@@ -33,6 +33,32 @@
       [checked]="searchDepartment() === department"
       (change)="searchDepartment.set(department)"
     />
-    {{ department }}
+    {{ department | uppercase }}
+  </label>
+}
+
+<h2>Courses</h2>
+@for (course of coursesResult(); track course.value) {
+  <label>
+    <input
+      type="radio"
+      [value]="course.value"
+      [checked]="searchCourse() === course.value"
+      (change)="searchCourse.set(course.value)"
+    />
+    {{ course.value }}
+  </label>
+}
+
+<h2>Sections</h2>
+@for (section of sectionsResult(); track section.value) {
+  <label>
+    <input
+      type="radio"
+      [value]="section.value"
+      [checked]="searchSection() === section.value"
+      (change)="searchSection.set(section.value)"
+    />
+    {{ section.value }}
   </label>
 }

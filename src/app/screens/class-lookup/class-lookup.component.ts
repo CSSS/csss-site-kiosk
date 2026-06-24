@@ -4,6 +4,7 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { map, of, switchMap, withLatestFrom } from 'rxjs';
 import {
+  CourseSection,
   type Department,
   DEPARTMENTS,
   getCurrentTerm,
@@ -58,10 +59,13 @@ export class ClassLookup {
     this.course$.pipe(
       withLatestFrom(this.year$, this.term$, this.department$),
       switchMap(([course, year, term, department]) => {
-        if (!isDepartment(department) || !term) {
+        if (!isDepartment(department) || !term || !course) {
           return of([]);
         }
         return this.courseApi.getCourseSections(year, term, department, course);
+      }),
+      map((sections: CourseSection[]) => {
+        return sections.filter(section => section.classType === 'e');
       })
     ),
     {
