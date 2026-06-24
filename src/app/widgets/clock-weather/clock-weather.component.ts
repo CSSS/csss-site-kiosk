@@ -10,4 +10,5 @@ import { TimeService } from './time.service';
 })
 export class ClockWeather {
   timeService = inject(TimeService);
+  // TODO: Add weather service
 }
