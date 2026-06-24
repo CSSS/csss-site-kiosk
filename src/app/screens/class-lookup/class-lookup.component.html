@@ -23,3 +23,16 @@
     {{ term }}
   </label>
 }
+
+<h2>Departments</h2>
+@for (department of departments; track department) {
+  <label>
+    <input
+      type="radio"
+      [value]="department"
+      [checked]="searchDepartment() === department"
+      (change)="searchDepartment.set(department)"
+    />
+    {{ department }}
+  </label>
+}

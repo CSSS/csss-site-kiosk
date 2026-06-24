@@ -83,7 +83,6 @@ export class ClassLookup {
     effect(() => {
       this.searchTerm();
       untracked(() => {
-        this.searchDepartment.set('');
         this.searchCourse.set('');
         this.searchSection.set('');
       });
