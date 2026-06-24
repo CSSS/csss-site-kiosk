@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ObservableCache } from './observable-cache.service';
+import { ObservableCache } from './observable-cache';
 
 describe('ObservableCache', () => {
   let service: ObservableCache;

@@ -1,8 +1,29 @@
+export const DEPARTMENTS = ['cmpt', 'macm', 'math'] as const;
+export type Department = (typeof DEPARTMENTS)[number];
+
 export type Term = 'fall' | 'spring' | 'summer';
 export type ClassType = 'e' | 'n';
 export type SectionCode = 'LEC' | 'TUT' | 'LAB' | 'SEM';
 export type InstructorRoleCode = 'PI' | 'SI';
 export type DeliveryMethod = 'In Person' | 'Distance Education';
+
+/**
+ * text: year
+ * value: year
+ */
+export interface Year {
+  text: string;
+  value: string;
+}
+
+/**
+ * text: all caps term
+ * value: lowercase term
+ */
+export interface TermResponse {
+  text: string;
+  value: string;
+}
 
 /**
  * text: course code
@@ -161,4 +182,30 @@ export interface CourseOutline {
   grades: CourseOutlineGrade[];
   requiredText: CourseOutlineText[];
   recommendedText: CourseOutlineText[];
+}
+
+/**
+ * Returns the term based on the month.
+ * Spring: Jan 1 - April 30
+ * Summer: May 1 - August 31
+ * Fall: September 1 - December 31
+ * @param date - date to check
+ * @returns the term based on the month
+ */
+export function getCurrentTerm(date: Date): Term {
+  // September
+  if (date.getMonth() >= 8) {
+    return 'fall';
+  }
+
+  // May
+  if (date.getMonth() >= 4) {
+    return 'summer';
+  }
+
+  return 'spring';
+}
+
+export function isDepartment(value: string): value is Department {
+  return DEPARTMENTS.includes(value as Department);
 }

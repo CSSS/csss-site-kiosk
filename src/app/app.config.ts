@@ -2,7 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { provideHttpClient } from '@angular/common/http';
-import { provideApi as provideCsssApi } from '../api/generated/csss-backend';
+import { provideApi as provideCsssApi } from '../app/api/generated/csss-backend';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 

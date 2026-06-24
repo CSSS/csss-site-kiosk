@@ -1,0 +1,25 @@
+<h2>Year</h2>
+@for (year of yearsResult(); track year) {
+  <label>
+    <input
+      type="radio"
+      [value]="year"
+      [checked]="searchYear() === year"
+      (change)="searchYear.set(year)"
+    />
+    {{ year }}
+  </label>
+}
+
+<h2>Term</h2>
+@for (term of termsResult(); track term) {
+  <label>
+    <input
+      type="radio"
+      [value]="term"
+      [checked]="searchTerm() === term"
+      (change)="searchTerm.set(term)"
+    />
+    {{ term }}
+  </label>
+}
