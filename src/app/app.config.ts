@@ -1,7 +1,7 @@
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
-import { provideHttpClient } from '@angular/common/http';
 import { provideApi as provideCsssApi } from '../app/api/generated/csss-backend';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
@@ -13,6 +13,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideCsssApi({
       basePath: environment.csssApiUrl
-    })
+    }),
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { timezone: '-700' }
+    }
   ]
 };
