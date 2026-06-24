@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.23.0",
+    "generators": {
+      "csss-backend": {
+        "generatorName": "typescript-angular",
+        "inputSpec": "http://localhost:3049/api/openapi.json",
+        "output": "#{cwd}/src/app/api/generated/csss-backend",
+        "globalProperty": {
+          "apis": "TranslinkApi",
+          "models": "",
+          "supportingFiles": ""
+        },
+        "additionalProperties": {
+          "ngVersion": "22.0.0",
+          "supportsES6": "true",
+          "fileNaming": "kebab-case",
+          "withInterfaces": true
+        }
+      },
+      "csss-backend-file": {
+        "generatorName": "typescript-angular",
+        "inputSpec": "#{cwd}/src/app/api/backend-api.schema.json",
+        "output": "#{cwd}/src/api/generated/csss-backend",
+        "globalProperty": {
+          "apis": "TranslinkApi",
+          "models": "",
+          "supportingFiles": ""
+        },
+        "additionalProperties": {
+          "ngVersion": "22.0.0",
+          "supportsES6": "true",
+          "fileNaming": "kebab-case",
+          "withInterfaces": true
+        }
+      }
+    }
+  }
+}
