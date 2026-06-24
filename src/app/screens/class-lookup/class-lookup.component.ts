@@ -1,10 +1,9 @@
-import { UpperCasePipe } from '@angular/common';
+import { TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { Component, effect, inject, signal, untracked } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { map, of, switchMap, withLatestFrom } from 'rxjs';
+import { combineLatest, map, of, switchMap, withLatestFrom } from 'rxjs';
 import {
-  CourseSection,
   type Department,
   DEPARTMENTS,
   getCurrentTerm,
@@ -15,7 +14,7 @@ import { SfuCourseOutlines } from '../../api/sfu-course-outlines/sfu-course-outl
 
 @Component({
   selector: 'ksk-class-lookup',
-  imports: [UpperCasePipe, FormsModule],
+  imports: [UpperCasePipe, TitleCasePipe, FormsModule],
   templateUrl: './class-lookup.component.html',
   styleUrl: './class-lookup.component.scss'
 })
@@ -25,24 +24,27 @@ export class ClassLookup {
   protected currentDate = new Date();
   protected departments = DEPARTMENTS;
 
-  protected readonly searchYear = signal<number>(this.currentDate.getFullYear());
-  protected readonly searchTerm = signal<Term | null>(getCurrentTerm(this.currentDate));
-  protected readonly searchDepartment = signal<Department | ''>('');
-  protected readonly searchCourse = signal<string>('');
-  protected readonly searchSection = signal<string>('');
+  protected readonly selectedYear = signal<number>(this.currentDate.getFullYear());
+  protected readonly selectedTerm = signal<Term | null>(getCurrentTerm(this.currentDate));
+  protected readonly selectedDepartment = signal<Department | ''>('');
+  protected readonly selectedCourse = signal<string>('');
+  protected readonly selectedSection = signal<string>('');
 
-  protected year$ = toObservable(this.searchYear);
-  protected term$ = toObservable(this.searchTerm);
-  protected department$ = toObservable(this.searchDepartment);
-  protected course$ = toObservable(this.searchCourse);
-  protected section$ = toObservable(this.searchSection);
+  protected year$ = toObservable(this.selectedYear);
+  protected term$ = toObservable(this.selectedTerm);
+  protected department$ = toObservable(this.selectedDepartment);
+  protected course$ = toObservable(this.selectedCourse);
+  protected section$ = toObservable(this.selectedSection);
 
-  yearsResult = toSignal(this.courseApi.getYears().pipe(map(years => years.reverse())));
-  termsResult = toSignal(this.year$.pipe(switchMap(year => this.courseApi.getTerms(year))));
+  yearsResult = toSignal(this.courseApi.getYears().pipe(map(years => years.reverse())), {
+    initialValue: []
+  });
+  termsResult = toSignal(this.year$.pipe(switchMap(year => this.courseApi.getTerms(year))), {
+    initialValue: []
+  });
 
   coursesResult = toSignal(
-    this.department$.pipe(
-      withLatestFrom(this.year$, this.term$),
+    combineLatest(this.department$, this.year$, this.term$).pipe(
       switchMap(([department, year, term]) => {
         if (!isDepartment(department) || !term) {
           return of([]);
@@ -64,7 +66,7 @@ export class ClassLookup {
         }
         return this.courseApi.getCourseSections(year, term, department, course);
       }),
-      map((sections: CourseSection[]) => {
+      map(sections => {
         return sections.filter(section => section.classType === 'e');
       })
     ),
@@ -73,37 +75,34 @@ export class ClassLookup {
     }
   );
 
+  protected readonly outlineResult = toSignal(
+    this.section$.pipe(
+      withLatestFrom(this.year$, this.term$, this.department$, this.course$),
+      switchMap(([section, year, term, department, course]) => {
+        if (!isDepartment(department) || !term || !course || !section) {
+          return of(null);
+        }
+        return this.courseApi.getCourseOutline(year, term, department, course, section);
+      })
+    )
+  );
+
   constructor() {
+    // These reset the radio buttons when certain options are clicked
     effect(() => {
-      this.searchYear();
+      this.selectedYear();
+      this.selectedTerm();
+      this.selectedDepartment();
       untracked(() => {
-        this.searchTerm.set(null);
-        this.searchDepartment.set('');
-        this.searchCourse.set('');
-        this.searchSection.set('');
+        this.selectedCourse.set('');
+        this.selectedSection.set('');
       });
     });
 
     effect(() => {
-      this.searchTerm();
+      this.selectedCourse();
       untracked(() => {
-        this.searchCourse.set('');
-        this.searchSection.set('');
-      });
-    });
-
-    effect(() => {
-      this.searchDepartment();
-      untracked(() => {
-        this.searchCourse.set('');
-        this.searchSection.set('');
-      });
-    });
-
-    effect(() => {
-      this.searchCourse();
-      untracked(() => {
-        this.searchSection.set('');
+        this.selectedSection.set('');
       });
     });
   }
