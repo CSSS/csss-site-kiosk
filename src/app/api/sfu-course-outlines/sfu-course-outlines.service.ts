@@ -55,7 +55,7 @@ function makeUrl(input: UrlKey): string {
  * BASE_URL?{year}/{term}/{department}/{courseNumber}/{courseSection}/{courseSection}
  */
 @Service()
-export class SfuCourseOutlines {
+export class SfuCourseOutlinesService {
   private http = inject(HttpClient);
 
   /**

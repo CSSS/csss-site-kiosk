@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SfuCourseOutlines } from './sfu-course-outlines.service';
+import { SfuCourseOutlinesService } from './sfu-course-outlines.service';
 
-describe('SfuCourseOutlines', () => {
-  let service: SfuCourseOutlines;
+describe('SfuCourseOutlinesService', () => {
+  let service: SfuCourseOutlinesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SfuCourseOutlines);
+    service = TestBed.inject(SfuCourseOutlinesService);
   });
 
   it('should be created', () => {

@@ -10,7 +10,7 @@ import {
   isDepartment,
   type Term
 } from '../../api/sfu-course-outlines/sfu-course-outline.models';
-import { SfuCourseOutlines } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
+import { SfuCourseOutlinesService } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
 
 @Component({
   selector: 'ksk-class-lookup',
@@ -18,8 +18,8 @@ import { SfuCourseOutlines } from '../../api/sfu-course-outlines/sfu-course-outl
   templateUrl: './class-lookup.component.html',
   styleUrl: './class-lookup.component.scss'
 })
-export class ClassLookup {
-  private _courseApi = inject(SfuCourseOutlines);
+export class ClassLookupComponent {
+  private _courseApi = inject(SfuCourseOutlinesService);
 
   protected currentDate = new Date();
   protected departments = DEPARTMENTS;
