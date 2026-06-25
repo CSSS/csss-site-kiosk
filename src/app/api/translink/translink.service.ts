@@ -1,15 +1,12 @@
 import { inject, Service } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { map, type Observable } from 'rxjs';
 import { IANA_TIMEZONE, LOCALE } from '../../app.config';
-import type {
-  TransLinkRealtimeResponse,
-  TransLinkScheduleResponse
-} from '../generated/csss-backend';
+import type { TransLinkScheduleResponse, TransLinkStaticResponse } from '../generated/csss-backend';
 import { TranslinkService as TranslinkApiService } from '../generated/csss-backend/api/translink.service';
 import { ObservableCache } from '../observable-cache';
 
 const MIDNIGHT = 24 * 60 * 60 * 1000;
-const TWO_MINUTES = 1000 * 60 * 2;
+const MINUTE_AND_A_HALF = 90 * 1000;
 const STATIC_CACHE_KEY = 'static';
 const REALTIME_CACHE_KEY = 'realtime';
 
@@ -19,15 +16,34 @@ export class TranslinkService {
 
   private cache = new ObservableCache();
 
-  getRealtimeData(): Observable<TransLinkRealtimeResponse[]> {
-    return this.cache.get<TransLinkRealtimeResponse[]>(
+  getDepartureSchedule(): Observable<TransLinkScheduleResponse[]> {
+    return this.cache.get<TransLinkScheduleResponse[]>(
       REALTIME_CACHE_KEY,
-      this.translinkApi.getRealtimeSchedule,
-      TWO_MINUTES
+      () => this.translinkApi.getDepartureSchedule(),
+      MINUTE_AND_A_HALF
     );
   }
 
-  getStaticSchedule(): Observable<TransLinkScheduleResponse[]> {
+  getNextDepartures(): Observable<Map<string, TransLinkScheduleResponse>> {
+    return this.getDepartureSchedule().pipe(
+      map(schedules => {
+        const result = new Map<string, TransLinkScheduleResponse>();
+
+        for (const schedule of schedules) {
+          if (result.has(schedule.route_number)) {
+            // We assume that the routes are sorted from soonest departure time to latest
+            continue;
+          }
+
+          result.set(schedule.route_number, schedule);
+        }
+
+        return result;
+      })
+    );
+  }
+
+  getStaticSchedule(): Observable<TransLinkStaticResponse> {
     const now = new Date();
     const vancouverTimeStr = now.toLocaleString(LOCALE, {
       timeZone: IANA_TIMEZONE,
@@ -43,9 +59,9 @@ export class TranslinkService {
     const msPassedToday = hours * 60 * 60 * 1000 + minutes * 60 * 1000 + seconds * 1000 + ms;
     const msUntilMidnight = MIDNIGHT - msPassedToday;
 
-    return this.cache.get<TransLinkScheduleResponse[]>(
+    return this.cache.get<TransLinkStaticResponse>(
       STATIC_CACHE_KEY,
-      this.translinkApi.getDepartureSchedule,
+      () => this.translinkApi.getStaticSchedule(),
       msUntilMidnight
     );
   }

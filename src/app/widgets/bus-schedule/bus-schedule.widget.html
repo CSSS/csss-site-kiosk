@@ -1,0 +1,10 @@
+@for (bus of nextDepartures(); track $index) {
+  <div class="route">
+    <h2>{{ bus.routeNumber }}</h2>
+    <div class="circle">
+      in
+      <br />
+      {{ getDisplayTime(bus.secondsUntilDeparture) }}
+    </div>
+  </div>
+}

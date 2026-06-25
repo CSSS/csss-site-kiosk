@@ -1,0 +1,22 @@
+@use 'utilities/extends';
+@use 'utilities/mixins' as m;
+
+:host {
+  @extend %card-bg;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  text-align: center;
+}
+
+.route {
+  @include m.flex-center(col, 3rem);
+}
+
+.circle {
+  @include m.flex-center(center);
+  background-color: white;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  border: 0.75rem solid var(--colour-accent-blue);
+}
