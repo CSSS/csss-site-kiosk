@@ -3,13 +3,16 @@
 
 :host {
   @include m.card();
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  text-align: center;
 }
 
 h2 {
   font-size: 5rem;
+}
+
+.schedule {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  text-align: center;
 }
 
 .route {

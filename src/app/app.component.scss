@@ -1,7 +1,7 @@
 @use 'utilities/functions' as f;
 :host {
   display: grid;
-  grid-template-rows: 1fr 0 4fr; /* Second one is zero due to the router outlet */
+  grid-template-rows: 1fr 0 4fr auto; /* Second one is zero due to the router outlet */
   gap: f.spacing('xl');
   width: 100%;
   height: 100%;
