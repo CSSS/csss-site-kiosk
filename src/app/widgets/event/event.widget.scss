@@ -1,11 +1,9 @@
-@use 'utilities/extends';
 @use 'utilities/mixins' as m;
 @use 'utilities/functions' as f;
 
 :host {
-  @extend %card-bg;
-
-  display: block;
+  @include m.card();
+  @include m.flex-center(row, 0, vertical);
 }
 
 .carousel {
@@ -17,7 +15,7 @@ swiper-container {
 }
 
 swiper-slide {
-  @include m.flex-center('center');
+  @include m.flex-center(row);
 
   .card {
     width: 380px;
@@ -31,7 +29,7 @@ swiper-slide {
     filter: blur(2px);
 
     &__img {
-      @extend %card-bg;
+      @include m.card();
       height: 100%;
       object-fit: cover;
       padding: 0;

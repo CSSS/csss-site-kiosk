@@ -2,11 +2,11 @@
 @use 'variables' as v;
 
 @function spacing($key) {
-  @if not map.has-key(v.$spacing-scale, $key) {
-    @error "Unknown spacing scale: #{$key}. Available scales: #{map.keys(v.$spacing-scale)}";
+  @if not map.has-key(v.$spacing, $key) {
+    @error "Unknown spacing scale: #{$key}. Available scales: #{map.keys(v.$spacing)}";
   }
 
-  @return map.get(v.$spacing-scale, $key);
+  @return map.get(v.$spacing, $key);
 }
 
 @function font-size($key) {

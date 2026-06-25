@@ -1,8 +1,0 @@
-@use 'utilities/functions' as f;
-
-%card-bg {
-  background: var(--colour-surface-base);
-  border-radius: 3.25rem;
-  padding: f.spacing('xl');
-  overflow: hidden;
-}

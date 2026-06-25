@@ -1,23 +1,31 @@
 @use 'sass:map';
 @use 'variables' as v;
 
-@mixin flex-center($direction: row, $gap: 0) {
+/*
+ * direction - flex direction: `row` or `column`
+ * gap - flex gap value with CSS units
+ * axis - the axis to center on: `horizontal`, `vertical`, or `both`
+ */
+@mixin flex-center($direction: row, $gap: 0, $axis: horizontal) {
   display: flex;
   flex-direction: $direction;
   gap: $gap;
 
-  @if $direction == row {
+  @if $axis == both {
     justify-content: center;
-  }
-
-  @if $direction == col {
-    flex-direction: column;
     align-items: center;
-  }
-
-  @if $direction == center {
-    align-items: center;
-    justify-content: center;
+  } @else if $direction == row {
+    @if $axis == horizontal {
+      justify-content: center;
+    } @else {
+      align-items: center;
+    }
+  } @else if $direction == column {
+    @if $axis == horizontal {
+      align-items: center;
+    } @else {
+      justify-content: center;
+    }
   }
 }
 
@@ -37,4 +45,15 @@
   &:hover {
     background-color: color-mix(in oklch, $color $amount, black);
   }
+}
+
+@mixin card(
+  $bg-colour: var(--colour-surface-base),
+  $padding: map.get(v.$spacing, 'xl'),
+  $border-radius: 3.25rem
+) {
+  background-color: $bg-colour;
+  padding: $padding;
+  border-radius: $border-radius;
+  overflow: hidden;
 }
