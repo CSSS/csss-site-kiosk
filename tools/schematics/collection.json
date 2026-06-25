@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "screen": {
+      "description": "Generate a screen component in src/app/screens.",
+      "factory": "./screen/index#screen",
+      "schema": "./screen/schema.json"
+    },
+    "widget": {
+      "description": "Generate a widget component in src/app/widgets.",
+      "factory": "./widget/index#widget",
+      "schema": "./widget/schema.json"
+    }
+  }
+}
