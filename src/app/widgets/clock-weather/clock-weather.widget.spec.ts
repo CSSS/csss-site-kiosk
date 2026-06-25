@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClockWeatherComponent } from './clock-weather.widget';
+import { ClockWeatherWidget } from './clock-weather.widget';
 
-describe('ClockWeatherComponent', () => {
-  let component: ClockWeatherComponent;
-  let fixture: ComponentFixture<ClockWeatherComponent>;
+describe('ClockWeatherWidget', () => {
+  let component: ClockWeatherWidget;
+  let fixture: ComponentFixture<ClockWeatherWidget>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClockWeatherComponent]
+      imports: [ClockWeatherWidget]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ClockWeatherComponent);
+    fixture = TestBed.createComponent(ClockWeatherWidget);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

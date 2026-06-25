@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ClassLookupComponent } from './screens/class-lookup/class-lookup.screen';
-import { HomeScreenComponent } from './screens/home/home.screen';
+import { HomeScreen } from './screens/home/home.screen';
 
 export const routes: Routes = [
   {
@@ -9,6 +9,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: HomeScreenComponent
+    component: HomeScreen
   }
 ];

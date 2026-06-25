@@ -8,7 +8,7 @@ import { TimeService } from '../../core/time.service';
   templateUrl: './clock-weather.widget.html',
   styleUrl: './clock-weather.widget.scss'
 })
-export class ClockWeatherComponent {
+export class ClockWeatherWidget {
   timeService = inject(TimeService);
   // TODO: Add weather service
 }
