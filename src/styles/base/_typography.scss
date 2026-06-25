@@ -76,7 +76,8 @@ h4 {
   font-family: v.$font-heading;
 }
 
-body {
+body,
+p {
   @include m.type-scale('body');
   font-family: v.$font-body;
 }

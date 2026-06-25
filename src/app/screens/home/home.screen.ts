@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ClockWeatherWidget } from '../../widgets/clock-weather/clock-weather.widget';
+import { EventWidget } from '../../widgets/event/event.widget';
 
 @Component({
-  selector: 'ksk-home',
-  imports: [ClockWeatherWidget],
+  selector: 'ksk-home-screen',
+  imports: [EventWidget],
   templateUrl: './home.screen.html',
   styleUrl: './home.screen.scss'
 })

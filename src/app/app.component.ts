@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ClassLookupComponent } from './screens/class-lookup/class-lookup.screen';
+import { ClockWeatherWidget } from './widgets/clock-weather/clock-weather.widget';
 
 @Component({
   selector: 'ksk-root',
-  imports: [RouterOutlet, ClassLookupComponent],
+  imports: [RouterOutlet, ClockWeatherWidget],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

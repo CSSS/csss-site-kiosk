@@ -13,7 +13,7 @@ import {
 import { SfuCourseOutlinesService } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
 
 @Component({
-  selector: 'ksk-class-lookup',
+  selector: 'ksk-class-lookup-screen',
   imports: [UpperCasePipe, TitleCasePipe, FormsModule],
   templateUrl: './class-lookup.screen.html',
   styleUrl: './class-lookup.screen.scss'
