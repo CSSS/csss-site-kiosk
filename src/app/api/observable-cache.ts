@@ -7,8 +7,13 @@ const CACHE_TTL = 60 * 60 * 1000;
  * Caches observable values for a certain amount of time.
  * Default TTL is 1 hour.
  */
+interface CacheEntry<T> {
+  value: Observable<T>;
+  expiresAt: number;
+}
+
 export class ObservableCache {
-  private cache = new Map<string, Observable<unknown>>();
+  private cache = new Map<string, CacheEntry<unknown>>();
 
   constructor(private ttl: number = CACHE_TTL) {}
 
@@ -18,24 +23,32 @@ export class ObservableCache {
    * @template T - return type from fetcher
    * @param key - key to cache the value under
    * @param fetcher - function that returns an Observable that fetches data
-   * @param ttl - time to expire cached value
+   * @param ttl - time to expire cached value, in milliseconds
    * @returns Observable<T> - observable of the cached value or the fetched value if not cached
    */
   get<T>(key: string, fetcher: () => Observable<T>, ttl?: number): Observable<T> {
-    if (!this.cache.has(key)) {
-      this.cache.set(
-        key,
-        fetcher().pipe(
-          shareReplay({
-            bufferSize: 1,
-            refCount: true,
-            windowTime: ttl ?? this.ttl
-          })
-        )
-      );
+    const now = Date.now();
+    const cached = this.cache.get(key);
+
+    if (cached && cached.expiresAt > now) {
+      return cached.value as Observable<T>;
     }
 
-    return this.cache.get(key) as Observable<T>;
+    const entryTtl = ttl ?? this.ttl;
+    const value = fetcher().pipe(
+      shareReplay({
+        bufferSize: 1,
+        refCount: true,
+        windowTime: entryTtl
+      })
+    );
+
+    this.cache.set(key, {
+      value,
+      expiresAt: now + entryTtl
+    });
+
+    return value;
   }
 
   /**
