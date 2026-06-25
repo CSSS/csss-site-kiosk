@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use 'variables' as v;
+
+@function spacing($key) {
+  @if not map.has-key(v.$spacing-scale, $key) {
+    @error "Unknown spacing scale: #{$key}. Available scales: #{map.keys(v.$spacing-scale)}";
+  }
+
+  @return map.get(v.$spacing-scale, $key);
+}
+
+@function font-size($key) {
+  @if not map.has-key(v.$font-sizes, $key) {
+    @error "Unknown font size key: #{$key}. Available sizes: #{map.keys(v.$font-sizes)}";
+  }
+
+  @return map.get(v.$font-sizes, $key);
+}
+
+@function font-weight($key) {
+  @if not map.has-key(v.$font-weights, $key) {
+    @error "Unknown font weight key: #{$key}. Available weights: #{map.keys(v.$font-weights)}";
+  }
+
+  @return map.get(v.$font-weights, $key);
+}
+
+@function line-height($key) {
+  @if not map.has-key(v.$line-heights, $key) {
+    @error "Unknown line height key: #{$key}. Available line heights: #{map.keys(v.$line-heights)}";
+  }
+
+  @return map.get(v.$line-heights, $key);
+}
+
+@function animation-duration($key) {
+  @if not map.has-key(v.$animation-durations, $key) {
+    @error "Unknown animation duration key: #{$key}. Available animation durations: #{map.keys(v.$animation-durations)}";
+  }
+
+  @return map.get(v.$animation-durations, $key);
+}

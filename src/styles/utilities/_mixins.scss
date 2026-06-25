@@ -1,0 +1,41 @@
+@use 'sass:map';
+@use 'variables' as v;
+
+@mixin flex-center($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  gap: $gap;
+
+  @if $direction == row {
+    align-items: center;
+  }
+
+  @if $direction == col {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @if $direction == center {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@mixin type-scale($key) {
+  $style: map.get(v.$type-scale, $key);
+
+  @if not $style {
+    @error "Unknown type scale key: #{$key}. Available keys: #{map.keys(v.$type-scale)}";
+  }
+
+  font-size: map.get($style, size);
+  line-height: map.get($style, line-height);
+  font-weight: map.get($style, weight);
+}
+
+@mixin hover-shade($colour, $amount: 85%) {
+  &:hover {
+    background-color: color-mix(in oklch, $color $amount, black);
+  }
+}

@@ -1,0 +1,37 @@
+@use '../utilities/colours' as c;
+
+:root {
+  /* CSSS brand palette */
+  @each $name, $value in c.$csss-brand {
+    --csss-brand-#{$name}: #{$value};
+  }
+
+  @each $name, $value in c.$app {
+    --app-#{$name}: #{$value};
+  }
+
+  /* Semantic tokens */
+  /* Colours */
+  --color-surface-base: var(--csss-brand-cream);
+  --color-surface-inverse: var(--csss-brand-grey);
+  --color-border-default: hsl(0, 0%, 0%, 0.15);
+
+  --color-text-primary: var(--csss-brand-black);
+  --color-text-inverse: var(--csss-brand-cream);
+
+  --color-accent-blue: var(--csss-brand-blue);
+  --color-accent-blue-fg: var(--csss-brand-cream);
+
+  --color-accent-pink: var(--csss-brand-pink);
+  --color-accent-pink-fg: var(--csss-brand-cream);
+
+  --color-accent-red: var(--csss-brand-red);
+  --color-accent-red-fg: var(--csss-brand-cream);
+
+  --color-accent-teal: var(--csss-brand-teal);
+  --color-accent-teal-fg: var(--csss-brand-cream);
+
+  --color-danger: var(--app-red);
+  --color-warning: var(--app-yellow);
+  --color-success: var(--app-green);
+}
