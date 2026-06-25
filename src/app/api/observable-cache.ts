@@ -12,7 +12,16 @@ export class ObservableCache {
 
   constructor(private ttl: number = CACHE_TTL) {}
 
-  get<T>(key: string, fetcher: () => Observable<T>): Observable<T> {
+  /**
+   * Retrieves the requested value either from the source or cache.
+   *
+   * @template T - return type from fetcher
+   * @param key - key to cache the value under
+   * @param fetcher - function that returns an Observable that fetches data
+   * @param ttl - time to expire cached value
+   * @returns Observable<T> - observable of the cached value or the fetched value if not cached
+   */
+  get<T>(key: string, fetcher: () => Observable<T>, ttl?: number): Observable<T> {
     if (!this.cache.has(key)) {
       this.cache.set(
         key,
@@ -20,7 +29,7 @@ export class ObservableCache {
           shareReplay({
             bufferSize: 1,
             refCount: true,
-            windowTime: this.ttl
+            windowTime: ttl ?? this.ttl
           })
         )
       );
@@ -29,6 +38,11 @@ export class ObservableCache {
     return this.cache.get(key) as Observable<T>;
   }
 
+  /**
+   * Deletes a cached value if key is provided. If no key is provided then it deletes the whole cache.
+   *
+   * @param key - key to the value to delete
+   */
   clear(key?: string): void {
     if (key) {
       this.cache.delete(key);
