@@ -3,10 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "schematicCollections": [
-      "./tools/schematics/collection.json",
-      "@schematics/angular"
-    ]
+    "schematicCollections": ["./tools/schematics/collection.json", "@schematics/angular"]
   },
   "newProjectRoot": "projects",
   "projects": {
