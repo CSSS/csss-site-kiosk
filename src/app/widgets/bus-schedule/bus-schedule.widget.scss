@@ -1,5 +1,6 @@
 @use 'utilities/extends';
 @use 'utilities/mixins' as m;
+@use 'utilities/functions' as f;
 
 :host {
   @extend %card-bg;
@@ -8,15 +9,40 @@
   text-align: center;
 }
 
-.route {
-  @include m.flex-center(col, 3rem);
+h2 {
+  font-size: 5rem;
 }
 
-.circle {
+.route {
+  @include m.flex-center(col, 2rem);
+}
+
+.status {
+  --colour-status: var(--colour-warning);
   @include m.flex-center(center);
   background-color: white;
   width: 9rem;
   height: 9rem;
   border-radius: 50%;
-  border: 0.75rem solid var(--colour-accent-blue);
+  border: 0.75rem solid var(--colour-status);
+
+  &--arrived {
+    @extend .status;
+    --colour-status: var(--colour-success);
+  }
+
+  &--on-time {
+    @extend .status;
+    --colour-status: var(--colour-accent-blue);
+  }
+
+  &--delayed {
+    @extend .status;
+    --colour-status: var(--colour-warning);
+  }
+
+  &--cancelled {
+    @extend .status;
+    --colour-status: var(--colour-danger);
+  }
 }
