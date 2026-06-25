@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 
 interface Event {
@@ -8,15 +9,25 @@ interface Event {
 
 @Component({
   selector: 'ksk-event-widget',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './event.widget.html',
   styleUrl: './event.widget.scss'
 })
 export class EventWidget {
   events: Event[] = [
     {
-      posterUrl: 'https://dummyimage.com/600x400/000/fff',
-      title: 'Test Description',
+      posterUrl: 'https://dummyimage.com/380x500/000/fff',
+      title: 'First Poster',
+      location: 'Location'
+    },
+    {
+      posterUrl: 'https://dummyimage.com/380x500/000/fff',
+      title: 'Second Poster',
+      location: 'Location'
+    },
+    {
+      posterUrl: 'https://dummyimage.com/380x500/000/fff',
+      title: 'Third Poster',
       location: 'Location'
     }
   ];

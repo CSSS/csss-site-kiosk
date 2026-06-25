@@ -1,1 +1,14 @@
-
+<div class="carousel">
+  @for (event of events; track $index) {
+    <div class="card">
+      <img
+        class="card__img"
+        [ngSrc]="event.posterUrl"
+        alt="title"
+        width="380"
+        height="500"
+        priority
+      />
+    </div>
+  }
+</div>

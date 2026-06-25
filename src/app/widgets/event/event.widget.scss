@@ -1,4 +1,22 @@
+@use 'utilities/extends';
+@use 'utilities/mixins' as m;
+
 :host {
-  background-color: var(--color-surface-base);
-  border-radius: 52px;
+  @extend %card-bg;
+
+  display: block;
+}
+
+.carousel {
+  @include m.flex-center(row);
+}
+
+.card {
+  width: fit-content;
+  padding: 0;
+
+  &__img {
+    @extend %card-bg;
+    padding: 0;
+  }
 }

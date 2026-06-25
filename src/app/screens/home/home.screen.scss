@@ -1,6 +1,20 @@
+@use 'utilities/extends';
+@use 'utilities/functions' as f;
+@use 'utilities/mixins' as m;
+
 :host {
   display: grid;
-  grid-template-rows: 1fr 3fr 1fr;
+  grid-template-rows: 4fr 2fr 1fr;
+  gap: f.spacing('md');
   width: 100%;
   height: 100%;
+}
+
+.bottom {
+  @include m.flex-center(row, 1rem);
+}
+
+.card {
+  @extend %card-bg;
+  width: 100%;
 }
