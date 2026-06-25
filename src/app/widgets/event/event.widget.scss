@@ -1,5 +1,6 @@
 @use 'utilities/extends';
 @use 'utilities/mixins' as m;
+@use 'utilities/functions' as f;
 
 :host {
   @extend %card-bg;
@@ -8,15 +9,45 @@
 }
 
 .carousel {
-  @include m.flex-center(row);
+  width: 100%;
 }
 
-.card {
-  width: fit-content;
-  padding: 0;
+swiper-container {
+  width: 100%;
+}
 
-  &__img {
-    @extend %card-bg;
-    padding: 0;
+swiper-slide {
+  @include m.flex-center('center');
+
+  .card {
+    width: 380px;
+    height: 100%;
+
+    transition:
+      transform f.animation-duration('normal') ease,
+      opacity f.animation-duration('normal') ease;
+    transform: scale(0.6);
+    opacity: 0.5;
+    filter: blur(2px);
+
+    &__img {
+      @extend %card-bg;
+      height: 100%;
+      object-fit: cover;
+      padding: 0;
+    }
+  }
+
+  &.swiper-slide-active {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+
+    .card {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
   }
 }
