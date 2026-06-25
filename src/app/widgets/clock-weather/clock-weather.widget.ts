@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { TimeService } from './time.service';
+import { TimeService } from '../../core/time.service';
 
 @Component({
   selector: 'ksk-clock-weather',
   imports: [DatePipe],
-  templateUrl: './clock-weather.component.html',
-  styleUrl: './clock-weather.component.scss'
+  templateUrl: './clock-weather.widget.html',
+  styleUrl: './clock-weather.widget.scss'
 })
 export class ClockWeatherComponent {
   timeService = inject(TimeService);

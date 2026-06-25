@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { ClassLookupComponent } from './class-lookup.screen';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('ClassLookupComponent', () => {
+  let component: ClassLookupComponent;
+  let fixture: ComponentFixture<ClassLookupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent]
+      imports: [ClassLookupComponent]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(ClassLookupComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

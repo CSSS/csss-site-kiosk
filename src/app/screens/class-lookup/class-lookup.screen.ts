@@ -15,8 +15,8 @@ import { SfuCourseOutlinesService } from '../../api/sfu-course-outlines/sfu-cour
 @Component({
   selector: 'ksk-class-lookup',
   imports: [UpperCasePipe, TitleCasePipe, FormsModule],
-  templateUrl: './class-lookup.component.html',
-  styleUrl: './class-lookup.component.scss'
+  templateUrl: './class-lookup.screen.html',
+  styleUrl: './class-lookup.screen.scss'
 })
 export class ClassLookupComponent {
   private _courseApi = inject(SfuCourseOutlinesService);

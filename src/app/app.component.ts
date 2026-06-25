@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ClassLookupComponent } from './screens/class-lookup/class-lookup.component';
+import { ClassLookupComponent } from './screens/class-lookup/class-lookup.screen';
 
 @Component({
   selector: 'ksk-root',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClockWeatherComponent } from './clock-weather.component';
+import { ClockWeatherComponent } from './clock-weather.widget';
 
 describe('ClockWeatherComponent', () => {
   let component: ClockWeatherComponent;
