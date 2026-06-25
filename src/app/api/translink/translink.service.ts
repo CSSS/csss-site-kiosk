@@ -24,6 +24,11 @@ export class TranslinkService {
     );
   }
 
+  /**
+   * Retrieves the next departure for each bus route.
+   *
+   * @returns An observable map of route numbers with their schedule information.
+   */
   getNextDepartures(): Observable<Map<string, TransLinkScheduleResponse>> {
     return this.getDepartureSchedule().pipe(
       map(schedules => {
@@ -43,6 +48,11 @@ export class TranslinkService {
     );
   }
 
+  /**
+   * Retrieves the static schedule for desired bus routes.
+   *
+   * @returns an observable of the static schedule response, which is cached until midnight in Vancouver time
+   */
   getStaticSchedule(): Observable<TransLinkStaticResponse> {
     const now = new Date();
     const vancouverTimeStr = now.toLocaleString(LOCALE, {

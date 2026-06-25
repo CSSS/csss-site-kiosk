@@ -73,7 +73,7 @@ export class BusScheduleWidget {
 
     let minutes = Math.floor(timeDiff / 60);
     if (minutes < 60) {
-      return `${minutes} minutes`;
+      return `${minutes} minute${minutes > 1 ? 's' : ''}`;
     }
 
     const hours = Math.floor(minutes / 60);
