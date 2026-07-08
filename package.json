@@ -13,7 +13,7 @@
     "lint": "eslint ./src --ext .ts --config eslint.config.mjs",
     "format": "prettier ./src --write",
     "precommit": "npm run lint && npm run format",
-    "dev:build": "ng build --watch --configuration development",
+    "dev:build": "ng build --watch --configuration production",
     "dev:server": "node server/index.js",
     "dev": "concurrently \"npm run dev:build\" \"npm run dev:server\"",
     "server:install": "npm install --prefix server",

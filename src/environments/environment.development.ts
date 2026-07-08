@@ -1,6 +1,5 @@
 export const environment = {
   production: false,
-  csssApiUrl: 'http://localhost:8080/api',
-  sfuCourseOutlineApi: 'http://www.sfu.ca/bin/wcm/course-outlines?',
+  csssApiUrl: 'http://localhost:3049/api',
   appUrl: 'http://localhost:8080'
 };
