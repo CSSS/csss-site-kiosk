@@ -5,7 +5,9 @@ $spacing: (
   sm: 0.5rem,
   md: 1rem,
   lg: 1.5rem,
-  xl: 2rem
+  xl: 2rem,
+  '2xl': 2.5rem,
+  '3xl': 3rem
 );
 
 $animation-durations: (
@@ -14,7 +16,8 @@ $animation-durations: (
   slow: 0.5s
 );
 
-$font-body: 'Ancizar Serif', serif;
+$font-mono: 'Geist Mono', 'serif';
+$font-body: 'Cal Sans', sans-serif;
 $font-heading: 'Cal Sans', sans-serif;
 $font-title: 'Boldonse', sans-serif;
 
