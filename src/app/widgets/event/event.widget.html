@@ -1,19 +1,17 @@
-<h3>Events</h3>
-<div class="carousel">
-  <swiper-container init="false" #swiperRef>
-    @for (event of events; track $index) {
-      <swiper-slide>
-        <div class="card">
-          <img
-            class="card__img"
-            [ngSrc]="event.posterUrl"
-            alt="title"
-            width="380"
-            height="500"
-            priority
-          />
-        </div>
-      </swiper-slide>
-    }
-  </swiper-container>
-</div>
+<h2>csss events</h2>
+<swiper-container init="false" #swiperRef>
+  @for (event of events; track $index) {
+    <swiper-slide>
+      <div class="card">
+        <img
+          class="card__img"
+          [ngSrc]="event.posterUrl"
+          alt="title"
+          width="580"
+          height="614"
+          priority
+        />
+      </div>
+    </swiper-slide>
+  }
+</swiper-container>

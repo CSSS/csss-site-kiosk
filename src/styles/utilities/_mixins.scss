@@ -47,13 +47,15 @@
   }
 }
 
-@mixin card(
-  $bg-colour: var(--colour-surface-base),
-  $padding: map.get(v.$spacing, 'xl'),
-  $border-radius: 3.25rem
-) {
+@mixin card($bg-colour: var(--colour-surface-base), $border-radius: 50px) {
   background-color: $bg-colour;
-  padding: $padding;
   border-radius: $border-radius;
   overflow: hidden;
+
+  > h2 {
+    color: var(--colour-text-inverse);
+    font-size: 2.25rem;
+    text-align: center;
+    margin: 1rem 0;
+  }
 }

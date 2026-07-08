@@ -1,12 +1,7 @@
-@use 'utilities/mixins' as m;
-@use 'utilities/functions' as f;
+@use 'utilities/mixins' as *;
 
 :host {
-  @include m.card();
-}
-
-h2 {
-  font-size: 5rem;
+  @include card(var(--colour-accent-blue));
 }
 
 .schedule {
@@ -16,12 +11,12 @@ h2 {
 }
 
 .route {
-  @include m.flex-center(column, 2rem);
+  @include flex-center(column, 2rem);
 }
 
 .status {
   --colour-status: var(--colour-warning);
-  @include m.flex-center(column, 0, both);
+  @include flex-center(column, 0, both);
   background-color: white;
   width: 9rem;
   height: 9rem;

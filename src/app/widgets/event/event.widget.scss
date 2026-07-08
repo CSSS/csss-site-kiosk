@@ -2,51 +2,27 @@
 @use 'utilities/functions' as f;
 
 :host {
-  @include m.card();
-}
-
-.carousel {
-  width: 100%;
-  height: 100%;
-  @include m.flex-center(row, 0, vertical);
+  --host-height: 55.625rem;
+  --card-height: 38.375rem;
+  --card-offset: 5rem;
+  --carousel-height: calc(var(--card-height) + var(--card-offset));
+  @include m.card(var(--colour-accent-teal));
 }
 
 swiper-container {
   width: 100%;
+  height: var(--carousel-height);
+  @include m.flex-center(row, 0, vertical);
 }
 
 swiper-slide {
   @include m.flex-center(row);
+  max-height: var(--card-height);
 
-  .card {
-    width: 380px;
+  .card__img {
+    @include m.card();
     height: 100%;
-
-    transition:
-      transform f.animation-duration('normal') ease,
-      opacity f.animation-duration('normal') ease;
-    transform: scale(0.6);
-    opacity: 0.5;
-    filter: blur(2px);
-
-    &__img {
-      @include m.card();
-      height: 100%;
-      object-fit: cover;
-      padding: 0;
-    }
-  }
-
-  &.swiper-slide-active {
-    transform: scale(1);
-    opacity: 1;
-    filter: blur(0);
-    z-index: 2;
-
-    .card {
-      transform: scale(1);
-      opacity: 1;
-      filter: blur(0);
-    }
+    object-fit: cover;
+    padding: 0;
   }
 }
