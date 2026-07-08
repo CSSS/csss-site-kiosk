@@ -1,18 +1,23 @@
 {
-  "name": "csss-kiosk-site",
+  "name": "csss-site-kiosk",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "api:url": "openapi-generator-cli generate --generator-key csss-backend",
     "api:file": "openapi-generator-cli generate --generator-key csss-backend-file",
-    "prebuild": "npm run api:file",
+    "prebuild": "npm run api:url",
     "start": "npm run prebuild && ng serve",
     "build": "npm run prebuild && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "eslint ./src --ext .ts --config eslint.config.mjs",
     "format": "prettier ./src --write",
-    "precommit": "npm run lint && npm run format"
+    "precommit": "npm run lint && npm run format",
+    "dev:build": "ng build --watch --configuration development",
+    "dev:server": "node server/index.js",
+    "dev": "concurrently \"npm run dev:build\" \"npm run dev:server\"",
+    "server:install": "npm install --prefix server",
+    "start:kiosk": "npm run build && npm run server"
   },
   "private": true,
   "packageManager": "npm@11.12.1",
@@ -23,6 +28,7 @@
     "@angular/forms": "^22.0.0",
     "@angular/platform-browser": "^22.0.0",
     "@angular/router": "^22.0.0",
+    "@napi-rs/keyring": "^1.3.0",
     "rxjs": "~7.8.0",
     "swiper": "^12.2.0",
     "tslib": "^2.3.0"

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { sfuCourseOutlineApi } from '../../config';
 import { ObservableCache } from '../observable-cache';
 import type {
   Course,
@@ -44,7 +44,7 @@ function makeKey(input: UrlKey): string {
 }
 
 function makeUrl(input: UrlKey): string {
-  return environment.sfuCourseOutlineApi + makeKey(input);
+  return sfuCourseOutlineApi + makeKey(input);
 }
 
 /**
@@ -66,7 +66,7 @@ export class SfuCourseOutlinesService {
   getYears(): Observable<number[]> {
     return this.cache.get<number[]>('years', () =>
       this.http
-        .get<Year[]>(environment.sfuCourseOutlineApi)
+        .get<Year[]>(sfuCourseOutlineApi)
         .pipe(map(res => res.map(({ text }) => parseInt(text))))
     );
   }
@@ -74,7 +74,7 @@ export class SfuCourseOutlinesService {
   getTerms(year: number): Observable<Term[]> {
     return this.cache.get<Term[]>(year.toString(), () =>
       this.http
-        .get<TermResponse[]>(`${environment.sfuCourseOutlineApi}${year}`)
+        .get<TermResponse[]>(`${sfuCourseOutlineApi}${year}`)
         .pipe(map(res => res.map(term => term.value as Term)))
     );
   }
@@ -113,13 +113,13 @@ export class SfuCourseOutlinesService {
     this.cache.clear(key ? makeKey(key) : undefined);
   }
 
-  private fetcher(params: CoursesKey): Observable<Course[]>;
-  private fetcher(params: SectionsKey): Observable<CourseSection[]>;
-  private fetcher(params: OutlineKey): Observable<CourseOutline>;
   /**
    * @param params - parameters to fetch the data
    * @returns an observable of the fetched data
    */
+  private fetcher(params: CoursesKey): Observable<Course[]>;
+  private fetcher(params: SectionsKey): Observable<CourseSection[]>;
+  private fetcher(params: OutlineKey): Observable<CourseOutline>;
   private fetcher(params: UrlKey): Observable<Course[] | CourseSection[] | CourseOutline> {
     return this.http.get<Course[] | CourseSection[] | CourseOutline>(makeUrl(params)).pipe(
       tap(res => {
