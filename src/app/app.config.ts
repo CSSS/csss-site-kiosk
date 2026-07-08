@@ -5,12 +5,7 @@ import { provideRouter } from '@angular/router';
 import { provideApi as provideCsssApi } from '../app/api/generated/csss-backend';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
-
-export const LOCALE = 'en-CA';
-export const IANA_TIMEZONE = 'America/Vancouver';
-export const DATETIME_FORMATTER = new Intl.DateTimeFormat(LOCALE, {
-  timeZone: IANA_TIMEZONE
-});
+import { LOCALE } from './config';
 
 export const appConfig: ApplicationConfig = {
   providers: [

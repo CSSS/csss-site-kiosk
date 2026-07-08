@@ -1,6 +1,6 @@
 import { inject, Service } from '@angular/core';
 import { map, type Observable } from 'rxjs';
-import { IANA_TIMEZONE, LOCALE } from '../../app.config';
+import { IANA_TIMEZONE, LOCALE } from '../../config';
 import type { TransLinkScheduleResponse, TransLinkStaticResponse } from '../generated/csss-backend';
 import { TranslinkService as TranslinkApiService } from '../generated/csss-backend/api/translink.service';
 import { ObservableCache } from '../observable-cache';
