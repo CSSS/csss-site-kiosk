@@ -4,7 +4,7 @@ import { Observable, shareReplay } from 'rxjs';
 const CACHE_TTL = 60 * 60 * 1000;
 
 /**
- * Caches observable values for a certain amount of time.
+ * Caches HTTP observable values for a certain amount of time.
  * Default TTL is 1 hour.
  */
 interface CacheEntry<T> {
@@ -30,18 +30,12 @@ export class ObservableCache {
     const now = Date.now();
     const cached = this.cache.get(key);
 
-    if (cached && cached.expiresAt > now) {
+    if (cached && cached.expiresAt >= now) {
       return cached.value as Observable<T>;
     }
 
     const entryTtl = ttl ?? this.ttl;
-    const value = fetcher().pipe(
-      shareReplay({
-        bufferSize: 1,
-        refCount: true,
-        windowTime: entryTtl
-      })
-    );
+    const value = fetcher().pipe(shareReplay(1));
 
     this.cache.set(key, {
       value,

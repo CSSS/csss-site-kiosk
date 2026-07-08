@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { provideRouter, RouterLink } from '@angular/router';
+import { provideRouter } from '@angular/router';
+import { BusScheduleWidget } from '../../widgets/bus-schedule/bus-schedule.widget';
 import { MockBusScheduleWidget } from '../../widgets/bus-schedule/bus-schedule.widget.mock';
+import { EventWidget } from '../../widgets/event/event.widget';
 import { MockEventWidget } from '../../widgets/event/event.widget.mock';
 import { HomeScreen } from './home.screen';
 
@@ -15,8 +17,11 @@ describe('HomeScreen', () => {
       providers: [provideRouter([])]
     })
       .overrideComponent(HomeScreen, {
-        set: {
-          imports: [MockEventWidget, MockBusScheduleWidget, RouterLink]
+        remove: {
+          imports: [EventWidget, BusScheduleWidget]
+        },
+        add: {
+          imports: [MockEventWidget, MockBusScheduleWidget]
         }
       })
       .compileComponents();
