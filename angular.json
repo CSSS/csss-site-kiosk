@@ -89,6 +89,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 8080
+          },
           "configurations": {
             "production": {
               "buildTarget": "csss-kiosk-site:build:production"
