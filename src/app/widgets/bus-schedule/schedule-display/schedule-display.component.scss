@@ -22,7 +22,7 @@
   }
 
   &__units {
-    font-size: font-size('xl');
+    font-size: font-size('lg');
   }
 
   &__dropdown {
@@ -37,6 +37,9 @@
     z-index: -1;
     padding-top: 15%;
     padding-inline: spacing(xs);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
   }
 }
 
