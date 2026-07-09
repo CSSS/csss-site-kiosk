@@ -28,14 +28,36 @@ swiper-container {
 
 swiper-slide {
   @include flex-center(row);
+  position: relative;
   max-height: var(--card-height);
+  width: 36.25rem;
+}
+
+.swiper-slide-active .card::after {
+  opacity: 0;
 }
 
 .card {
   position: relative;
+  border-radius: 50px;
+  overflow: hidden;
+  background-color: var(--colour-surface-base);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: color-mix(in srgb, var(--colour-accent-teal) 50%, transparent);
+    opacity: 1;
+    transition: opacity 600ms ease;
+    z-index: 2;
+  }
 
   &__img {
     @include card();
+    width: 100%;
     height: 100%;
     object-fit: cover;
     padding: 0;
@@ -49,7 +71,6 @@ swiper-slide {
     height: var(--datetime-height);
     aspect-ratio: 1/1;
     background-color: var(--colour-accent-red);
-    border-radius: 10%;
     z-index: 1;
     font-family: font(heading);
     text-align: center;
@@ -72,10 +93,12 @@ swiper-slide {
   &__infobox {
     position: absolute;
     background-color: var(--colour-surface-base);
+    left: 0;
+    right: 0;
     bottom: 0;
     height: 50%;
     width: 100%;
-    border-radius: 0 0 50px 50px;
+    background-color: var(--colour-surface-base);
     padding: 4.75rem spacing('2xl') spacing('2xl');
 
     display: grid;

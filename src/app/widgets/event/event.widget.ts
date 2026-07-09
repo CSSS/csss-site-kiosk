@@ -68,8 +68,8 @@ export class EventWidget implements AfterViewInit {
     const swiperParams = {
       modules: [Autoplay, EffectCoverflow, Pagination],
       effect: 'coverflow',
-      slidesPerView: 3,
-      spaceBetween: 300,
+      slidesPerView: 'auto',
+      speed: 600,
       centeredSlides: true,
       loop: true,
       grabCursor: true,
@@ -80,17 +80,18 @@ export class EventWidget implements AfterViewInit {
       },
       autoplay: {
         delay: 5000,
+        pauseOnMouseEnter: true,
         disableOnInteraction: false
       },
       coverflowEffect: {
         rotate: 0,
-        depth: 150,
+        depth: 240,
         slideShadows: false
       },
       injectStyles: [
         `
         .swiper-pagination-bullet {
-          transition: transform 160ms ease;
+          transition: transform 600ms ease;
         }
 
         .swiper-pagination-bullet-active {
