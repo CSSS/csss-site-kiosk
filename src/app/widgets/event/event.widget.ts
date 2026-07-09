@@ -81,7 +81,8 @@ export class EventWidget implements AfterViewInit {
       },
       coverflowEffect: {
         rotate: 10,
-        depth: 100
+        depth: 150,
+        slideShadows: false
       }
     };
 

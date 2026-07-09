@@ -1,29 +1,79 @@
-@use 'utilities/mixins' as m;
-@use 'utilities/functions' as f;
+@use 'utilities/mixins' as *;
+@use 'utilities/functions' as *;
 
 :host {
   --host-height: 55.625rem;
   --card-height: 38.375rem;
   --card-offset: 5rem;
   --carousel-height: calc(var(--card-height) + var(--card-offset));
-  @include m.card(var(--colour-accent-teal));
+  @include card(var(--colour-accent-teal));
   overflow: hidden;
 }
 
 swiper-container {
   width: 100%;
   height: var(--carousel-height);
-  @include m.flex-center(row, 0, vertical);
+  @include flex-center(row, 0, vertical);
 }
 
 swiper-slide {
-  @include m.flex-center(row);
+  @include flex-center(row);
   max-height: var(--card-height);
+}
 
-  .card__img {
-    @include m.card();
+.card {
+  position: relative;
+
+  &__img {
+    @include card();
     height: 100%;
     object-fit: cover;
     padding: 0;
+  }
+
+  &__datebox {
+    --datetime-height: 6rem;
+    position: absolute;
+    top: calc(50% - (var(--datetime-height) / 2));
+    left: spacing('2xl');
+    height: var(--datetime-height);
+    aspect-ratio: 1/1;
+    background-color: var(--colour-accent-red);
+    border-radius: 10%;
+    z-index: 1;
+    font-family: font(heading);
+    text-align: center;
+
+    @include flex-center(column, 0, both);
+  }
+
+  &__date {
+    line-height: 0.9;
+    color: var(--colour-text-inverse);
+    font-size: font-size('4xl');
+  }
+
+  &__month {
+    line-height: 1;
+    color: var(--colour-text-inverse);
+    font-size: font-size(base);
+  }
+
+  &__infobox {
+    position: absolute;
+    background-color: var(--colour-surface-base);
+    bottom: 0;
+    height: 50%;
+    width: 100%;
+    border-radius: 0 0 50px 50px;
+    padding: 4.75rem spacing('2xl') spacing('2xl');
+
+    display: grid;
+    gap: spacing(sm);
+    grid-template-rows: 1rem auto 1fr;
+  }
+
+  &__time {
+    color: var(--colour-text-base);
   }
 }
