@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, combineLatest, map, of, shareReplay, switchMap, timer } from 'rxjs';
@@ -24,7 +25,7 @@ const STATUS_COLOUR_MAP: Record<number, string> = {
 
 @Component({
   selector: 'ksk-bus-schedule-widget',
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './bus-schedule.widget.html',
   styleUrl: './bus-schedule.widget.scss'
 })
@@ -32,12 +33,14 @@ export class BusScheduleWidget {
   private translinkService = inject(TranslinkService);
   private timeService = inject(TimeService);
 
+  routesToTrack = ['R5', '143', '144', '145'];
+
   private pollDepartures$ = timer(0, TWO_MINUTES).pipe(
     switchMap(() =>
       this.translinkService.getNextDepartures().pipe(
         catchError(error => {
           console.error('Error while polling departures:', error);
-          return of([] as TransLinkScheduleResponse[]);
+          return of(new Map<string, TransLinkScheduleResponse>());
         })
       )
     ),
@@ -48,9 +51,19 @@ export class BusScheduleWidget {
     combineLatest([this.pollDepartures$, timer(0, ONE_MINUTE)]).pipe(
       map(([res]) => {
         const now = this.timeService.currentTime();
-        const result: DepartureInfo[] = [];
+        const result = new Map<string, DepartureInfo[]>([
+          ['R5', []],
+          ['143', []],
+          ['144', []],
+          ['145', []]
+        ]);
         for (const departure of res.values()) {
-          result.push({
+          const departList = result.get(departure.route_number);
+          if (!departList) {
+            console.error(`Route ${departure.route_number} is not being tracked.`);
+            continue;
+          }
+          departList.push({
             routeNumber: departure.route_number,
             secondsUntilDeparture: Math.floor(
               departure.scheduled_departure_time - now.getTime() / 1000
@@ -62,22 +75,20 @@ export class BusScheduleWidget {
       })
     ),
     {
-      initialValue: []
+      initialValue: new Map<string, DepartureInfo[]>([
+        ['R5', []],
+        ['143', []],
+        ['144', []],
+        ['145', []]
+      ])
     }
   );
 
-  protected getDisplayTime(timeDiff: number): string {
+  protected getDisplayTime(timeDiff: number): number {
     if (timeDiff < 60) {
-      return '<1 minute';
+      return 1;
     }
 
-    let minutes = Math.floor(timeDiff / 60);
-    if (minutes < 60) {
-      return `${minutes} minute${minutes > 1 ? 's' : ''}`;
-    }
-
-    const hours = Math.floor(minutes / 60);
-    minutes = minutes % 60;
-    return `${hours} hr ${minutes} min`;
+    return Math.floor(timeDiff / 60);
   }
 }

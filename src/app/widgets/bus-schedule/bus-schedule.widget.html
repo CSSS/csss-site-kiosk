@@ -1,11 +1,23 @@
 <h2>departures @ upper loop</h2>
 <div class="schedule">
-  @for (bus of nextDepartures(); track $index) {
+  @for (route of routesToTrack; track $index) {
     <div class="route">
-      <h2>{{ bus.routeNumber }}</h2>
-      <div [class]="bus.status">
+      <h3 class="route__label">{{ route }}</h3>
+      @let nextDeparture = nextDepartures().get(route)?.[0];
+      <div [class]="nextDeparture?.status ?? ''">
+        <div class="route__time">
+          @if (nextDeparture) {
+            {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
+          } @else {
+            DONE
+          }
+        </div>
         <br />
-        {{ getDisplayTime(bus.secondsUntilDeparture) }}
+        <div class="route__units">
+          @if (nextDeparture) {
+            MIN
+          }
+        </div>
       </div>
     </div>
   }
