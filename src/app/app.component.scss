@@ -1,4 +1,5 @@
 @use 'utilities/functions' as f;
+
 :host {
   width: 100lvw;
   height: 100lvh;
@@ -10,9 +11,4 @@
   > * {
     padding-inline: 5rem;
   }
-}
-
-nav {
-  height: 100%;
-  grid-row-start: 5;
 }

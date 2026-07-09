@@ -43,7 +43,6 @@ export class TranslinkService {
   getNextDepartures(): Observable<Map<string, DepartureInfo[]>> {
     return this.getDepartureSchedule().pipe(
       map(departures => {
-        console.log(departures);
         const result = new Map<string, DepartureInfo[]>();
 
         for (const departure of departures) {
@@ -58,7 +57,6 @@ export class TranslinkService {
           result.set(departure.route_number, departList);
         }
 
-        console.log(result);
         return result;
       })
     );
