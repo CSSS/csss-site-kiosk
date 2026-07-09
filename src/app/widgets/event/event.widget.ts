@@ -6,7 +6,7 @@ import {
   ElementRef,
   viewChild
 } from '@angular/core';
-import { Autoplay, EffectCoverflow } from 'swiper/modules';
+import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 
 interface Event {
   posterUrl: string;
@@ -66,7 +66,7 @@ export class EventWidget implements AfterViewInit {
     const swiperEl = this.swiperRef().nativeElement;
 
     const swiperParams = {
-      modules: [Autoplay, EffectCoverflow],
+      modules: [Autoplay, EffectCoverflow, Pagination],
       effect: 'coverflow',
       slidesPerView: 3,
       spaceBetween: 300,
@@ -75,15 +75,29 @@ export class EventWidget implements AfterViewInit {
       grabCursor: true,
       touchRatio: 1,
       resistanceRatio: 0.5,
+      pagination: {
+        clickable: true
+      },
       autoplay: {
         delay: 5000,
         disableOnInteraction: false
       },
       coverflowEffect: {
-        rotate: 10,
+        rotate: 0,
         depth: 150,
         slideShadows: false
-      }
+      },
+      injectStyles: [
+        `
+        .swiper-pagination-bullet {
+          transition: transform 160ms ease;
+        }
+
+        .swiper-pagination-bullet-active {
+          transform: scale(1.5);
+        }
+`
+      ]
     };
 
     Object.assign(swiperEl, swiperParams);

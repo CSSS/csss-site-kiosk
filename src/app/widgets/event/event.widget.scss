@@ -8,12 +8,22 @@
   --carousel-height: calc(var(--card-height) + var(--card-offset));
   @include card(var(--colour-accent-teal));
   overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 swiper-container {
+  --swiper-pagination-bottom: 3rem;
+  --swiper-pagination-color: var(--colour-text-inverse);
+  --swiper-pagination-bullet-size: 1.5rem;
+  --swiper-pagination-bullet-horizontal-gap: 1.25rem;
   width: 100%;
   height: var(--carousel-height);
+  padding-top: 1rem;
   @include flex-center(row, 0, vertical);
+  flex-grow: 1;
+  min-height: 0;
 }
 
 swiper-slide {
