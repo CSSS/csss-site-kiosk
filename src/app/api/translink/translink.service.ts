@@ -1,9 +1,19 @@
 import { inject, Service } from '@angular/core';
 import { map, type Observable } from 'rxjs';
 import { IANA_TIMEZONE, LOCALE } from '../../config';
-import type { TransLinkScheduleResponse, TransLinkStaticResponse } from '../generated/csss-backend';
+import { TimeService } from '../../core/time.service';
+import {
+  type TransLinkScheduleResponse,
+  type TransLinkStaticResponse
+} from '../generated/csss-backend';
 import { TranslinkService as TranslinkApiService } from '../generated/csss-backend/api/translink.service';
 import { ObservableCache } from '../observable-cache';
+
+export interface DepartureInfo {
+  routeNumber: string;
+  secondsUntilDeparture: number;
+  status: number;
+}
 
 const MIDNIGHT = 24 * 60 * 60 * 1000;
 const MINUTE_AND_A_HALF = 90 * 1000;
@@ -13,6 +23,7 @@ const REALTIME_CACHE_KEY = 'realtime';
 @Service()
 export class TranslinkService {
   private translinkApi = inject(TranslinkApiService);
+  private timeService = inject(TimeService);
 
   private cache = new ObservableCache();
 
@@ -29,20 +40,25 @@ export class TranslinkService {
    *
    * @returns An observable map of route numbers with their schedule information.
    */
-  getNextDepartures(): Observable<Map<string, TransLinkScheduleResponse>> {
+  getNextDepartures(): Observable<Map<string, DepartureInfo[]>> {
     return this.getDepartureSchedule().pipe(
-      map(schedules => {
-        const result = new Map<string, TransLinkScheduleResponse>();
+      map(departures => {
+        console.log(departures);
+        const result = new Map<string, DepartureInfo[]>();
 
-        for (const schedule of schedules) {
-          if (result.has(schedule.route_number)) {
-            // We assume that the routes are sorted from soonest departure time to latest
-            continue;
-          }
-
-          result.set(schedule.route_number, schedule);
+        for (const departure of departures) {
+          const departList = result.get(departure.route_number) ?? [];
+          departList.push({
+            routeNumber: departure.route_number,
+            secondsUntilDeparture: Math.floor(
+              departure.scheduled_departure_time - this.timeService.currentTime().getTime() / 1000
+            ),
+            status: departure.status
+          });
+          result.set(departure.route_number, departList);
         }
 
+        console.log(result);
         return result;
       })
     );

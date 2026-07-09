@@ -1,0 +1,33 @@
+@let departs = departures();
+@let nextDeparture = departures()?.[0];
+<div class="route">
+  <h3 class="route__label">{{ routeNumber() }}</h3>
+  <div [class]="getStatusClass(nextDeparture?.status)" (click)="isDropdownOpen.update(val => !val)">
+    <div class="route__time">
+      @if (nextDeparture) {
+        {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
+      } @else {
+        --
+      }
+    </div>
+    <br />
+    <div class="route__units">
+      @if (nextDeparture) {
+        MIN
+      }
+    </div>
+  </div>
+  @if (departs && departs.length && isDropdownOpen()) {
+    <div class="route__dropdown">
+      @for (departure of departs; track $index) {
+        @if ($index !== 0) {
+          <span class="route__time">
+            {{ getDisplayTime(departure.secondsUntilDeparture) | number: '2.0-0' }}
+          </span>
+          <span class="route__units">MIN</span>
+          <hr />
+        }
+      }
+    </div>
+  }
+</div>
