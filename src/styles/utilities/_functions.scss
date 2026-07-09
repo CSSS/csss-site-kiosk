@@ -17,6 +17,14 @@
   @return map.get(v.$font-sizes, $key);
 }
 
+@function font($key) {
+  @if not map.has-key(v.$fonts, $key) {
+    @error "Unknown font key: #{$key}. Available fonts: #{map.keys(v.$fonts)}";
+  }
+
+  @return map.get(v.$fonts, $key);
+}
+
 @function font-weight($key) {
   @if not map.has-key(v.$font-weights, $key) {
     @error "Unknown font weight key: #{$key}. Available weights: #{map.keys(v.$font-weights)}";

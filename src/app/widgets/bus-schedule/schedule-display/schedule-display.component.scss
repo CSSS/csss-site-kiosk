@@ -6,6 +6,7 @@
   @include flex-center(column);
   line-height: 1;
   z-index: 1;
+  font-family: font(heading);
 
   &__label {
     line-height: 1;

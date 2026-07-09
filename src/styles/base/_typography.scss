@@ -1,6 +1,5 @@
 @use 'utilities/functions' as f;
 @use 'utilities/mixins' as m;
-@use 'utilities/variables' as v;
 
 /* Normal body */
 @font-face {
@@ -67,30 +66,34 @@
 
 h1 {
   @include m.type-scale('h1');
-  font-family: v.$font-title;
+  font-family: f.font(title);
 }
 
 h2 {
   @include m.type-scale('h2');
-  font-family: v.$font-heading;
+  font-family: f.font(heading);
 }
 
 h3 {
   @include m.type-scale('h3');
-  font-family: v.$font-heading;
+  font-family: f.font(heading);
 }
 
 h4 {
   @include m.type-scale('h4');
-  font-family: v.$font-heading;
+  font-family: f.font(heading);
 }
 
 body,
 p {
   @include m.type-scale('body');
-  font-family: v.$font-body;
+  font-family: f.font(body);
+}
+
+.text-heading {
+  font-family: f.font(heading);
 }
 
 .text-mono {
-  font-family: v.$font-mono;
+  font-family: f.font(mono);
 }

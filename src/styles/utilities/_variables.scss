@@ -16,10 +16,24 @@ $animation-durations: (
   slow: 0.5s
 );
 
-$font-mono: 'Geist Mono', 'serif';
-$font-body: 'Cal Sans', sans-serif;
-$font-heading: 'Cal Sans', sans-serif;
-$font-title: 'Boldonse', sans-serif;
+$fonts: (
+  mono: (
+    'Geist Mono',
+    serif
+  ),
+  body: (
+    'Ancizar Serif',
+    serif
+  ),
+  heading: (
+    'Cal Sans',
+    sans-serif
+  ),
+  title: (
+    'Boldonse',
+    sans-serif
+  )
+);
 
 $font-sizes: (
   xs: 0.75rem,

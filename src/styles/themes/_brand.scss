@@ -1,4 +1,5 @@
-@use '../utilities/colours' as c;
+@use '../base/colours' as c;
+@use '../utilities/variables' as t;
 
 :root {
   /* CSSS brand palette */

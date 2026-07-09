@@ -1,3 +1,5 @@
+@use 'utilities/functions' as *;
+
 :host {
   height: 100%;
   width: 100%;
@@ -6,6 +8,10 @@
 
 .nav-button {
   text-align: center;
+
+  &__label {
+    font-family: font(heading);
+  }
 }
 
 nav {
