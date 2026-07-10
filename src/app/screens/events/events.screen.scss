@@ -12,16 +12,23 @@
   gap: 0.25rem;
   flex-direction: column;
   min-height: 10rem;
-  padding: 0.1rem;
+  padding: 0.2rem;
 }
 
 .cal__event {
   display: block;
   background-color: var(--colour-surface-base);
+  color: var(--colour-text-inverse);
   padding: 0.1rem;
   border-radius: 4px;
 
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  &--holiday {
+    @extend .cal__event;
+    max-width: 6rem;
+    background-color: var(--colour-accent-teal);
+  }
 }

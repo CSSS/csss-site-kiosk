@@ -1,18 +1,27 @@
 <!-- Custom template for the cell that contains a day -->
 <ng-template #customCell let-day="day" let-locale="locale">
+  @let holiday = day.events.find(e => e.meta?.type === 'holiday');
   <div class="cal-cell-top">
     <span class="cal-day-number">{{
       day.date.toISOString() | calendarDate: 'monthViewDayNumber' : locale
     }}</span>
+    @if (holiday) {
+      <span class="cal__event--holiday">{{ holiday.title }}</span>
+    }
   </div>
   <div class="cal__events">
+    @let noHolidays = day.events.filter(e => e.meta?.type !== 'holiday');
     @if (day.events.length > 0) {
       @let displayEvents =
-        day.events.length <= maxEvents
-          ? day.events.slice(0, maxEvents)
-          : day.events.slice(0, maxEvents - 1);
+        noHolidays.length <= maxEvents
+          ? noHolidays.slice(0, maxEvents)
+          : noHolidays.slice(0, maxEvents - 1);
       @for (event of displayEvents; track event.id ?? event) {
-        <button class="cal__event" (click)="eventClicked(event, day, $event)">
+        <button
+          class="cal__event"
+          [style.backgroundColor]="getEventColour(event.meta?.type)"
+          (click)="eventClicked(event, day, $event)"
+        >
           {{ event.title }}
         </button>
       }

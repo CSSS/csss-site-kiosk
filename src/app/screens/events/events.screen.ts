@@ -1,18 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import {
   CalendarDatePipe,
-  CalendarEvent,
+  type CalendarEvent,
   CalendarMonthViewComponent,
   DateAdapter,
   provideCalendar
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { Event } from '../../api/generated/csss-backend';
 import { TimeService } from '../../core/time.service';
 
-interface KioskCalendarEvent extends Event {
-  type: 'holiday' | 'csss' | 'other';
+interface KioskCalendarMeta {
+  type: 'holiday' | 'csss' | 'sfu' | 'other';
 }
+
+type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> & Required<Pick<CalendarEvent, 'meta'>>;
 
 @Component({
   selector: 'ksk-events-screen',
@@ -40,29 +41,52 @@ export class EventsScreen {
 
   private id?: number;
 
-  events = signal<CalendarEvent<KioskCalendarEvent>[]>([
+  /**
+   * TODO: Have this fetched from the web server.
+   */
+  events = signal<KioskCalendarEvent[]>([
     {
       start: new Date(),
-      title: 'Event 1',
+      title: 'CSSS event',
       meta: {
-        type: 'csss',
-        name: '',
-        start_time: '',
-        end_time: '',
-        eid: 0
+        type: 'csss'
       }
     },
     {
       start: new Date(),
-      title: 'Event 2'
+      title: 'SFU event',
+      meta: {
+        type: 'sfu'
+      }
     },
     {
       start: new Date(),
-      title: 'Event 3'
+      title: 'Holiday',
+      meta: {
+        type: 'holiday'
+      }
     },
     {
       start: new Date(),
-      title: 'Event 4 aaaaaaaaaaaaaaaaaaaaaaaaaa'
+      title: 'Other long event title',
+      meta: {
+        type: 'other'
+      }
+    },
+    {
+      start: new Date(Date.now() + 3600000 * 24),
+      title: 'Event tomorrow',
+      meta: {
+        type: 'other'
+      }
+    },
+    {
+      start: new Date(Date.now() + 3600000 * 24),
+      end: new Date(Date.now() + 3600000 * 24 * 3),
+      title: 'Multi-day',
+      meta: {
+        type: 'csss'
+      }
     }
   ]);
 
@@ -85,8 +109,8 @@ export class EventsScreen {
   }
 
   protected eventClicked(
-    event: CalendarEvent<KioskCalendarEvent>,
-    day: { date: Date; events: CalendarEvent<KioskCalendarEvent>[] },
+    event: KioskCalendarEvent,
+    day: { date: Date; events: KioskCalendarEvent[] },
     domEvent: MouseEvent
   ): void {
     domEvent.stopPropagation();
@@ -99,11 +123,31 @@ export class EventsScreen {
       events
     }: {
       date: Date;
-      events: CalendarEvent<KioskCalendarEvent>[];
+      events: KioskCalendarEvent[];
     },
     domEvent?: MouseEvent
   ): void {
     domEvent?.stopPropagation();
     console.log('Day', date, events);
+  }
+
+  protected getEventColour(type?: KioskCalendarMeta['type']): string {
+    let colour: string;
+    switch (type) {
+      case 'csss':
+        colour = 'blue';
+        break;
+      case 'holiday':
+        colour = 'teal';
+        break;
+      case 'sfu':
+        colour = 'red';
+        break;
+      default:
+        colour = 'pink';
+        break;
+    }
+
+    return `var(--colour-accent-${colour})`;
   }
 }
