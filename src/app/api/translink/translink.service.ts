@@ -36,7 +36,7 @@ export class TranslinkService {
   }
 
   /**
-   * Retrieves the next departure for each bus route.
+   * Retrieves the next 3 departures for each bus route.
    *
    * @returns An observable map of route numbers with their schedule information.
    */

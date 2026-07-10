@@ -1,11 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, combineLatest, map, of, shareReplay, switchMap, timer } from 'rxjs';
+import { catchError, combineLatest, filter, map, of, shareReplay, switchMap } from 'rxjs';
 import { DepartureInfo, TranslinkService } from '../../api/translink/translink.service';
+import { TimeService } from '../../core/time.service';
 import { ScheduleDisplayComponent } from './schedule-display/schedule-display.component';
-
-const ONE_MINUTE = 1000 * 60;
-const TWO_MINUTES = ONE_MINUTE * 2;
 
 @Component({
   selector: 'ksk-bus-schedule-widget',
@@ -15,10 +13,16 @@ const TWO_MINUTES = ONE_MINUTE * 2;
 })
 export class BusScheduleWidget {
   private translinkService = inject(TranslinkService);
+  private timeService = inject(TimeService);
 
   routesToTrack = ['R5', '143', '144', '145'];
 
-  private pollDepartures$ = timer(0, TWO_MINUTES).pipe(
+  /**
+   * Polls the TransLink endpoint roughly every 2 minutes.
+   */
+  private pollDepartures$ = this.timeService.minuteTick$.pipe(
+    // Polls on every other minute tick
+    filter((_, index) => index % 2 === 0),
     switchMap(() =>
       this.translinkService.getNextDepartures().pipe(
         catchError(error => {
@@ -27,17 +31,19 @@ export class BusScheduleWidget {
         })
       )
     ),
-    shareReplay({ bufferSize: 1, refCount: true, windowTime: TWO_MINUTES })
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
+  /**
+   * Grabs the departure info and sets it on the UI.
+   */
   protected nextDepartures = toSignal(
-    combineLatest([this.pollDepartures$, timer(0, ONE_MINUTE)]).pipe(
+    combineLatest([this.pollDepartures$, this.timeService.minuteTick$]).pipe(
       map(([res]) => {
-        const result = this.routesToTrack.reduce((acc, route) => {
+        return this.routesToTrack.reduce((acc, route) => {
           acc.set(route, res.get(route) || []);
           return acc;
         }, new Map<string, DepartureInfo[]>());
-        return result;
       })
     ),
     {

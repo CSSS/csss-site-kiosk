@@ -1,3 +1,5 @@
+@use 'utilities/functions' as *;
+
 :host {
   display: flex;
   width: 100%;
@@ -9,6 +11,13 @@
 
 h2 {
   font-size: 6rem;
+  display: flex;
+  gap: spacing(md);
+
+  .hms {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.05em;
+  }
 }
 
 h3 {

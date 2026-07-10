@@ -1,2 +1,6 @@
-<h2>{{ timeService.currentTime() | date: 'mediumTime' }}</h2>
-<h3>{{ timeService.currentTime() | date: 'EEEE, MMMM dd' }}</h3>
+@let time = timeService.currentTime();
+<h2>
+  <span class="hms">{{ time | date: 'h:mm:ss' }}</span>
+  <span>{{ time | date: 'a' }}</span>
+</h2>
+<h3>{{ time | date: 'EEEE, MMMM dd' }}</h3>
