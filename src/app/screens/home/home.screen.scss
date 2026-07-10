@@ -3,7 +3,8 @@
 
 :host {
   display: grid;
-  grid-template-rows: 55.625rem 4.685rem 20.3125rem;
+  grid-template-rows: 70% 25%;
+  gap: 5%;
   width: 100%;
   height: 100%;
 }
@@ -15,8 +16,4 @@
 .card {
   @include m.card();
   width: 100%;
-}
-
-ksk-bus-schedule-widget {
-  grid-row-start: 3;
 }
