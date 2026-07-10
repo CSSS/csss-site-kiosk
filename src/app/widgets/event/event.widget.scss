@@ -74,6 +74,7 @@ swiper-slide {
     z-index: 1;
     font-family: font(heading);
     text-align: center;
+    border-radius: 10%;
 
     @include flex-center(column, 0, both);
   }
