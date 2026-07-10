@@ -44,3 +44,29 @@ h5,
 h6 {
   text-wrap: balance;
 }
+
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  border: none;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  color: inherit;
+
+  font: inherit;
+  text-align: inherit;
+  line-height: normal;
+
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}

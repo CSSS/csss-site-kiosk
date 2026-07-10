@@ -1,5 +1,5 @@
-@use 'utilities/functions' as f;
-@use 'utilities/mixins' as m;
+@use 'utilities/functions' as *;
+@use 'utilities/mixins' as *;
 
 :host {
   display: grid;
@@ -10,10 +10,10 @@
 }
 
 .bottom {
-  @include m.flex-center(row, 1rem);
+  @include flex-center(row, 1rem);
 }
 
 .card {
-  @include m.card();
+  @include card();
   width: 100%;
 }

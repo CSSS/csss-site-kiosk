@@ -35,7 +35,7 @@ export class NavbarComponent {
     {
       label: 'CLASS SEARCH',
       icon: LucidePencil.icon,
-      url: '/class-search'
+      url: '/classes'
     }
   ]);
 }

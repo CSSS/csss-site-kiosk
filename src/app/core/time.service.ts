@@ -23,7 +23,7 @@ export class TimeService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this._timeoutId) {
+    if (this._timeoutId !== undefined) {
       clearTimeout(this._timeoutId);
     }
   }
