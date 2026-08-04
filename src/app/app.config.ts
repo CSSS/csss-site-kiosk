@@ -1,10 +1,11 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter } from '@angular/router';
 import { provideApi as provideCsssApi } from '../app/api/generated/csss-backend';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { LOCALE } from './config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +14,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideCsssApi({
       basePath: environment.csssApiUrl
-    })
+    }),
+    {
+      provide: LOCALE_ID,
+      useValue: LOCALE
+    },
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { timezone: '-700' }
+    }
   ]
 };

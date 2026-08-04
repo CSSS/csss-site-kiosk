@@ -1,0 +1,25 @@
+@use 'utilities/functions' as *;
+
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+h2 {
+  font-size: 6rem;
+  display: flex;
+  gap: spacing(md);
+
+  .hms {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.05em;
+  }
+}
+
+h3 {
+  font-size: 2.5rem;
+}

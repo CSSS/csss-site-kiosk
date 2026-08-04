@@ -10,16 +10,16 @@ import {
   isDepartment,
   type Term
 } from '../../api/sfu-course-outlines/sfu-course-outline.models';
-import { SfuCourseOutlines } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
+import { SfuCourseOutlinesService } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
 
 @Component({
-  selector: 'ksk-class-lookup',
+  selector: 'ksk-class-lookup-screen',
   imports: [UpperCasePipe, TitleCasePipe, FormsModule],
-  templateUrl: './class-lookup.component.html',
-  styleUrl: './class-lookup.component.scss'
+  templateUrl: './class-lookup.screen.html',
+  styleUrl: './class-lookup.screen.scss'
 })
-export class ClassLookup {
-  private courseApi = inject(SfuCourseOutlines);
+export class ClassLookupComponent {
+  private _courseApi = inject(SfuCourseOutlinesService);
 
   protected currentDate = new Date();
   protected departments = DEPARTMENTS;
@@ -36,10 +36,10 @@ export class ClassLookup {
   protected course$ = toObservable(this.selectedCourse);
   protected section$ = toObservable(this.selectedSection);
 
-  yearsResult = toSignal(this.courseApi.getYears().pipe(map(years => years.reverse())), {
+  yearsResult = toSignal(this._courseApi.getYears().pipe(map(years => years.reverse())), {
     initialValue: []
   });
-  termsResult = toSignal(this.year$.pipe(switchMap(year => this.courseApi.getTerms(year))), {
+  termsResult = toSignal(this.year$.pipe(switchMap(year => this._courseApi.getTerms(year))), {
     initialValue: []
   });
 
@@ -49,7 +49,7 @@ export class ClassLookup {
         if (!isDepartment(department) || !term) {
           return of([]);
         }
-        return this.courseApi.getDepartmentCourses(year, term, department);
+        return this._courseApi.getDepartmentCourses(year, term, department);
       })
     ),
     {
@@ -64,7 +64,7 @@ export class ClassLookup {
         if (!isDepartment(department) || !term || !course) {
           return of([]);
         }
-        return this.courseApi.getCourseSections(year, term, department, course);
+        return this._courseApi.getCourseSections(year, term, department, course);
       }),
       map(sections => {
         return sections.filter(section => section.classType === 'e');
@@ -82,7 +82,7 @@ export class ClassLookup {
         if (!isDepartment(department) || !term || !course || !section) {
           return of(null);
         }
-        return this.courseApi.getCourseOutline(year, term, department, course, section);
+        return this._courseApi.getCourseOutline(year, term, department, course, section);
       })
     )
   );

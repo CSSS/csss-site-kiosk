@@ -9,9 +9,8 @@
         "inputSpec": "http://localhost:3049/api/openapi.json",
         "output": "#{cwd}/src/app/api/generated/csss-backend",
         "globalProperty": {
-          "apis": "TranslinkApi",
-          "models": "",
-          "supportingFiles": ""
+          "apis": "Translink:Event",
+          "models": ""
         },
         "additionalProperties": {
           "ngVersion": "22.0.0",
@@ -22,12 +21,11 @@
       },
       "csss-backend-file": {
         "generatorName": "typescript-angular",
-        "inputSpec": "#{cwd}/src/app/api/backend-api.schema.json",
-        "output": "#{cwd}/src/api/generated/csss-backend",
+        "inputSpec": "#{cwd}/src/app/api/backend-api.json",
+        "output": "#{cwd}/src/app/api/generated/csss-backend",
         "globalProperty": {
-          "apis": "TranslinkApi",
-          "models": "",
-          "supportingFiles": ""
+          "apis": "Translink:Event",
+          "models": ""
         },
         "additionalProperties": {
           "ngVersion": "22.0.0",

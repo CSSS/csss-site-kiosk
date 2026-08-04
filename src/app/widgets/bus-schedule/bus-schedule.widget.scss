@@ -1,0 +1,12 @@
+@use 'utilities/mixins' as *;
+@use 'utilities/functions' as *;
+
+:host {
+  @include card(var(--colour-accent-blue));
+}
+
+.schedule {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  text-align: center;
+}

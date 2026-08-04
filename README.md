@@ -1,59 +1,83 @@
-# CsssKioskSite
+# CSSS Kiosk Site
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.3.
+The application that runs on the SFU CSSS's common room touchscreen.
+It uses Angular for the frontend and Express for the proxy server.
 
-## Development server
+## Development
 
-To start a local development server, run:
+You will need `node`, `npm`, and the CSSS backend server (potentially).
+
+### Setting up your environment
+
+1. Clone the repository.
+2. Install all dependencies.
+```bash
+# in path/to/csss-site-kiosk
+npm install # Installs the frontend dependencies
+npm run server:install # Installs the server dependencies
+```
+3. Run the CSSS backend server locally or download the `openapi.json` file from it and name it `src/app/api/backend-api.json`.
+4. Run the API generator for the frontend.
+```bash
+# in path/to/csss-site-kiosk
+npm run api:url # If you have the backend server running on localhost:3049
+npm run api:file # If you have the file at `src/app/api/backend-api.json`
+```
+5. Create `server/.env` by copying `server/.env.example`. See [Environment variables](#environment-variables) to see what each does.
+6. Once you've done all of this you can move on to [Running this locally](#running-this-locally).
+
+## Running this locally
+
+Make sure you've done everything in [Setting up your environment](#setting-up-your-environment) before running these.
+
+There are a few ways to run this application, use whatever you want based on the domain you're working on.
+The frontend will send requests based on the file it's using in `src/environments/`.
+
+By default will be accessible on [https://localhost:8080](https://localhost:8080) once it's running.
+
+### Frontend only
+
+Use this if you only need to work on the UI.
+
+- The frontend will be built using its `development` environment.
+- The frontend will send requests directly to `localhost:3049`.
 
 ```bash
-ng serve
+# in path/to/csss-site-kiosk
+npx ng serve # just `ng serve` if you have the Angular CLI installed globally
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Frontend + proxy server
 
-## Code scaffolding
+Use this if you need the proxy server running as well.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- The proxy will serve whatever is in `dist/csss-site-kiosk/browser/`.
+- The frontend will be built using the `production` environment and send requests to `localhost:SERVER_PORT` (default 8080).
+- The proxy will send requests to `PROXY_TARGET` (default `localhost:3049`).
 
 ```bash
-ng generate component component-name
+# in path/to/csss-site-kiosk
+npm run dev
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Environment Variables
 
-```bash
-ng generate --help
-```
+There are two sets of environment variables: one for the frontend and one for the proxy.
+The frontend environment defaults can be found in [src/environments](src/environments/).
 
-## Building
+| Variable   | Default (development)       | Description                                               |
+|------------|-----------------------------|-----------------------------------------------------------|
+| production | `false`                     | The environment the frontend assumes it's in.             |
+| csssApiUrl | `http://localhost:3049/api` | The target for requests going to the CSSS backend server. |
+| appUrl     | `http://localhost:8080`     | The URL this server is served from.                       |
 
-To build the project run:
 
-```bash
-ng build
-```
+The proxy server uses `server/.env`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+| Variable         | Default                 | Description                                                                              |
+|------------------|-------------------------|------------------------------------------------------------------------------------------|
+| NODE_ENV         | `development`           | The environment the proxy assumes it's in.                                              |
+| KIOSK_API_SECRET | `secret_on_backend`     | The authorization bearer key that the CSSS backend server will use to authenticate requests. |
+| PROXY_TARGET     | `http://localhost:3049` | Where the proxy will forward its requests.                                               |
+| SERVER_PORT      | `8080`                  | The port the proxy will be served from.                                                  |
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

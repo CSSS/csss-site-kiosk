@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ClassLookup } from './screens/class-lookup/class-lookup.component';
+import { NavbarComponent } from './core/navbar/navbar.component';
+import { ClockWeatherWidget } from './widgets/clock-weather/clock-weather.widget';
 
 @Component({
   selector: 'ksk-root',
-  imports: [RouterOutlet, ClassLookup],
+  imports: [RouterOutlet, ClockWeatherWidget, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class App {
+export class AppComponent {
   protected readonly title = signal('csss-kiosk-site');
 }

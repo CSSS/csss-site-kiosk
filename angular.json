@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "schematicCollections": ["./tools/schematics/collection.json", "@schematics/angular"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -11,16 +12,13 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "type": "component",
-          "addTypeToClassName": false
+          "type": "component"
         },
         "@schematics/angular:directive": {
-          "type": "directive",
-          "addTypeToClassName": false
+          "type": "directive"
         },
         "@schematics/angular:service": {
-          "type": "service",
-          "addTypeToClassName": false
+          "type": "service"
         },
         "@schematics/angular:guard": {
           "typeSeparator": "."
@@ -54,7 +52,10 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -88,6 +89,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 8080
+          },
           "configurations": {
             "production": {
               "buildTarget": "csss-kiosk-site:build:production"

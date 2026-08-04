@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "KioskWidgetSchematic",
+  "title": "Widget Options Schema",
+  "type": "object",
+  "description": "Generate a widget component in src/app/widgets with .widget file names.",
+  "additionalProperties": false,
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project where the widget should be added.",
+      "$default": {
+        "$source": "projectName"
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "The name for the new widget.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the widget?"
+    },
+    "displayBlock": {
+      "type": "boolean",
+      "default": false,
+      "alias": "b",
+      "description": "Add :host { display: block; } to the widget stylesheet."
+    },
+    "inlineStyle": {
+      "type": "boolean",
+      "default": false,
+      "alias": "s",
+      "description": "Include styles directly in the TypeScript file."
+    },
+    "inlineTemplate": {
+      "type": "boolean",
+      "default": false,
+      "alias": "t",
+      "description": "Include the template directly in the TypeScript file."
+    },
+    "standalone": {
+      "type": "boolean",
+      "default": true,
+      "description": "Generate a standalone widget component."
+    },
+    "viewEncapsulation": {
+      "type": "string",
+      "enum": ["Emulated", "None", "ShadowDom"],
+      "alias": "v",
+      "description": "Set the view encapsulation mode."
+    },
+    "changeDetection": {
+      "type": "string",
+      "default": "OnPush",
+      "enum": ["Eager", "OnPush"],
+      "alias": "c",
+      "description": "Configure the change detection strategy."
+    },
+    "prefix": {
+      "type": "string",
+      "alias": "p",
+      "description": "A prefix to add to the generated selector."
+    },
+    "style": {
+      "type": "string",
+      "default": "scss",
+      "enum": ["css", "scss", "sass", "less", "none"],
+      "description": "The stylesheet format."
+    },
+    "addTypeToClassName": {
+      "type": "boolean",
+      "default": true,
+      "description": "Append Widget to the generated class name."
+    },
+    "skipTests": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip the unit test file."
+    },
+    "flat": {
+      "type": "boolean",
+      "default": false,
+      "description": "Create the widget files directly in src/app/widgets."
+    },
+    "skipImport": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not automatically import the widget into an NgModule."
+    },
+    "selector": {
+      "type": "string",
+      "description": "The HTML selector to use for the widget."
+    },
+    "skipSelector": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip generating an HTML selector."
+    },
+    "module": {
+      "type": "string",
+      "alias": "m",
+      "description": "The NgModule where the widget should be declared."
+    },
+    "export": {
+      "type": "boolean",
+      "default": false,
+      "description": "Export the widget from the specified NgModule."
+    },
+    "exportDefault": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use a default export for the widget class."
+    },
+    "ngHtml": {
+      "type": "boolean",
+      "default": false,
+      "description": "Generate an .ng.html template file."
+    }
+  },
+  "required": ["name", "project"]
+}

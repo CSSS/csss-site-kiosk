@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'sass:meta';
+@use 'utilities/functions' as *;
+
+@layer vendor, base, theme, overrides;
+@import url('../node_modules/angular-calendar/css/angular-calendar.css') layer(vendor);
+
+@layer base {
+  @include meta.load-css('base/reset');
+  @include meta.load-css('base/typography');
+}
+
+@layer theme {
+  @include meta.load-css('themes/brand');
+}
+
+@layer overrides {
+  mwl-calendar-month-view {
+    display: block;
+    border-radius: 20px;
+    overflow: hidden;
+    font-family: font(heading);
+  }
+
+  mwl-calendar-open-day-events {
+    display: none !important;
+  }
+
+  .cal-cell-top {
+    border-right: none;
+    padding: 0.2rem;
+    min-height: 0;
+  }
+
+  .cal-calendar,
+  .cal-tooltip {
+    font-family: font(heading);
+  }
+
+  .cal-month-view {
+    .cal-day-cell {
+      border-right: none;
+      min-width: 0;
+    }
+
+    .cal-cell-top {
+      flex: none;
+    }
+  }
+}
