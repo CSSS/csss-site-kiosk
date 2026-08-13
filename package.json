@@ -6,8 +6,8 @@
     "api:url": "openapi-generator-cli generate --generator-key csss-backend",
     "api:file": "openapi-generator-cli generate --generator-key csss-backend-file",
     "prebuild": "npm run api:file",
-    "start": "npm run prebuild && ng serve",
-    "build": "npm run prebuild && ng build",
+    "start": "ng serve",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "eslint ./src --ext .ts --config eslint.config.mjs",
@@ -17,7 +17,7 @@
     "dev:server": "node server/index.js",
     "dev": "concurrently \"npm run dev:build\" \"npm run dev:server\"",
     "server:install": "npm install --prefix server",
-    "start:kiosk": "npm run build && npm run server"
+    "start:kiosk": "npm run build && npm run dev:server"
   },
   "scarfSettings": {
     "enabled": false
