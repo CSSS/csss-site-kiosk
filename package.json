@@ -1,57 +1,31 @@
 {
   "name": "csss-site-kiosk",
   "version": "0.0.1",
-  "scripts": {
-    "ng": "ng",
-    "api:url": "openapi-generator-cli generate --generator-key csss-backend",
-    "api:file": "openapi-generator-cli generate --generator-key csss-backend-file",
-    "prebuild": "npm run api:file",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "eslint ./src --ext .ts --config eslint.config.mjs",
-    "format": "prettier ./src --write",
-    "precommit": "npm run lint && npm run format",
-    "dev:build": "ng build --watch --configuration production",
-    "dev:server": "node server/index.js",
-    "dev": "concurrently \"npm run dev:build\" \"npm run dev:server\"",
-    "server:install": "npm install --prefix server",
-    "start:kiosk": "npm run build && npm run dev:server"
-  },
-  "scarfSettings": {
-    "enabled": false
-  },
   "private": true,
-  "packageManager": "npm@11.12.1",
-  "dependencies": {
-    "@angular/common": "^22.0.0",
-    "@angular/compiler": "^22.0.0",
-    "@angular/core": "^22.0.0",
-    "@angular/forms": "^22.0.0",
-    "@angular/platform-browser": "^22.0.0",
-    "@angular/router": "^22.0.0",
-    "@lucide/angular": "^1.23.0",
-    "@sfucsss/backend-openapi": "^1.1.0",
-    "angular-calendar": "^0.32.2",
-    "date-fns": "^4.4.0",
-    "rxjs": "~7.8.0",
-    "swiper": "^12.2.0",
-    "tslib": "^2.3.0"
+  "workspaces": [
+    "frontend",
+    "server"
+  ],
+  "scripts": {
+    "ng": "npm run ng --workspace frontend --",
+    "api:url": "npm run api:url --workspace frontend",
+    "api:file": "npm run api:file --workspace frontend",
+    "start": "npm run build && npm run start:server",
+    "build": "npm run build --workspace frontend",
+    "watch": "npm run watch --workspace frontend --",
+    "test": "npm run test --workspace frontend --",
+    "lint": "npm run lint --workspace frontend --",
+    "format": "npm run format --workspace frontend --",
+    "precommit": "npm run lint && npm run format",
+    "start:frontend": "npm run start --workspace frontend --",
+    "start:server": "npm run start --workspace server --",
+    "dev:build": "npm run dev:build --workspace frontend --",
+    "dev:server": "npm run start:server",
+    "dev": "concurrently --kill-others-on-fail \"npm run dev:build\" \"npm run dev:server\"",
+    "start:kiosk": "npm start"
   },
+  "packageManager": "npm@11.12.1",
   "devDependencies": {
-    "@angular/build": "^22.0.3",
-    "@angular/cli": "^22.0.3",
-    "@angular/compiler-cli": "^22.0.0",
-    "@eslint/js": "^10.0.1",
-    "@openapitools/openapi-generator-cli": "^2.39.0",
-    "eslint": "^10.5.0",
-    "eslint-config-prettier": "^10.1.8",
-    "jsdom": "^28.0.0",
-    "prettier": "^3.8.4",
-    "prettier-plugin-organize-imports": "^4.3.0",
-    "typescript": "~6.0.2",
-    "typescript-eslint": "^8.62.0",
-    "vitest": "^4.0.8"
+    "concurrently": "^10.0.3"
   }
 }

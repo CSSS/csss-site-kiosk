@@ -3,7 +3,7 @@
 @use 'utilities/functions' as *;
 
 @layer vendor, base, theme, overrides;
-@import url('../node_modules/angular-calendar/css/angular-calendar.css') layer(vendor);
+@import url('../../node_modules/angular-calendar/css/angular-calendar.css') layer(vendor);
 
 @layer base {
   @include meta.load-css('base/reset');

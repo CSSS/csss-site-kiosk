@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "$schema": "../node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "spaces": 2,
   "generator-cli": {
     "version": "7.23.0",
@@ -21,7 +21,7 @@
       },
       "csss-backend-file": {
         "generatorName": "typescript-angular",
-        "inputSpec": "#{cwd}/node_modules/@sfucsss/backend-openapi/openapi.json",
+        "inputSpec": "#{cwd}/../node_modules/@sfucsss/backend-openapi/openapi.json",
         "output": "#{cwd}/src/app/api/generated/csss-backend",
         "globalProperty": {
           "apis": "Translink:Event",
