@@ -1,0 +1,84 @@
+# Triggers on any tag push like v1.2.3 and publishes a GitHub Release
+# with a zip containing the built backend + built Angular frontend.
+# Requires a tag in the format `vX.Y.Z`.
+
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      # Reinstall only the server's runtime dependencies before packaging.
+      # npm workspaces place these in the root node_modules directory.
+      - name: Install production server dependencies
+        run: npm ci --omit=dev --workspace server
+
+      # ---- Package ----
+      - name: Assemble release package
+        run: |
+          mkdir -p release/server
+          mkdir -p release/frontend/dist/csss-kiosk-site/browser
+
+          cp server/index.js release/server/
+          cp -r node_modules release/server/node_modules
+          rm -f release/server/node_modules/server
+
+          cp -r frontend/dist/csss-kiosk-site/browser/. \
+            release/frontend/dist/csss-kiosk-site/browser/
+
+          # record the version being shipped
+          printf '%s\n' "${GITHUB_REF_NAME}" > release/VERSION
+
+      - name: Verify release package
+        run: |
+          test -f release/VERSION
+          test -f release/server/index.js
+          test ! -e release/server/package.json
+          test ! -e release/server/.env.example
+          test -d release/server/node_modules/express
+          test -f release/frontend/dist/csss-kiosk-site/browser/index.html
+          node --check release/server/index.js
+
+      - name: Zip release package
+        run: |
+          cd release
+          zip -r ../app-${GITHUB_REF_NAME}.zip .
+          cd ..
+          sha256sum app-${GITHUB_REF_NAME}.zip > app-${GITHUB_REF_NAME}.zip.sha256
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            app-${{ github.ref_name }}.zip
+            app-${{ github.ref_name }}.zip.sha256
+          generate_release_notes: true
