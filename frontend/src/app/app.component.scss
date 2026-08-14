@@ -1,8 +1,8 @@
 @use 'utilities/functions' as f;
 
 :host {
-  width: 100lvw;
-  height: 100lvh;
+  max-width: 1080px;
+  aspect-ratio: 9 / 16;
   display: grid;
   grid-template-rows: 15lvh 1fr 15lvh;
   gap: f.spacing('xl');
