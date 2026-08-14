@@ -1,16 +1,20 @@
 # Project specific
-src/app/api/generated/**/*
+frontend/src/app/api/generated/**/*
 
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 # Compiled output
 /dist
+/frontend/dist
 /tmp
+/frontend/tmp
 /out-tsc
+/frontend/out-tsc
 /bazel-out
+/frontend/bazel-out
 
 # Node
-/node_modules
+**/node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -34,9 +38,10 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/frontend/.angular/cache
 .sass-cache/
 /connect.lock
-/coverage
+/frontend/coverage
 /libpeerconnection.log
 testem.log
 /typings
