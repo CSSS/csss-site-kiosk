@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "csss-kiosk-site": {
+    "csss-site-kiosk": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -94,10 +94,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "csss-kiosk-site:build:production"
+              "buildTarget": "csss-site-kiosk:build:production"
             },
             "development": {
-              "buildTarget": "csss-kiosk-site:build:development"
+              "buildTarget": "csss-site-kiosk:build:development"
             }
           },
           "defaultConfiguration": "development"

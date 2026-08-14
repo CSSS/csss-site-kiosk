@@ -20,14 +20,7 @@ function main() {
   const PROXY_TARGET = process.env.PROXY_TARGET;
 
   // The folder our frontend is served from.
-  const FRONTEND_PATH = join(
-    __dirname,
-    '..',
-    'frontend',
-    'dist',
-    'csss-kiosk-site',
-    'browser'
-  );
+  const FRONTEND_PATH = join(__dirname, '..', 'frontend', 'dist', 'csss-site-kiosk', 'browser');
 
   const app = express();
 

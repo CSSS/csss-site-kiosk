@@ -10,5 +10,5 @@ import { ClockWeatherWidget } from './widgets/clock-weather/clock-weather.widget
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  protected readonly title = signal('csss-kiosk-site');
+  protected readonly title = signal('csss-site-kiosk');
 }

@@ -64,7 +64,7 @@ npm run start:frontend
 
 Use this if you need the proxy server running as well.
 
-- The proxy serves the latest build from `frontend/dist/csss-kiosk-site/browser/`.
+- The proxy serves the latest build from `frontend/dist/csss-site-kiosk/browser/`.
 - The frontend will be built using the `production` environment and send requests to `localhost:SERVER_PORT` (default 8080).
 - The proxy will send requests to `PROXY_TARGET` (default `localhost:3049`).
 
