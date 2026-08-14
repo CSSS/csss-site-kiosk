@@ -46,14 +46,14 @@ jobs:
       - name: Assemble release package
         run: |
           mkdir -p release/server
-          mkdir -p release/frontend/dist/csss-kiosk-site/browser
+          mkdir -p release/frontend/dist/csss-site-kiosk/browser
 
-          cp server/index.js release/server/
+          cp server/server.js release/server/
           cp -r node_modules release/server/node_modules
           rm -f release/server/node_modules/server
 
-          cp -r frontend/dist/csss-kiosk-site/browser/. \
-            release/frontend/dist/csss-kiosk-site/browser/
+          cp -r frontend/dist/csss-site-kiosk/browser/. \
+            release/frontend/dist/csss-site-kiosk/browser/
 
           # record the version being shipped
           printf '%s\n' "${GITHUB_REF_NAME}" > release/VERSION
@@ -61,12 +61,12 @@ jobs:
       - name: Verify release package
         run: |
           test -f release/VERSION
-          test -f release/server/index.js
+          test -f release/server/server.js
           test ! -e release/server/package.json
           test ! -e release/server/.env.example
           test -d release/server/node_modules/express
-          test -f release/frontend/dist/csss-kiosk-site/browser/index.html
-          node --check release/server/index.js
+          test -f release/frontend/dist/csss-site-kiosk/browser/index.html
+          node --check release/server/server.js
 
       - name: Zip release package
         run: |
