@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import { readFile } from 'fs/promises';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -21,6 +22,7 @@ function main() {
 
   // The folder our frontend is served from.
   const FRONTEND_PATH = join(__dirname, '..', 'frontend', 'dist', 'csss-site-kiosk', 'browser');
+  const VERSION_PATH = join(__dirname, '..', 'VERSION');
 
   const app = express();
 
@@ -38,6 +40,16 @@ function main() {
     console.error('Failed to load secret:', err);
     process.exit(1);
   }
+
+  app.get('/health', async (_, res) => {
+    try {
+      const version = (await readFile(VERSION_PATH, 'utf8')).trim();
+      res.type('text/plain').send(version);
+    } catch (err) {
+      console.error('Failed to read version:', err);
+      res.status(503).type('text/plain').send('Version unavailable.');
+    }
+  });
 
   // Proxy API requests to our web server
   app.use(
