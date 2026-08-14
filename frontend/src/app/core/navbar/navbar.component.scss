@@ -23,9 +23,10 @@ nav {
 }
 
 a {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--colour-accent-pink);
   padding: 2rem;
   border-radius: 50%;
-  margin-bottom: 1rem;
 }
