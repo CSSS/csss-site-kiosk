@@ -1,6 +1,8 @@
+import { Tab, TabContent, TabList, TabPanel, Tabs } from '@angular/aria/tabs';
 import { Component, signal } from '@angular/core';
 import { DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EventsBrowserComponent } from './events-browser/events-browser.component';
 import {
   EventsCalendarComponent,
   KioskCalendarEvent
@@ -8,7 +10,15 @@ import {
 
 @Component({
   selector: 'ksk-events-screen',
-  imports: [EventsCalendarComponent],
+  imports: [
+    EventsCalendarComponent,
+    EventsBrowserComponent,
+    TabList,
+    Tab,
+    Tabs,
+    TabPanel,
+    TabContent
+  ],
   providers: [
     provideCalendar({
       provide: DateAdapter,
@@ -19,6 +29,8 @@ import {
   styleUrl: './events.screen.scss'
 })
 export class EventsScreen {
+  readonly tabSelected = signal<'browse' | 'calendar'>('browse');
+
   /**
    * TODO: Have this fetched from the web server.
    */

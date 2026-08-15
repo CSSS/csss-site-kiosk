@@ -1,0 +1,24 @@
+@use 'utilities/functions' as *;
+
+/* Place styles here for parts that aren't in `events-calendar.component.html` */
+mwl-calendar-month-view {
+  display: block;
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  font-family: font(heading);
+  top: 0;
+}
+
+mwl-calendar-open-day-events {
+  display: none !important;
+}
+
+.cal-tooltip {
+  font-family: font(heading);
+}
+
+.cal-day-cell {
+  border-right: none;
+  min-width: 0;
+}

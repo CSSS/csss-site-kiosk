@@ -55,22 +55,26 @@
   src: url('../../assets/fonts/inter-v20-latin-700italic.woff2') format('woff2');
 }
 
-h1 {
+h1,
+.h1 {
   @include m.type-scale('h1');
   font-family: f.font(title);
 }
 
-h2 {
+h2,
+.h2 {
   @include m.type-scale('h2');
   font-family: f.font(heading);
 }
 
-h3 {
+h3,
+.h3 {
   @include m.type-scale('h3');
   font-family: f.font(heading);
 }
 
-h4 {
+h4,
+.h4 {
   @include m.type-scale('h4');
   font-family: f.font(heading);
 }

@@ -1,1 +1,17 @@
-<ksk-events-calendar [events]="events()" />
+<div ngTabs>
+  <div
+    class="sliding-window"
+    [style.transform]="tabSelected() === 'calendar' ? 'translateX(-50%)' : 'translateX(0)'"
+  >
+    <div ngTabPanel [preserveContent]="true" value="browse">
+      <ng-template ngTabContent><ksk-events-browser /></ng-template>
+    </div>
+    <div ngTabPanel [preserveContent]="true" value="calendar">
+      <ng-template ngTabContent><ksk-events-calendar [events]="events()" /></ng-template>
+    </div>
+  </div>
+  <div ngTabList [(selectedTab)]="tabSelected">
+    <div ngTab class="h3" value="browse">Browse</div>
+    <div ngTab class="h3" value="calendar">Calendar</div>
+  </div>
+</div>

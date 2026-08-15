@@ -24,7 +24,7 @@ export class EventsCalendarComponent {
   /**
    * Number of events that can be displayed before the cell overflows.
    */
-  protected readonly maxEvents = 5;
+  protected readonly maxEvents = 4;
 
   protected eventClicked(
     event: KioskCalendarEvent,

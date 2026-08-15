@@ -62,22 +62,22 @@ $type-scale: (
   h1: (
     size: map.get($font-sizes, '3xl'),
     line-height: map.get($line-heights, 'tight'),
-    weight: map.get($font-weights, 'bold')
+    weight: map.get($font-weights, 'normal')
   ),
   h2: (
     size: map.get($font-sizes, '2xl'),
     line-height: map.get($line-heights, 'tight'),
-    weight: map.get($font-weights, 'bold')
+    weight: map.get($font-weights, 'normal')
   ),
   h3: (
     size: map.get($font-sizes, 'xl'),
     line-height: map.get($line-heights, 'tight'),
-    weight: map.get($font-weights, 'bold')
+    weight: map.get($font-weights, 'normal')
   ),
   h4: (
     size: map.get($font-sizes, 'lg'),
     line-height: map.get($line-heights, 'tight'),
-    weight: map.get($font-weights, 'bold')
+    weight: map.get($font-weights, 'normal')
   ),
   body: (
     size: map.get($font-sizes, 'base'),
