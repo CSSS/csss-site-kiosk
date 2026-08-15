@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'sass:meta';
-@use 'utilities/functions' as *;
 
 @layer vendor, base, theme, overrides;
 @import url('../../node_modules/angular-calendar/css/angular-calendar.css') layer(vendor);
@@ -24,7 +23,7 @@
 
     /* Text colours */
     --colour-text-surface: var(--csss-brand-black); /* For body text and subtitles */
-    --colour-text-on-surface: var(--csss-brand-grey);
+    --colour-text-on-surface: var(--csss-brand-cream);
     --colour-text-primary: var(--csss-brand-cream); /* For headings and high-emphasis body text */
     --colour-text-secondary: var(--csss-brand-cream); /* For body text and subtitles */
     --colour-text-disabled: var(--csss-brand-cream); /* Unclickable or inactive text */

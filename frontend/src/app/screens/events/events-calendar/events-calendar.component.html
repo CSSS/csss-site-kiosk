@@ -1,3 +1,15 @@
+<h2 class="calendar-title">{{ viewDate | calendarDate: view + 'ViewTitle' : 'en' }}</h2>
+<mwl-calendar-month-view [viewDate]="viewDate" [events]="events()" [cellTemplate]="customCell" />
+<div class="month-picker">
+  <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+    <svg lucideChevronLeft [strokeWidth]="4"></svg>
+  </div>
+  <div mwlCalendarToday [(viewDate)]="viewDate">Today</div>
+  <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+    <svg lucideChevronRight [strokeWidth]="4"></svg>
+  </div>
+</div>
+
 <!-- Custom template for the cell that contains a day -->
 <ng-template #customCell let-day="day" let-locale="locale">
   @let holiday = day.events.find(e => e.meta?.type === 'holiday');
@@ -29,5 +41,3 @@
     }
   </div>
 </ng-template>
-
-<mwl-calendar-month-view [viewDate]="viewDate" [events]="events()" [cellTemplate]="customCell" />

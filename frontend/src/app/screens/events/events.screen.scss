@@ -7,9 +7,9 @@
   display: grid;
   grid-template-rows: 95% 1fr;
   overflow: hidden;
-  border-radius: 0.5rem;
-  border: 1px solid var(--colour-bg-on-surface);
+  border-radius: var(--border-radius-default);
   min-height: 100%;
+  background-color: var(--colour-bg-on-surface);
 }
 
 [ngTabPanel] {
@@ -25,6 +25,7 @@
   align-items: center;
   background-color: var(--colour-bg-primary);
   color: var(--colour-text-primary);
+  border-radius: var(--border-radius-default);
 }
 
 .sliding-window {

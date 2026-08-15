@@ -1,13 +1,11 @@
 @use 'utilities/functions' as *;
 
-/* Place styles here for parts that aren't in `events-calendar.component.html` */
+// Place styles here for parts that can't work in `events-calendar.component.html`
 mwl-calendar-month-view {
   display: block;
-  position: absolute;
   width: 100%;
   overflow: hidden;
   font-family: font(heading);
-  top: 0;
 }
 
 mwl-calendar-open-day-events {
@@ -21,4 +19,19 @@ mwl-calendar-open-day-events {
 .cal-day-cell {
   border-right: none;
   min-width: 0;
+}
+
+.cal-cell {
+  background-color: var(--colour-bg-on-surface);
+  color: var(--colour-text-on-surface);
+}
+
+// The dates that are part of the current month
+.cal-day-number {
+  color: var(--colour-text-on-surface);
+}
+
+// The dates that aren't part of the current month
+.cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
+  opacity: 0.2;
 }
