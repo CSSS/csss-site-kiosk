@@ -51,36 +51,5 @@
 }
 
 @layer overrides {
-  mwl-calendar-month-view {
-    display: block;
-    border-radius: 20px;
-    overflow: hidden;
-    font-family: font(heading);
-  }
-
-  mwl-calendar-open-day-events {
-    display: none !important;
-  }
-
-  .cal-cell-top {
-    border-right: none;
-    padding: 0.2rem;
-    min-height: 0;
-  }
-
-  .cal-calendar,
-  .cal-tooltip {
-    font-family: font(heading);
-  }
-
-  .cal-month-view {
-    .cal-day-cell {
-      border-right: none;
-      min-width: 0;
-    }
-
-    .cal-cell-top {
-      flex: none;
-    }
-  }
+  @include meta.load-css('overrides/calendar');
 }

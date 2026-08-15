@@ -1,8 +1,14 @@
 @use 'utilities/functions' as *;
 
+.cal-cell-top {
+  border-right: none;
+  padding: 0.2rem;
+  min-height: 0;
+}
+
 .cal__events {
   display: flex;
-  gap: 0.25rem;
+  gap: spacing(xs);
   flex-direction: column;
   min-height: 10rem;
   padding: 0.2rem;
