@@ -6,7 +6,8 @@
   --card-height: 38.375rem;
   --card-offset: 5rem;
   --carousel-height: calc(var(--card-height) + var(--card-offset));
-  @include card(var(--colour-accent-teal));
+  --widget-background-colour: var(--colour-bg-on-surface);
+  @include widget(var(--widget-background-colour));
   overflow: hidden;
   height: 100%;
   display: flex;
@@ -15,7 +16,7 @@
 
 swiper-container {
   --swiper-pagination-bottom: 3rem;
-  --swiper-pagination-color: var(--colour-text-inverse);
+  --swiper-pagination-color: var(--colour-text-secondary);
   --swiper-pagination-bullet-size: 1.5rem;
   --swiper-pagination-bullet-horizontal-gap: 1.25rem;
   width: 100%;
@@ -39,9 +40,8 @@ swiper-slide {
 
 .card {
   position: relative;
-  border-radius: 50px;
   overflow: hidden;
-  background-color: var(--colour-surface-base);
+  @include card();
 
   &::after {
     content: '';
@@ -81,13 +81,13 @@ swiper-slide {
 
   &__date {
     line-height: 0.9;
-    color: var(--colour-text-inverse);
+    color: var(--colour-text-secondary);
     font-size: font-size('4xl');
   }
 
   &__month {
     line-height: 1;
-    color: var(--colour-text-inverse);
+    color: var(--colour-text-secondary);
     font-size: font-size(base);
   }
 

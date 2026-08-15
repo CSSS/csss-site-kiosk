@@ -14,7 +14,7 @@
     width: 4.25rem;
     position: relative;
     top: spacing(xl);
-    background-color: var(--colour-surface-inverse);
+    background-color: var(--colour-surface-base);
     border-radius: spacing(xs);
     padding: spacing(xs);
   }
@@ -31,7 +31,7 @@
     position: absolute;
     top: 80%;
     bottom: 100%;
-    background-color: var(--colour-surface-inverse);
+    background-color: var(--colour-surface-base);
     color: black;
     height: 9.125rem;
     width: 50%;

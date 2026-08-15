@@ -1,6 +1,7 @@
 @use 'utilities/functions' as *;
 
 :host {
+  --nav-button-background-colour: var(--colour-action-primary);
   height: 100%;
   width: 100%;
   display: flex;
@@ -26,7 +27,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--colour-accent-pink);
+  background-color: var(--nav-button-background-colour);
   padding: 2rem;
   border-radius: 50%;
 }

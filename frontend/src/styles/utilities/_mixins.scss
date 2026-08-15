@@ -47,14 +47,24 @@
   }
 }
 
-@mixin card($bg-colour: var(--colour-surface-base), $border-radius: 50px) {
+@mixin widget(
+  $bg-colour: var(--colour-bg-on-surface),
+  $border-radius: var(--border-radius-default)
+) {
   background-color: $bg-colour;
   border-radius: $border-radius;
+  overflow: hidden;
 
   > h2 {
-    color: var(--colour-text-inverse);
+    color: var(--colour-text-primary);
     font-size: 2.25rem;
     text-align: center;
     margin: 1rem 0;
   }
+}
+
+@mixin card($bg-colour: var(--colour-bg-surface), $border-radius: var(--border-radius-default)) {
+  background-color: $bg-colour;
+  border-radius: $border-radius;
+  overflow: hidden;
 }

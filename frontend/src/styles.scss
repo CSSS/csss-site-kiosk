@@ -12,6 +12,46 @@
 
 @layer theme {
   @include meta.load-css('themes/brand');
+
+  :root {
+    /* Semantic tokens */
+    /* Backgrounds and surfaces */
+    --colour-bg-surface: var(--csss-brand-cream); /* On large empty space */
+    --colour-bg-primary: var(--csss-brand-black); /* For buttons,  */
+    --colour-bg-secondary: var(--csss-brand-teal);
+    --colour-bg-disabled: var(--csss-brand-grey);
+
+    /* Text */
+    --colour-text-surface: var(--csss-brand-black); /* For body text and subtitles */
+    --colour-text-primary: var(--csss-brand-cream); /* For headings and high-emphasis body text */
+    --colour-text-secondary: var(--csss-brand-cream); /* For body text and subtitles */
+    --colour-text-disabled: var(--csss-brand-cream); /* Unclickable or inactive text */
+
+    /* Buttons and links/Actions */
+    --colour-action-primary: var(--csss-brand-teal); /* Neutral buttons, links */
+    --colour-action-secondary: var(--csss-brand-teal); /* Other buttons */
+
+    --colour-danger: var(--app-red);
+    --colour-warning: var(--app-yellow);
+    --colour-success: var(--app-green);
+
+    /* Deprecated tokens, don't use */
+    --colour-surface-base: var(--csss-brand-cream);
+    --colour-surface-inverse: var(--csss-brand-grey);
+    --colour-border-default: hsl(0, 0%, 0%, 0.15);
+
+    --colour-accent-blue: var(--csss-brand-blue);
+    --colour-accent-blue-fg: var(--csss-brand-cream);
+
+    --colour-accent-pink: var(--csss-brand-pink);
+    --colour-accent-pink-fg: var(--csss-brand-cream);
+
+    --colour-accent-red: var(--csss-brand-red);
+    --colour-accent-red-fg: var(--csss-brand-cream);
+
+    --colour-accent-teal: var(--csss-brand-teal);
+    --colour-accent-teal-fg: var(--csss-brand-cream);
+  }
 }
 
 @layer overrides {
