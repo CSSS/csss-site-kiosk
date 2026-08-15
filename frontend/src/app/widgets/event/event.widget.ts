@@ -9,7 +9,7 @@ import {
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
 
-interface Event {
+export interface KioskEvent {
   posterUrl: string;
   title: string;
   location?: string;
@@ -25,7 +25,7 @@ interface Event {
 export class EventWidget implements AfterViewInit {
   swiperRef = viewChild.required<ElementRef>('swiperRef');
 
-  events: Event[] = [
+  events: KioskEvent[] = [
     {
       posterUrl: `https://dummyimage.com/580x614/333/fff&text=${1}`,
       title: 'First Poster',

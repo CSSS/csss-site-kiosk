@@ -1,1 +1,19 @@
-<p>events-browser works!</p>
+<h2>Next</h2>
+<div class="next">
+  @if (displayEvents.length > 0) {
+    @let event = displayEvents[0];
+    <div class="next__card">
+      <img [ngSrc]="event.posterUrl" alt="title" [width]="DUMMY_IMG_W" [height]="DUMMY_IMG_H" />
+    </div>
+  }
+</div>
+<h2>Upcoming</h2>
+<div class="upcoming">
+  <swiper-container init="false" #swiperRef>
+    @for (event of displayEvents | slice: 1; track event.title) {
+      <swiper-slide>
+        <img [ngSrc]="event.posterUrl" alt="title" [width]="DUMMY_IMG_W" [height]="DUMMY_IMG_H" />
+      </swiper-slide>
+    }
+  </swiper-container>
+</div>

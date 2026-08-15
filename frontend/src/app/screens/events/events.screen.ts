@@ -1,10 +1,11 @@
 import { Tab, TabContent, TabList, TabPanel, Tabs } from '@angular/aria/tabs';
 import { Component, signal } from '@angular/core';
+import { CalendarEvent } from 'angular-calendar';
 import { EventsBrowserComponent } from './events-browser/events-browser.component';
-import {
-  EventsCalendarComponent,
-  KioskCalendarEvent
-} from './events-calendar/events-calendar.component';
+import { EventsCalendarComponent } from './events-calendar/events-calendar.component';
+
+export type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> &
+  Required<Pick<CalendarEvent, 'meta'>>;
 
 @Component({
   selector: 'ksk-events-screen',

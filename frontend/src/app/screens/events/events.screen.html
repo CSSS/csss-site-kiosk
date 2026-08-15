@@ -5,7 +5,7 @@
     [style.transform]="tabSelected() === 'calendar' ? 'translateX(-50%)' : 'translateX(0)'"
   >
     <div ngTabPanel [preserveContent]="true" value="browse">
-      <ng-template ngTabContent><ksk-events-browser /></ng-template>
+      <ng-template ngTabContent><ksk-events-browser [events]="events()" /></ng-template>
     </div>
     <div ngTabPanel [preserveContent]="true" value="calendar">
       <ng-template ngTabContent><ksk-events-calendar [events]="events()" /></ng-template>

@@ -3,7 +3,6 @@ import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
 import {
   CalendarDateFormatter,
   CalendarDatePipe,
-  CalendarEvent,
   CalendarMonthViewComponent,
   CalendarNextViewDirective,
   CalendarPreviousViewDirective,
@@ -15,10 +14,8 @@ import {
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { TimeService } from '../../../core/time.service';
+import { KioskCalendarEvent } from '../events.screen';
 import { CustomCalendarDateFormatter, CustomCalendarUtils } from './calendar-utils';
-
-export type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> &
-  Required<Pick<CalendarEvent, 'meta'>>;
 
 @Component({
   selector: 'ksk-events-calendar',

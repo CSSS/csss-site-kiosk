@@ -15,12 +15,9 @@
 }
 
 swiper-container {
-  --swiper-pagination-bottom: 3rem;
-  --swiper-pagination-color: var(--colour-text-secondary);
-  --swiper-pagination-bullet-size: 1.5rem;
-  --swiper-pagination-bullet-horizontal-gap: 1.25rem;
+  --swiper-container-height: var(--carousel-height);
+  --swiper-pagination-bottom: 2rem;
   width: 100%;
-  height: var(--carousel-height);
   padding-top: 1rem;
   @include flex-center(row, 0, vertical);
   flex-grow: 1;
