@@ -1,3 +1,4 @@
+<!-- TODO: Make a generic tabs component -->
 <div ngTabs>
   <div
     class="sliding-window"
@@ -10,7 +11,11 @@
       <ng-template ngTabContent><ksk-events-calendar [events]="events()" /></ng-template>
     </div>
   </div>
-  <div ngTabList [(selectedTab)]="tabSelected">
+  <div
+    ngTabList
+    [(selectedTab)]="tabSelected"
+    [class.calendar-selected]="tabSelected() === 'calendar'"
+  >
     <div ngTab class="h3" value="browse">Browse</div>
     <div ngTab class="h3" value="calendar">Calendar</div>
   </div>

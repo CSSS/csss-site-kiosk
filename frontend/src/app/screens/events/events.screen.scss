@@ -1,4 +1,5 @@
 :host {
+  --tab-transition: transform 0.2s ease-in-out;
   display: block;
   height: 100%;
 }
@@ -20,16 +21,40 @@
 }
 
 [ngTabList] {
+  --tab-selector-width: 25%;
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
   background-color: var(--colour-bg-primary);
   color: var(--colour-text-primary);
   border-radius: var(--border-radius-default);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: calc(var(--tab-selector-width) / 2);
+    width: var(--tab-selector-width);
+    height: 0.25rem;
+    border-radius: 10px;
+    background-color: currentColor;
+    pointer-events: none;
+    transition: var(--tab-transition);
+  }
+
+  &.calendar-selected::after {
+    transform: translateX(200%);
+  }
+}
+
+[ngTab] {
+  flex: 1;
+  text-align: center;
 }
 
 .sliding-window {
   width: 200%;
   display: flex;
-  transition: transform 0.2s ease-in-out;
+  transition: var(--tab-transition);
 }
