@@ -17,11 +17,7 @@
           ? noHolidays.slice(0, maxEvents)
           : noHolidays.slice(0, maxEvents - 1);
       @for (event of displayEvents; track event.id ?? event) {
-        <button
-          class="cal__event"
-          [style.backgroundColor]="getEventColour(event.meta?.type)"
-          (click)="eventClicked(event, day, $event)"
-        >
+        <button class="cal__event" (click)="eventClicked(event, day, $event)">
           {{ event.title }}
         </button>
       }

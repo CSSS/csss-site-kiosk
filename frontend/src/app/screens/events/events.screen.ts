@@ -90,18 +90,6 @@ export class EventsScreen {
     }
   ]);
 
-  constructor() {
-    // this.id = setInterval(() => {
-    //   this.events.update(events => [
-    //     ...events,
-    //     {
-    //       start: new Date(),
-    //       title: `Event ${events.length + 1}`
-    //     }
-    //   ]);
-    // }, 3000);
-  }
-
   ngOnDestroy(): void {
     if (this.id !== undefined) {
       clearInterval(this.id);
@@ -129,25 +117,5 @@ export class EventsScreen {
   ): void {
     domEvent?.stopPropagation();
     console.log('Day', date, events);
-  }
-
-  protected getEventColour(type?: KioskCalendarMeta['type']): string {
-    let colour: string;
-    switch (type) {
-      case 'csss':
-        colour = 'blue';
-        break;
-      case 'holiday':
-        colour = 'teal';
-        break;
-      case 'sfu':
-        colour = 'red';
-        break;
-      default:
-        colour = 'pink';
-        break;
-    }
-
-    return `var(--colour-accent-${colour})`;
   }
 }

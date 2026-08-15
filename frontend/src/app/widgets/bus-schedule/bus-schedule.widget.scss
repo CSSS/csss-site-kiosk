@@ -2,7 +2,7 @@
 @use 'utilities/functions' as *;
 
 :host {
-  @include card(var(--colour-accent-blue));
+  @include widget();
 }
 
 .schedule {

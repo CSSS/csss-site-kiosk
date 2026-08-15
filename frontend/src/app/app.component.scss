@@ -1,16 +1,12 @@
 @use 'utilities/functions' as f;
 
 :host {
-  width: 100lvw;
-  height: 100lvh;
+  max-width: 1080px;
+  aspect-ratio: 9 / 16;
   display: grid;
-  grid-template-rows: 15lvh 1fr 15lvh;
-  gap: f.spacing('xl');
-  background-color: var(--colour-surface-base);
-
-  > * {
-    padding-inline: 5rem;
-  }
+  grid-template-rows: 15% 15% 1fr 150px;
+  background-color: var(--colour-bg-surface);
+  padding-inline: 5rem;
 }
 
 main {

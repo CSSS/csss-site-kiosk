@@ -26,37 +26,37 @@ export class EventWidget implements AfterViewInit {
 
   events: Event[] = [
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${1}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${1}`,
       title: 'First Poster',
       location: 'Location'
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${2}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${2}`,
       title: 'Second Poster',
       location: 'Location'
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${3}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${3}`,
       title: 'Third Poster',
       location: 'Location'
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${4}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${4}`,
       title: 'First Poster',
       location: 'Location'
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${5}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${5}`,
       title: 'Second Poster',
       location: 'Location'
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${6}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${6}`,
       title: 'Third Poster',
       location: 'Location'
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/000/fff&text=${7}`,
+      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${7}`,
       title: 'Third Poster',
       location: 'Location'
     }
