@@ -17,8 +17,8 @@
 
 .cal__event {
   display: block;
-  background-color: var(--colour-surface-base);
-  color: var(--colour-text-secondary);
+  background-color: var(--colour-bg-primary);
+  color: var(--colour-text-primary);
   padding: 0.1rem;
   border-radius: 4px;
 
@@ -29,6 +29,5 @@
   &--holiday {
     @extend .cal__event;
     max-width: 6rem;
-    background-color: var(--colour-accent-teal);
   }
 }

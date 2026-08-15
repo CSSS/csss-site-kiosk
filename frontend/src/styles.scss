@@ -15,25 +15,31 @@
 
   :root {
     /* Semantic tokens */
-    /* Backgrounds and surfaces */
+    /* Backgrounds and surface colours */
     --colour-bg-surface: var(--csss-brand-cream); /* On large empty space */
-    --colour-bg-primary: var(--csss-brand-black); /* For buttons,  */
+    --colour-bg-on-surface: var(--csss-brand-grey); /* For things on top of surface */
+    --colour-bg-primary: var(--csss-brand-black); /* For buttons */
     --colour-bg-secondary: var(--csss-brand-teal);
     --colour-bg-disabled: var(--csss-brand-grey);
 
-    /* Text */
+    /* Text colours */
     --colour-text-surface: var(--csss-brand-black); /* For body text and subtitles */
+    --colour-text-on-surface: var(--csss-brand-grey);
     --colour-text-primary: var(--csss-brand-cream); /* For headings and high-emphasis body text */
     --colour-text-secondary: var(--csss-brand-cream); /* For body text and subtitles */
     --colour-text-disabled: var(--csss-brand-cream); /* Unclickable or inactive text */
 
-    /* Buttons and links/Actions */
-    --colour-action-primary: var(--csss-brand-teal); /* Neutral buttons, links */
-    --colour-action-secondary: var(--csss-brand-teal); /* Other buttons */
+    /* Buttons and link colours */
+    --colour-action-primary: var(--csss-brand-black); /* Neutral buttons, links */
+    --colour-action-secondary: var(--csss-brand-black); /* Other buttons */
 
+    /* Utility colours */
     --colour-danger: var(--app-red);
     --colour-warning: var(--app-yellow);
     --colour-success: var(--app-green);
+
+    /* Structure */
+    --border-radius-default: 10px;
 
     /* Deprecated tokens, don't use */
     --colour-surface-base: var(--csss-brand-cream);

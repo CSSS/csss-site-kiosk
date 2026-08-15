@@ -49,7 +49,7 @@ swiper-slide {
     inset: 0;
     width: 100%;
     height: 100%;
-    background-color: color-mix(in srgb, var(--colour-accent-teal) 50%, transparent);
+    background-color: color-mix(in srgb, var(--widget-background-colour) 50%, transparent);
     opacity: 1;
     transition: opacity 600ms ease;
     z-index: 2;
@@ -70,7 +70,7 @@ swiper-slide {
     left: spacing('2xl');
     height: var(--datetime-height);
     aspect-ratio: 1/1;
-    background-color: var(--colour-accent-red);
+    background-color: var(--colour-bg-primary);
     z-index: 1;
     font-family: font(heading);
     text-align: center;

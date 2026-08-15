@@ -26,6 +26,7 @@ nav {
 a {
   display: flex;
   justify-content: center;
+  max-width: 6.25rem;
   align-items: center;
   background-color: var(--nav-button-background-colour);
   padding: 2rem;
