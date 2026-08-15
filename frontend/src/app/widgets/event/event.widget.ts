@@ -7,6 +7,7 @@ import {
   viewChild
 } from '@angular/core';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
 
 interface Event {
   posterUrl: string;
@@ -88,17 +89,8 @@ export class EventWidget implements AfterViewInit {
         depth: 240,
         slideShadows: false
       },
-      injectStyles: [
-        `
-        .swiper-pagination-bullet {
-          transition: transform 600ms ease;
-        }
-
-        .swiper-pagination-bullet-active {
-          transform: scale(1.5);
-        }
-`
-      ]
+      injectStylesUrls: ['/swiper/pagination-element.min.css'],
+      injectStyles: [SWIPER_PAGINATION_BULLET_STYLES]
     };
 
     Object.assign(swiperEl, swiperParams);
