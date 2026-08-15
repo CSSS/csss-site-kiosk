@@ -41,19 +41,9 @@
     /* Structure */
     --border-radius-default: 10px;
 
-    /* Deprecated tokens, don't use */
-    --colour-surface-base: var(--csss-brand-cream);
-    --colour-surface-inverse: var(--csss-brand-grey);
-    --colour-border-default: hsl(0, 0%, 0%, 0.15);
-
+    /* Deprecated tokens, don't use, kept for the bus widget */
     --colour-accent-blue: var(--csss-brand-blue);
     --colour-accent-blue-fg: var(--csss-brand-cream);
-
-    --colour-accent-pink: var(--csss-brand-pink);
-    --colour-accent-pink-fg: var(--csss-brand-cream);
-
-    --colour-accent-red: var(--csss-brand-red);
-    --colour-accent-red-fg: var(--csss-brand-cream);
 
     --colour-accent-teal: var(--csss-brand-teal);
     --colour-accent-teal-fg: var(--csss-brand-cream);

@@ -93,13 +93,13 @@ swiper-slide {
 
   &__infobox {
     position: absolute;
-    background-color: var(--colour-surface-base);
+    background-color: var(--colour-bg-surface);
     left: 0;
     right: 0;
     bottom: 0;
     height: 50%;
     width: 100%;
-    background-color: var(--colour-surface-base);
+    background-color: var(--colour-bg-surface);
     padding: 4.75rem spacing('2xl') spacing('2xl');
 
     display: grid;
