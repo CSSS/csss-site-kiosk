@@ -1,23 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
-import {
-  CalendarDatePipe,
-  type CalendarEvent,
-  CalendarMonthViewComponent,
-  DateAdapter,
-  provideCalendar
-} from 'angular-calendar';
+import { Component, signal } from '@angular/core';
+import { DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { TimeService } from '../../core/time.service';
-
-interface KioskCalendarMeta {
-  type: 'holiday' | 'csss' | 'sfu' | 'other';
-}
-
-type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> & Required<Pick<CalendarEvent, 'meta'>>;
+import {
+  EventsCalendarComponent,
+  KioskCalendarEvent
+} from './events-calendar/events-calendar.component';
 
 @Component({
   selector: 'ksk-events-screen',
-  imports: [CalendarMonthViewComponent, CalendarDatePipe],
+  imports: [EventsCalendarComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
@@ -28,19 +19,6 @@ type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> & Required<Pick<CalendarEv
   styleUrl: './events.screen.scss'
 })
 export class EventsScreen {
-  private timeService = inject(TimeService);
-  /**
-   * Number of events that can be displayed before the cell overflows.
-   */
-  protected readonly maxEvents = 5;
-
-  /**
-   * Date to highlight
-   */
-  protected viewDate = this.timeService.currentTime();
-
-  private id?: number;
-
   /**
    * TODO: Have this fetched from the web server.
    */
@@ -89,33 +67,4 @@ export class EventsScreen {
       }
     }
   ]);
-
-  ngOnDestroy(): void {
-    if (this.id !== undefined) {
-      clearInterval(this.id);
-    }
-  }
-
-  protected eventClicked(
-    event: KioskCalendarEvent,
-    day: { date: Date; events: KioskCalendarEvent[] },
-    domEvent: MouseEvent
-  ): void {
-    domEvent.stopPropagation();
-    console.log('Event', event, day);
-  }
-
-  protected dayClicked(
-    {
-      date,
-      events
-    }: {
-      date: Date;
-      events: KioskCalendarEvent[];
-    },
-    domEvent?: MouseEvent
-  ): void {
-    domEvent?.stopPropagation();
-    console.log('Day', date, events);
-  }
 }
