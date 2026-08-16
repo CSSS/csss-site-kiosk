@@ -85,6 +85,8 @@ The frontend environment defaults can be found in
 | production | `false`                     | The environment the frontend assumes it's in.             |
 | csssApiUrl | `http://localhost:3049/api` | The target for requests going to the CSSS backend server. |
 | appUrl     | `http://localhost:8080`     | The URL this server is served from.                       |
+| mediaUrl   | `/media`                    | The base URL the images are fetched from.                 |
+
 
 
 The proxy server uses `server/.env`.
