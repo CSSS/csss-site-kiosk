@@ -15,7 +15,7 @@ import { KioskCalendarEvent } from '../events.screen';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../../styles/overrides/swiper';
-import { makeDummyImageUrl } from '../../../../utils/placeholders';
+import { placeHolderImgUrl } from '../../../../utils/placeholders';
 
 @Component({
   selector: 'ksk-events-browser',
@@ -35,65 +35,37 @@ export class EventsBrowserComponent implements AfterViewInit {
   swiperRef = viewChild.required<ElementRef>('swiperRef');
   displayEvents: KioskEvent[] = [
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '1'
-      }),
+      posterUrl: placeHolderImgUrl(0),
       title: 'First Poster',
       location: 'Location'
     },
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '2'
-      }),
+      posterUrl: placeHolderImgUrl(1),
       title: 'Second Poster',
       location: 'Location'
     },
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '3'
-      }),
+      posterUrl: placeHolderImgUrl(2),
       title: 'Third Poster',
       location: 'Location'
     },
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '4'
-      }),
+      posterUrl: placeHolderImgUrl(3),
       title: 'Fourth Poster',
       location: 'Location'
     },
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '5'
-      }),
+      posterUrl: placeHolderImgUrl(4),
       title: 'Fifth Poster',
       location: 'Location'
     },
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '6'
-      }),
+      posterUrl: placeHolderImgUrl(5),
       title: 'Sixth Poster',
       location: 'Location'
     },
     {
-      posterUrl: makeDummyImageUrl({
-        width: this.DUMMY_IMG_W,
-        height: this.DUMMY_IMG_H,
-        text: '7'
-      }),
+      posterUrl: placeHolderImgUrl(6),
       title: 'Seventh Poster',
       location: 'Location'
     }

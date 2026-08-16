@@ -1,11 +1,6 @@
-export interface DummyImageParams {
-  width: number;
-  height?: number;
-  text?: string;
-}
+const PLACEHOLDER_DIR_URL = 'images/placeholders/';
+const PLACEHOLDER_IMG_URLS = ['ai-cyber-security.png', 'cupping.jpg', 'touch-grass.png'];
 
-export function makeDummyImageUrl(params: DummyImageParams): string {
-  const height = params.height ?? (params.width * 5) / 4;
-  const res = `https://dummyimage.com/${params.width}x${height}/333/`;
-  return params.text ? `${res}&text=${params.text}` : res;
+export function placeHolderImgUrl(index: number): string {
+  return `${PLACEHOLDER_DIR_URL}${PLACEHOLDER_IMG_URLS[index % PLACEHOLDER_IMG_URLS.length]}`;
 }
