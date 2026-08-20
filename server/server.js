@@ -51,13 +51,12 @@ function main() {
     }
   });
 
-  // Proxy API requests to our web server
+  // Proxy backend requests while preserving their route prefixes upstream.
   app.use(
     createProxyMiddleware({
       target: PROXY_TARGET,
       changeOrigin: true,
-      // Match without mounting at /api so Express preserves the prefix upstream.
-      pathFilter: '/api',
+      pathFilter: ['/kiosk', '/api'],
       on: {
         proxyReq: proxyReq => {
           proxyReq.setHeader('Authorization', `Bearer ${cachedSecret}`);
