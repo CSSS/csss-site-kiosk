@@ -6,11 +6,13 @@
     "generators": {
       "csss-backend": {
         "generatorName": "typescript-angular",
-        "inputSpec": "http://localhost:3049/api/openapi.json",
-        "output": "#{cwd}/src/app/api/generated/csss-backend",
+        "inputSpec": "https://sfucsss.org/api/openapi.json",
+        "output": "#{cwd}/src/app/api/generated/csss-api",
         "globalProperty": {
-          "apis": "Translink:Event",
-          "models": ""
+          "apis": "Kiosk:Event",
+          "models": "Event:EventCreate:EventUpdate:EventDelete:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
+          "supportingFiles": "",
+          "generateRecursiveDependentModels": "true"
         },
         "additionalProperties": {
           "ngVersion": "22.0.0",
@@ -22,10 +24,12 @@
       "csss-backend-file": {
         "generatorName": "typescript-angular",
         "inputSpec": "#{cwd}/../node_modules/@sfucsss/backend-openapi/openapi.json",
-        "output": "#{cwd}/src/app/api/generated/csss-backend",
+        "output": "#{cwd}/src/app/api/generated/csss-api",
         "globalProperty": {
-          "apis": "Translink:Event",
-          "models": ""
+          "apis": "Kiosk:Event",
+          "models": "Event:EventCreate:EventUpdate:EventDelete:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
+          "supportingFiles": "",
+          "generateRecursiveDependentModels": "true"
         },
         "additionalProperties": {
           "ngVersion": "22.0.0",
