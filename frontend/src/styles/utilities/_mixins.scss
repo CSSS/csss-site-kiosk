@@ -37,7 +37,7 @@
   width: 100%;
   border: 1px solid var(--colour-outline);
 
-  > h2 {
+  > h2:first-of-type {
     color: var(--colour-on-surface-strong);
     text-align: center;
     margin: 1rem 0;
