@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   LucideCalendar,
   LucideDynamicIcon,
@@ -16,7 +16,7 @@ interface NavItem {
 
 @Component({
   selector: 'ksk-navbar',
-  imports: [LucideDynamicIcon, RouterLink],
+  imports: [LucideDynamicIcon, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })

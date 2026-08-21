@@ -1,10 +1,13 @@
 <nav>
   @for (item of navItems(); track $index) {
-    <div class="nav-button">
-      <a [routerLink]="item.url">
-        <svg [lucideIcon]="item.icon" [size]="36"></svg>
-      </a>
+    <a
+      class="nav-button"
+      [routerLink]="item.url"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <svg [lucideIcon]="item.icon" [size]="48"></svg>
       <div class="nav-button__label">{{ item.label }}</div>
-    </div>
+    </a>
   }
 </nav>
