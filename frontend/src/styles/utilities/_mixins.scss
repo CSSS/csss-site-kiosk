@@ -1,5 +1,4 @@
 @use 'sass:map';
-@use 'variables' as v;
 
 /*
  * direction - flex direction: `row` or `column`
@@ -29,42 +28,43 @@
   }
 }
 
-@mixin type-scale($key) {
-  $style: map.get(v.$type-scale, $key);
-
-  @if not $style {
-    @error "Unknown type scale key: #{$key}. Available keys: #{map.keys(v.$type-scale)}";
-  }
-
-  font-size: map.get($style, size);
-  line-height: map.get($style, line-height);
-  font-weight: map.get($style, weight);
-}
-
-@mixin hover-shade($colour, $amount: 85%) {
-  &:hover {
-    background-color: color-mix(in oklch, $color $amount, black);
-  }
-}
-
-@mixin widget(
-  $bg-colour: var(--colour-bg-on-surface),
-  $border-radius: var(--border-radius-default)
-) {
+@mixin widget($bg-colour: var(--colour-bg-surface), $border-radius: var(--widget-radius)) {
   background-color: $bg-colour;
   border-radius: $border-radius;
   overflow: hidden;
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: 1px solid var(--colour-outline);
 
-  > h2 {
-    color: var(--colour-text-primary);
-    font-size: 2.25rem;
+  > h2:first-of-type {
+    color: var(--colour-on-surface-strong);
     text-align: center;
     margin: 1rem 0;
+    text-transform: uppercase;
   }
 }
 
-@mixin card($bg-colour: var(--colour-bg-surface), $border-radius: var(--border-radius-default)) {
+@mixin card($bg-colour: var(--colour-bg-surface), $border-radius: var(--radius-lg)) {
   background-color: $bg-colour;
   border-radius: $border-radius;
   overflow: hidden;
+  border: 1px solid var(--colour-outline);
+}
+
+@mixin badge($bg-colour: secondary, $text-colour: secondary) {
+  background-color: var(--colour-#{$bg-colour});
+  color: var(--colour-on-#{$text-colour});
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  padding: var(--sp-sm);
+}
+
+@mixin generate-palette($palette) {
+  @each $name, $value in $palette {
+    --colour-#{$name}: #{$value};
+  }
 }

@@ -1,30 +1,27 @@
 @use 'utilities/mixins' as *;
-@use 'utilities/functions' as *;
 
 .route {
   position: relative;
   @include flex-center(column);
   line-height: 1;
   z-index: 1;
-  font-family: font(heading);
+  font-family: var(--font-heading);
 
   &__label {
-    line-height: 1;
-    font-size: font-size('2xl');
+    @include badge();
     width: 4.25rem;
     position: relative;
-    top: spacing(xl);
-    background-color: var(--colour-bg-surface);
-    border-radius: spacing(xs);
-    padding: spacing(xs);
+    top: var(--sp-xl);
+    padding: var(--sp-xs);
   }
 
   &__time {
-    font-size: font-size('2xl');
+    font-size: var(--font-size-2xl);
   }
 
   &__units {
-    font-size: font-size('lg');
+    font-size: var(--font-size-lg);
+    color: var(--colour-on-surface-soft);
   }
 
   &__dropdown {
@@ -35,10 +32,10 @@
     color: black;
     height: 9.125rem;
     width: 50%;
-    border-radius: spacing(md);
+    border-radius: var(--sp-md);
     z-index: -1;
     padding-top: 15%;
-    padding-inline: spacing(xs);
+    padding-inline: var(--sp-xs);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -53,7 +50,8 @@
   width: 9rem;
   height: 9rem;
   border-radius: 50%;
-  border: 0.75rem solid var(--colour-status);
+  // border: 0.75rem solid var(--colour-status);
+  border: 1px var(--colour-outline) solid;
   color: var(--colour-text);
 
   &--arrived {

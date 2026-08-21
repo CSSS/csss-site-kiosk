@@ -1,86 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'sass:meta';
-@use 'utilities/functions' as *;
 
-@layer vendor, base, theme, overrides;
-@import url('../../node_modules/angular-calendar/css/angular-calendar.css') layer(vendor);
+@layer library, base, tokens, components, overrides;
+@import url('../../node_modules/angular-calendar/css/angular-calendar.css') layer(library);
 
 @layer base {
   @include meta.load-css('base/reset');
   @include meta.load-css('base/typography');
 }
 
-@layer theme {
-  @include meta.load-css('themes/brand');
-
-  :root {
-    /* Semantic tokens */
-    /* Backgrounds and surface colours */
-    --colour-bg-surface: var(--csss-brand-cream); /* On large empty space */
-    --colour-bg-on-surface: var(--csss-brand-grey); /* For things on top of surface */
-    --colour-bg-primary: var(--csss-brand-black); /* For buttons */
-    --colour-bg-secondary: var(--csss-brand-teal);
-    --colour-bg-disabled: var(--csss-brand-grey);
-
-    /* Text colours */
-    --colour-text-surface: var(--csss-brand-black); /* For body text and subtitles */
-    --colour-text-on-surface: var(--csss-brand-grey);
-    --colour-text-primary: var(--csss-brand-cream); /* For headings and high-emphasis body text */
-    --colour-text-secondary: var(--csss-brand-cream); /* For body text and subtitles */
-    --colour-text-disabled: var(--csss-brand-cream); /* Unclickable or inactive text */
-
-    /* Buttons and link colours */
-    --colour-action-primary: var(--csss-brand-black); /* Neutral buttons, links */
-    --colour-action-secondary: var(--csss-brand-black); /* Other buttons */
-
-    /* Utility colours */
-    --colour-danger: var(--app-red);
-    --colour-warning: var(--app-yellow);
-    --colour-success: var(--app-green);
-
-    /* Structure */
-    --border-radius-default: 10px;
-
-    /* Deprecated tokens, don't use, kept for the bus widget */
-    --colour-accent-blue: var(--csss-brand-blue);
-    --colour-accent-blue-fg: var(--csss-brand-cream);
-
-    --colour-accent-teal: var(--csss-brand-teal);
-    --colour-accent-teal-fg: var(--csss-brand-cream);
-  }
+@layer overrides {
+  @include meta.load-css('overrides/calendar');
+  @include meta.load-css('overrides/swiper');
 }
 
-@layer overrides {
-  mwl-calendar-month-view {
-    display: block;
-    border-radius: 20px;
-    overflow: hidden;
-    font-family: font(heading);
-  }
+@layer tokens {
+  @include meta.load-css('tokens/structure');
+  @include meta.load-css('tokens/colours');
+  @include meta.load-css('tokens/palette');
+}
 
-  mwl-calendar-open-day-events {
-    display: none !important;
-  }
+@layer components {
+  :root {
+    --widget-radius: var(--radius-lg);
+    --widget-radius-top: var(--radius-lg) var(--radius-lg) 0 0;
 
-  .cal-cell-top {
-    border-right: none;
-    padding: 0.2rem;
-    min-height: 0;
-  }
-
-  .cal-calendar,
-  .cal-tooltip {
-    font-family: font(heading);
-  }
-
-  .cal-month-view {
-    .cal-day-cell {
-      border-right: none;
-      min-width: 0;
-    }
-
-    .cal-cell-top {
-      flex: none;
-    }
+    --badge-colour: var(--colour-secondary);
   }
 }

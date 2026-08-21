@@ -1,10 +1,20 @@
 <nav>
   @for (item of navItems(); track $index) {
-    <div class="nav-button">
+    <a
+      [routerLink]="item.url"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (isActiveChange)="setActiveIndex($event, $index)"
+      ariaCurrentWhenActive="page"
+    >
+      <svg [lucideIcon]="item.icon" [size]="48"></svg>
       <div class="nav-button__label">{{ item.label }}</div>
-      <a [routerLink]="item.url">
-        <svg [lucideIcon]="item.icon" [size]="36" color="rgba(240, 238, 216, 1)"></svg>
-      </a>
-    </div>
+    </a>
   }
+  <span
+    class="nav-slider"
+    [style.width.%]="100 / navItems().length"
+    [style.transform]="'translateX(' + activeIndex() * 100 + '%)'"
+  >
+  </span>
 </nav>

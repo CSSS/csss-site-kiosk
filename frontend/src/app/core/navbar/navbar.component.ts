@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   LucideCalendar,
   LucideDynamicIcon,
@@ -16,11 +16,13 @@ interface NavItem {
 
 @Component({
   selector: 'ksk-navbar',
-  imports: [LucideDynamicIcon, RouterLink],
+  imports: [LucideDynamicIcon, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  readonly activeIndex = signal(0);
+
   readonly navItems = signal<NavItem[]>([
     {
       label: 'HOME',
@@ -33,9 +35,15 @@ export class NavbarComponent {
       url: '/events'
     },
     {
-      label: 'CLASS SEARCH',
+      label: 'CLASSES',
       icon: LucidePencil.icon,
       url: '/classes'
     }
   ]);
+
+  protected setActiveIndex(isActive: boolean, index: number): void {
+    if (isActive) {
+      this.activeIndex.set(index);
+    }
+  }
 }

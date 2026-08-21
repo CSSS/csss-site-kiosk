@@ -1,45 +1,28 @@
-import { Component, inject, signal } from '@angular/core';
-import {
-  CalendarDatePipe,
-  type CalendarEvent,
-  CalendarMonthViewComponent,
-  DateAdapter,
-  provideCalendar
-} from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { TimeService } from '../../core/time.service';
+import { Tab, TabContent, TabList, TabPanel, Tabs } from '@angular/aria/tabs';
+import { Component, signal } from '@angular/core';
+import { CalendarEvent } from 'angular-calendar';
+import { EventsBrowserComponent } from './events-browser/events-browser.component';
+import { EventsCalendarComponent } from './events-calendar/events-calendar.component';
 
-interface KioskCalendarMeta {
-  type: 'holiday' | 'csss' | 'sfu' | 'other';
-}
-
-type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> & Required<Pick<CalendarEvent, 'meta'>>;
+export type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> &
+  Required<Pick<CalendarEvent, 'meta'>>;
 
 @Component({
   selector: 'ksk-events-screen',
-  imports: [CalendarMonthViewComponent, CalendarDatePipe],
-  providers: [
-    provideCalendar({
-      provide: DateAdapter,
-      useFactory: adapterFactory
-    })
+  imports: [
+    EventsCalendarComponent,
+    EventsBrowserComponent,
+    TabList,
+    Tab,
+    Tabs,
+    TabPanel,
+    TabContent
   ],
   templateUrl: './events.screen.html',
   styleUrl: './events.screen.scss'
 })
 export class EventsScreen {
-  private timeService = inject(TimeService);
-  /**
-   * Number of events that can be displayed before the cell overflows.
-   */
-  protected readonly maxEvents = 5;
-
-  /**
-   * Date to highlight
-   */
-  protected viewDate = this.timeService.currentTime();
-
-  private id?: number;
+  readonly tabSelected = signal<'browse' | 'calendar'>('browse');
 
   /**
    * TODO: Have this fetched from the web server.
@@ -89,33 +72,4 @@ export class EventsScreen {
       }
     }
   ]);
-
-  ngOnDestroy(): void {
-    if (this.id !== undefined) {
-      clearInterval(this.id);
-    }
-  }
-
-  protected eventClicked(
-    event: KioskCalendarEvent,
-    day: { date: Date; events: KioskCalendarEvent[] },
-    domEvent: MouseEvent
-  ): void {
-    domEvent.stopPropagation();
-    console.log('Event', event, day);
-  }
-
-  protected dayClicked(
-    {
-      date,
-      events
-    }: {
-      date: Date;
-      events: KioskCalendarEvent[];
-    },
-    domEvent?: MouseEvent
-  ): void {
-    domEvent?.stopPropagation();
-    console.log('Day', date, events);
-  }
 }

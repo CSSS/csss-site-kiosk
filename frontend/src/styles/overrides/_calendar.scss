@@ -1,0 +1,35 @@
+// Place styles here for parts that can't work in `events-calendar.component.html`
+mwl-calendar-month-view {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  font-family: var(--font-heading);
+}
+
+mwl-calendar-open-day-events {
+  display: none !important;
+}
+
+.cal-tooltip {
+  font-family: var(--font-heading);
+}
+
+.cal-day-cell {
+  border-right: none;
+  min-width: 0;
+}
+
+.cal-cell {
+  background-color: var(--colour-bg-surface);
+  color: var(--colour-on-surface);
+}
+
+// The dates that are part of the current month
+.cal-day-number {
+  color: var(--colour-on-surface);
+}
+
+// The dates that aren't part of the current month
+.cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
+  opacity: 0.2;
+}

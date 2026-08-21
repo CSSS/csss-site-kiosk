@@ -1,0 +1,7 @@
+@use 'utilities/mixins' as *;
+
+:host {
+  @include widget();
+  display: grid; // REMOVE ME
+  place-items: center; // REMOVE ME
+}

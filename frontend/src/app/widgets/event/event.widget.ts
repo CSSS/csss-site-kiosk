@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -7,16 +6,20 @@ import {
   viewChild
 } from '@angular/core';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
+import { placeHolderImgUrl } from '../../../utils/placeholders';
+import { DateCardComponent } from '../../core/date-card/date-card.component';
 
-interface Event {
+export interface KioskEvent {
   posterUrl: string;
   title: string;
   location?: string;
+  date: Date;
 }
 
 @Component({
   selector: 'ksk-event-widget',
-  imports: [NgOptimizedImage],
+  imports: [DateCardComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './event.widget.html',
   styleUrl: './event.widget.scss'
@@ -24,41 +27,50 @@ interface Event {
 export class EventWidget implements AfterViewInit {
   swiperRef = viewChild.required<ElementRef>('swiperRef');
 
-  events: Event[] = [
+  cardWidth = 520;
+
+  events: KioskEvent[] = [
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${1}`,
+      posterUrl: placeHolderImgUrl(0),
       title: 'First Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${2}`,
+      posterUrl: placeHolderImgUrl(1),
       title: 'Second Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${3}`,
+      posterUrl: placeHolderImgUrl(2),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${4}`,
+      posterUrl: placeHolderImgUrl(3),
       title: 'First Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${5}`,
+      posterUrl: placeHolderImgUrl(4),
       title: 'Second Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${6}`,
+      posterUrl: placeHolderImgUrl(5),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
-      posterUrl: `https://dummyimage.com/580x614/333/fff&text=${7}`,
+      posterUrl: placeHolderImgUrl(6),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     }
   ];
 
@@ -80,25 +92,17 @@ export class EventWidget implements AfterViewInit {
       },
       autoplay: {
         delay: 5000,
+
         pauseOnMouseEnter: true,
         disableOnInteraction: false
       },
       coverflowEffect: {
         rotate: 0,
-        depth: 240,
+        depth: 360,
         slideShadows: false
       },
-      injectStyles: [
-        `
-        .swiper-pagination-bullet {
-          transition: transform 600ms ease;
-        }
-
-        .swiper-pagination-bullet-active {
-          transform: scale(1.5);
-        }
-`
-      ]
+      injectStylesUrls: ['/swiper/pagination-element.min.css'],
+      injectStyles: [SWIPER_PAGINATION_BULLET_STYLES]
     };
 
     Object.assign(swiperEl, swiperParams);

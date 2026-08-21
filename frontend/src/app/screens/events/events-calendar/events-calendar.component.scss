@@ -1,0 +1,49 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 5% auto 1fr;
+  color: var(--colour-on-surface);
+}
+
+.calendar-title {
+  text-align: center;
+}
+
+.month-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.cal-cell-top {
+  border-right: none;
+  padding: 0.2rem;
+  min-height: 0;
+}
+
+.cal__events {
+  display: flex;
+  gap: var(--sp-xs);
+  flex-direction: column;
+  min-height: 8rem;
+  padding: 0.2rem;
+}
+
+.cal__event {
+  display: block;
+  background-color: var(--colour-primary);
+  color: var(--colour-on-primary);
+  padding-inline: var(--sp-xs);
+  border-radius: 4px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &--holiday {
+    @extend .cal__event;
+    max-width: 6rem;
+  }
+}

@@ -1,12 +1,12 @@
 import { inject, Service } from '@angular/core';
+import {
+  KioskService as TranslinkApiService,
+  type TransLinkScheduleResponse,
+  type TransLinkStaticResponse
+} from '@csss-api';
 import { map, type Observable } from 'rxjs';
 import { IANA_TIMEZONE, LOCALE } from '../../config';
 import { TimeService } from '../../core/time.service';
-import {
-  type TransLinkScheduleResponse,
-  type TransLinkStaticResponse
-} from '../generated/csss-backend';
-import { TranslinkService as TranslinkApiService } from '../generated/csss-backend/api/translink.service';
 import { ObservableCache } from '../observable-cache';
 
 export interface DepartureInfo {

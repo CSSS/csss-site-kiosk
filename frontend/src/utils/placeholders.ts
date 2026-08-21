@@ -1,0 +1,8 @@
+const PLACEHOLDER_DIR_URL = 'events/placeholders/';
+const PLACEHOLDER_IMG_URLS = ['ai-cyber-security.png', 'cupping.jpg', 'touch-grass.png'];
+
+export function placeHolderImgUrl(index: number): string {
+  const url = `${PLACEHOLDER_DIR_URL}r_${PLACEHOLDER_IMG_URLS[index % PLACEHOLDER_IMG_URLS.length]}`;
+  console.log(url);
+  return url;
+}

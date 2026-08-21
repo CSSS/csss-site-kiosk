@@ -1,82 +1,84 @@
-<h2>Year</h2>
-@for (year of yearsResult(); track year) {
-  <label>
-    <input
-      type="radio"
-      [value]="year"
-      [checked]="selectedYear() === year"
-      (change)="selectedYear.set(year)"
-    />
-    {{ year }}
-  </label>
-}
-
-@if (selectedYear()) {
-  <h2>Term</h2>
-  @for (term of termsResult(); track term) {
-    <label>
-      <input
-        type="radio"
-        [value]="term"
-        [checked]="selectedTerm() === term"
-        (change)="selectedTerm.set(term)"
-      />
-      {{ term | titlecase }}
-    </label>
-  }
-}
-
-@if (selectedTerm() && termsResult().length) {
-  <h2>Departments</h2>
-  @for (department of departments; track department) {
-    <label>
-      <input
-        type="radio"
-        [value]="department"
-        [checked]="selectedDepartment() === department"
-        (change)="selectedDepartment.set(department)"
-      />
-      {{ department | uppercase }}
-    </label>
-  }
-}
-
-@if (selectedDepartment() && coursesResult().length) {
-  <h2>Courses</h2>
-  @for (course of coursesResult(); track course.value) {
-    <label>
-      <input
-        type="radio"
-        [value]="course.value"
-        [checked]="selectedCourse() === course.value"
-        (change)="selectedCourse.set(course.value)"
-      />
-      {{ course.value | uppercase }}
-    </label>
-  }
-}
-
-@if (selectedCourse() && sectionsResult().length) {
-  <h2>Sections</h2>
-  @for (section of sectionsResult(); track section.value) {
-    <label>
-      <input
-        type="radio"
-        [value]="section.value"
-        [checked]="selectedSection() === section.value"
-        (change)="selectedSection.set(section.value)"
-      />
-      {{ section.value }}
-    </label>
-  }
-}
-
-@let outline = outlineResult();
-@if (selectedSection() && outline) {
-  <h2>Outline</h2>
-  <div>{{ outline.info.description }}</div>
-  <br />
-  @for (instructor of outline.instructor; track $index) {
-    <div>Instructor {{ $index + 1 }}: {{ instructor.name }}</div>
-  }
-}
+<h2>UNDER CONSTRUCTION</h2>
+<img src="images/frog-black-background.webp" />
+<!-- <h2>Year</h2> -->
+<!-- @for (year of yearsResult(); track year) { -->
+<!--   <label> -->
+<!--     <input -->
+<!--       type="radio" -->
+<!--       [value]="year" -->
+<!--       [checked]="selectedYear() === year" -->
+<!--       (change)="selectedYear.set(year)" -->
+<!--     /> -->
+<!--     {{ year }} -->
+<!--   </label> -->
+<!-- } -->
+<!---->
+<!-- @if (selectedYear()) { -->
+<!--   <h2>Term</h2> -->
+<!--   @for (term of termsResult(); track term) { -->
+<!--     <label> -->
+<!--       <input -->
+<!--         type="radio" -->
+<!--         [value]="term" -->
+<!--         [checked]="selectedTerm() === term" -->
+<!--         (change)="selectedTerm.set(term)" -->
+<!--       /> -->
+<!--       {{ term | titlecase }} -->
+<!--     </label> -->
+<!--   } -->
+<!-- } -->
+<!---->
+<!-- @if (selectedTerm() && termsResult().length) { -->
+<!--   <h2>Departments</h2> -->
+<!--   @for (department of departments; track department) { -->
+<!--     <label> -->
+<!--       <input -->
+<!--         type="radio" -->
+<!--         [value]="department" -->
+<!--         [checked]="selectedDepartment() === department" -->
+<!--         (change)="selectedDepartment.set(department)" -->
+<!--       /> -->
+<!--       {{ department | uppercase }} -->
+<!--     </label> -->
+<!--   } -->
+<!-- } -->
+<!---->
+<!-- @if (selectedDepartment() && coursesResult().length) { -->
+<!--   <h2>Courses</h2> -->
+<!--   @for (course of coursesResult(); track course.value) { -->
+<!--     <label> -->
+<!--       <input -->
+<!--         type="radio" -->
+<!--         [value]="course.value" -->
+<!--         [checked]="selectedCourse() === course.value" -->
+<!--         (change)="selectedCourse.set(course.value)" -->
+<!--       /> -->
+<!--       {{ course.value | uppercase }} -->
+<!--     </label> -->
+<!--   } -->
+<!-- } -->
+<!---->
+<!-- @if (selectedCourse() && sectionsResult().length) { -->
+<!--   <h2>Sections</h2> -->
+<!--   @for (section of sectionsResult(); track section.value) { -->
+<!--     <label> -->
+<!--       <input -->
+<!--         type="radio" -->
+<!--         [value]="section.value" -->
+<!--         [checked]="selectedSection() === section.value" -->
+<!--         (change)="selectedSection.set(section.value)" -->
+<!--       /> -->
+<!--       {{ section.value }} -->
+<!--     </label> -->
+<!--   } -->
+<!-- } -->
+<!---->
+<!-- @let outline = outlineResult(); -->
+<!-- @if (selectedSection() && outline) { -->
+<!--   <h2>Outline</h2> -->
+<!--   <div>{{ outline.info.description }}</div> -->
+<!--   <br /> -->
+<!--   @for (instructor of outline.instructor; track $index) { -->
+<!--     <div>Instructor {{ $index + 1 }}: {{ instructor.name }}</div> -->
+<!--   } -->
+<!-- } -->

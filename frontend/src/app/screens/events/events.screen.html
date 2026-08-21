@@ -1,33 +1,22 @@
-<!-- Custom template for the cell that contains a day -->
-<ng-template #customCell let-day="day" let-locale="locale">
-  @let holiday = day.events.find(e => e.meta?.type === 'holiday');
-  <div class="cal-cell-top">
-    <span class="cal-day-number">{{
-      day.date.toISOString() | calendarDate: 'monthViewDayNumber' : locale
-    }}</span>
-    @if (holiday) {
-      <span class="cal__event--holiday">{{ holiday.title }}</span>
-    }
+<!-- TODO: Make a generic tabs component -->
+<div ngTabs>
+  <div
+    class="sliding-window"
+    [style.transform]="tabSelected() === 'calendar' ? 'translateX(-50%)' : 'translateX(0)'"
+  >
+    <div ngTabPanel [preserveContent]="true" value="browse">
+      <ng-template ngTabContent><ksk-events-browser [events]="events()" /></ng-template>
+    </div>
+    <div ngTabPanel [preserveContent]="true" value="calendar">
+      <ng-template ngTabContent><ksk-events-calendar [events]="events()" /></ng-template>
+    </div>
   </div>
-  <div class="cal__events">
-    @let noHolidays = day.events.filter(e => e.meta?.type !== 'holiday');
-    @if (day.events.length > 0) {
-      @let displayEvents =
-        noHolidays.length <= maxEvents
-          ? noHolidays.slice(0, maxEvents)
-          : noHolidays.slice(0, maxEvents - 1);
-      @for (event of displayEvents; track event.id ?? event) {
-        <button class="cal__event" (click)="eventClicked(event, day, $event)">
-          {{ event.title }}
-        </button>
-      }
-      @if (day.events.length > maxEvents) {
-        <button class="cal__event" (click)="dayClicked(day, $event)">
-          +{{ day.events.length - maxEvents + 1 }} more
-        </button>
-      }
-    }
+  <div
+    ngTabList
+    [(selectedTab)]="tabSelected"
+    [class.calendar-selected]="tabSelected() === 'calendar'"
+  >
+    <div ngTab class="h3" value="browse">Browse</div>
+    <div ngTab class="h3" value="calendar">Calendar</div>
   </div>
-</ng-template>
-
-<mwl-calendar-month-view [viewDate]="viewDate" [events]="events()" [cellTemplate]="customCell" />
+</div>
