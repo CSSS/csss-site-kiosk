@@ -1,0 +1,5 @@
+@use 'utilities/mixins' as *;
+
+:host {
+  @include widget();
+}

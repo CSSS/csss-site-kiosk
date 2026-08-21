@@ -7,7 +7,6 @@
   --carousel-height: calc(var(--card-height) + var(--card-offset));
   --widget-background-colour: var(--colour-bg-surface);
   @include widget();
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }

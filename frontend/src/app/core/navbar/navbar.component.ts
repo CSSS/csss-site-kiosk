@@ -21,6 +21,8 @@ interface NavItem {
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  readonly activeIndex = signal(0);
+
   readonly navItems = signal<NavItem[]>([
     {
       label: 'HOME',
@@ -38,4 +40,10 @@ export class NavbarComponent {
       url: '/classes'
     }
   ]);
+
+  protected setActiveIndex(isActive: boolean, index: number): void {
+    if (isActive) {
+      this.activeIndex.set(index);
+    }
+  }
 }

@@ -32,6 +32,9 @@
   background-color: $bg-colour;
   border-radius: $border-radius;
   overflow: hidden;
+  display: block;
+  height: 100%;
+  width: 100%;
   border: 1px solid var(--colour-outline);
 
   > h2 {
