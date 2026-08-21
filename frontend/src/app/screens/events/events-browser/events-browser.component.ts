@@ -1,4 +1,4 @@
-import { NgOptimizedImage, SlicePipe } from '@angular/common';
+import { DatePipe, NgOptimizedImage, SlicePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -12,6 +12,7 @@ import { Pagination } from 'swiper/modules';
 import { KioskEvent } from '../../../widgets/event/event.widget';
 import { KioskCalendarEvent } from '../events.screen';
 
+import { LucideCalendar, LucideClock } from '@lucide/angular';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -20,7 +21,7 @@ import { DateCardComponent } from '../../../core/date-card/date-card.component';
 
 @Component({
   selector: 'ksk-events-browser',
-  imports: [NgOptimizedImage, SlicePipe, DateCardComponent],
+  imports: [NgOptimizedImage, SlicePipe, DateCardComponent, DatePipe, LucideCalendar, LucideClock],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './events-browser.component.html',
   styleUrl: './events-browser.component.scss'

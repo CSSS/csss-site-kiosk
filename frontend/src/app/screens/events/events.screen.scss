@@ -10,7 +10,7 @@
   overflow: hidden;
   border-radius: var(--radius-md);
   min-height: 100%;
-  background-color: var(--colour-bg-on-surface);
+  background-color: var(--colour-bg-surface);
 }
 
 [ngTabPanel] {
@@ -26,19 +26,19 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--colour-primary);
-  color: var(--colour-on-primary);
-  border-radius: var(--border-radius-default);
+  background-color: var(--colour-bg-surface);
+  color: var(--colour-secondary);
+  border-radius: var(--radius-md);
 
   &::after {
     content: '';
     position: absolute;
-    bottom: 0rem;
+    top: 0rem;
     left: calc(var(--tab-selector-width) / 2);
     width: var(--tab-selector-width);
     height: 0.25rem;
     border-radius: 10px;
-    background-color: var(--colour-on-secondary);
+    background-color: var(--colour-secondary);
     pointer-events: none;
     transition: var(--tab-transition);
   }
@@ -54,7 +54,7 @@
 }
 
 [ngTab][data-active='false'] {
-  color: var(--colour-control);
+  color: var(--colour-on-surface);
 }
 
 .sliding-window {

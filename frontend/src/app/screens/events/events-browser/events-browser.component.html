@@ -2,8 +2,15 @@
 <div class="next">
   @if (displayEvents.length > 0) {
     @let event = displayEvents[0];
-    <div class="next__card">
-      <img [ngSrc]="event.posterUrl" alt="title" [width]="DUMMY_IMG_W" [height]="DUMMY_IMG_H" />
+    <div class="next__img">
+      <img [ngSrc]="event.posterUrl" alt="title" fill />
+    </div>
+    <div class="next__info">
+      <h2>{{ event.title }}</h2>
+      <div class="datetime"><svg lucideCalendar></svg>{{ event.date | date: 'longDate' }}</div>
+      <div class="datetime"><svg lucideClock></svg>{{ event.date | date: 'shortTime' }}</div>
+      <div></div>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, autem.</p>
     </div>
   }
 </div>
