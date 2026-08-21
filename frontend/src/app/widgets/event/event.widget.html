@@ -4,10 +4,12 @@
     <swiper-slide>
       <ksk-date-card
         class="card"
-        [date]="testDate"
+        [date]="event.date"
         [title]="event.title"
         description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod, libero officia quasi repellat odit deserunt. Impedit molestiae tenetur nemo accusamus?"
         [imgSrc]="event.posterUrl"
+        [width]="cardWidth"
+        [height]="(cardWidth * 5) / 4"
       />
     </swiper-slide>
   }

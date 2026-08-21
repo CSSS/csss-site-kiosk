@@ -16,10 +16,11 @@ import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { placeHolderImgUrl } from '../../../../utils/placeholders';
+import { DateCardComponent } from '../../../core/date-card/date-card.component';
 
 @Component({
   selector: 'ksk-events-browser',
-  imports: [NgOptimizedImage, SlicePipe],
+  imports: [NgOptimizedImage, SlicePipe, DateCardComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './events-browser.component.html',
   styleUrl: './events-browser.component.scss'
@@ -37,37 +38,44 @@ export class EventsBrowserComponent implements AfterViewInit {
     {
       posterUrl: placeHolderImgUrl(0),
       title: 'First Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(1),
       title: 'Second Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(2),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(3),
       title: 'Fourth Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(4),
       title: 'Fifth Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(5),
       title: 'Sixth Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(6),
       title: 'Seventh Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     }
   ];
 

@@ -2,7 +2,7 @@
 
 :host {
   --info-height: 45%;
-  --inline-padding: var(--sp-2xl);
+  --inline-padding: 10%;
   display: block;
   position: relative;
   height: 100%;
@@ -20,19 +20,20 @@ img {
   position: absolute;
   bottom: var(--info-height);
   left: var(--inline-padding);
-  width: 16%;
+  height: 16%;
   aspect-ratio: 1/1;
   transform: translate(0, calc(var(--info-height)));
   z-index: 2;
+  container-type: inline-size;
 }
 
 .day {
-  font-size: var(--font-size-3xl);
+  font-size: 70cqw;
 }
 
 .month {
   text-transform: uppercase;
-  font-size: var(--font-size-lg);
+  font-size: 30cqw;
 }
 
 .info {
@@ -42,7 +43,7 @@ img {
   bottom: 0;
   width: 100%;
   z-index: 1;
-  padding-block: var(--sp-3xl);
+  padding-block: 15%;
   padding-inline: var(--inline-padding);
 }
 

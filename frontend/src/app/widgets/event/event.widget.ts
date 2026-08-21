@@ -14,6 +14,7 @@ export interface KioskEvent {
   posterUrl: string;
   title: string;
   location?: string;
+  date: Date;
 }
 
 @Component({
@@ -26,43 +27,50 @@ export interface KioskEvent {
 export class EventWidget implements AfterViewInit {
   swiperRef = viewChild.required<ElementRef>('swiperRef');
 
-  testDate = new Date();
+  cardWidth = 520;
 
   events: KioskEvent[] = [
     {
       posterUrl: placeHolderImgUrl(0),
       title: 'First Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(1),
       title: 'Second Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(2),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(3),
       title: 'First Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(4),
       title: 'Second Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(5),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     },
     {
       posterUrl: placeHolderImgUrl(6),
       title: 'Third Poster',
-      location: 'Location'
+      location: 'Location',
+      date: new Date()
     }
   ];
 
@@ -90,7 +98,7 @@ export class EventWidget implements AfterViewInit {
       },
       coverflowEffect: {
         rotate: 0,
-        depth: 240,
+        depth: 360,
         slideShadows: false
       },
       injectStylesUrls: ['/swiper/pagination-element.min.css'],

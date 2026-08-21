@@ -12,7 +12,13 @@
   <swiper-container init="false" #swiperRef>
     @for (event of displayEvents | slice: 1; track event.title) {
       <swiper-slide>
-        <img [ngSrc]="event.posterUrl" alt="title" [width]="DUMMY_IMG_W" [height]="DUMMY_IMG_H" />
+        <ksk-date-card
+          [date]="event.date"
+          [title]="event.title"
+          [imgSrc]="event.posterUrl"
+          [width]="DUMMY_IMG_W"
+          [height]="DUMMY_IMG_H"
+        />
       </swiper-slide>
     }
   </swiper-container>

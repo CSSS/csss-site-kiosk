@@ -1,7 +1,6 @@
 @use 'utilities/mixins' as *;
 
 :host {
-  --host-height: 55.625rem;
   --card-height: 38.375rem;
   --card-offset: 5rem;
   --carousel-height: calc(var(--card-height) + var(--card-offset));
