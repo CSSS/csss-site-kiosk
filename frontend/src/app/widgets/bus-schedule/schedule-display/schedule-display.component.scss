@@ -8,13 +8,10 @@
   font-family: var(--font-heading);
 
   &__label {
-    line-height: 1;
-    font-size: var(--font-size-2xl);
+    @include badge();
     width: 4.25rem;
     position: relative;
     top: var(--sp-xl);
-    background-color: var(--colour-bg-surface);
-    border-radius: var(--sp-xs);
     padding: var(--sp-xs);
   }
 
@@ -24,6 +21,7 @@
 
   &__units {
     font-size: var(--font-size-lg);
+    color: var(--colour-on-surface-soft);
   }
 
   &__dropdown {
@@ -52,7 +50,8 @@
   width: 9rem;
   height: 9rem;
   border-radius: 50%;
-  border: 0.75rem solid var(--colour-status);
+  // border: 0.75rem solid var(--colour-status);
+  border: 1px var(--colour-outline) solid;
   color: var(--colour-text);
 
   &--arrived {

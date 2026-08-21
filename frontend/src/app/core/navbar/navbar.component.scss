@@ -24,12 +24,12 @@ nav {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  border: 1px solid var(--colour-outline);
 }
 
 a {
   display: flex;
   color: var(--nav-button-colour);
   justify-content: center;
-  max-width: 6.25rem;
   align-items: center;
 }
