@@ -1,11 +1,9 @@
-@use 'utilities/functions' as *;
-
 // Place styles here for parts that can't work in `events-calendar.component.html`
 mwl-calendar-month-view {
   display: block;
   width: 100%;
   overflow: hidden;
-  font-family: font(heading);
+  font-family: var(--font-heading);
 }
 
 mwl-calendar-open-day-events {
@@ -13,7 +11,7 @@ mwl-calendar-open-day-events {
 }
 
 .cal-tooltip {
-  font-family: font(heading);
+  font-family: var(--font-heading);
 }
 
 .cal-day-cell {
