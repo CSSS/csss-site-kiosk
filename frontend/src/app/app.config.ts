@@ -2,7 +2,7 @@ import { DATE_PIPE_DEFAULT_OPTIONS, IMAGE_LOADER, ImageLoaderConfig } from '@ang
 import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideApi as provideCsssApi } from 'csss-api';
+import { provideApi as provideCsssApi } from '@csss-api';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';

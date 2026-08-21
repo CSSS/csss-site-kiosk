@@ -26,19 +26,19 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--colour-bg-primary);
-  color: var(--colour-text-primary);
+  background-color: var(--colour-primary);
+  color: var(--colour-on-primary);
   border-radius: var(--border-radius-default);
 
   &::after {
     content: '';
     position: absolute;
-    bottom: 0.5rem;
+    bottom: 0rem;
     left: calc(var(--tab-selector-width) / 2);
     width: var(--tab-selector-width);
     height: 0.25rem;
     border-radius: 10px;
-    background-color: currentColor;
+    background-color: var(--colour-on-secondary);
     pointer-events: none;
     transition: var(--tab-transition);
   }
@@ -51,6 +51,10 @@
 [ngTab] {
   flex: 1;
   text-align: center;
+}
+
+[ngTab][data-active='false'] {
+  color: var(--colour-control);
 }
 
 .sliding-window {

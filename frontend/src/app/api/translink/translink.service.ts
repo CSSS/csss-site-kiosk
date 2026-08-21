@@ -3,7 +3,7 @@ import {
   KioskService as TranslinkApiService,
   type TransLinkScheduleResponse,
   type TransLinkStaticResponse
-} from 'csss-api';
+} from '@csss-api';
 import { map, type Observable } from 'rxjs';
 import { IANA_TIMEZONE, LOCALE } from '../../config';
 import { TimeService } from '../../core/time.service';

@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, effect, input, signal } from '@angular/core';
-import { BusStatus } from 'csss-api';
+import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 
 const DROPDOWN_TIMEOUT_MS = 3000;

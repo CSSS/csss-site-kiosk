@@ -3,7 +3,7 @@
   height: 100%;
   display: grid;
   grid-template-rows: 5% auto 1fr;
-  color: var(--colour-text-on-surface);
+  color: var(--colour-on-surface);
 }
 
 .calendar-title {
@@ -33,8 +33,8 @@
 
 .cal__event {
   display: block;
-  background-color: var(--colour-bg-primary);
-  color: var(--colour-text-primary);
+  background-color: var(--colour-primary);
+  color: var(--colour-on-primary);
   padding-inline: var(--sp-xs);
   border-radius: 4px;
 

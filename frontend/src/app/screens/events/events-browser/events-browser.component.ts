@@ -12,9 +12,9 @@ import { Pagination } from 'swiper/modules';
 import { KioskEvent } from '../../../widgets/event/event.widget';
 import { KioskCalendarEvent } from '../events.screen';
 
+import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../../styles/overrides/swiper';
 import { placeHolderImgUrl } from '../../../../utils/placeholders';
 
 @Component({
