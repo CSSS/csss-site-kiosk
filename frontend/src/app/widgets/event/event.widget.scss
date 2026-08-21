@@ -1,15 +1,13 @@
 @use 'utilities/mixins' as *;
-@use 'utilities/functions' as *;
 
 :host {
   --host-height: 55.625rem;
   --card-height: 38.375rem;
   --card-offset: 5rem;
   --carousel-height: calc(var(--card-height) + var(--card-offset));
-  --widget-background-colour: var(--colour-bg-on-surface);
-  @include widget(var(--widget-background-colour));
+  --widget-background-colour: var(--colour-bg-surface);
+  @include widget();
   overflow: hidden;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -27,7 +25,7 @@ swiper-container {
 swiper-slide {
   @include flex-center(row);
   position: relative;
-  max-height: var(--card-height);
+  height: var(--card-height);
   width: 36.25rem;
 }
 
@@ -36,10 +34,6 @@ swiper-slide {
 }
 
 .card {
-  position: relative;
-  overflow: hidden;
-  @include card();
-
   &::after {
     content: '';
     position: absolute;
@@ -50,61 +44,5 @@ swiper-slide {
     opacity: 1;
     transition: opacity 600ms ease;
     z-index: 2;
-  }
-
-  &__img {
-    @include card();
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    padding: 0;
-  }
-
-  &__datebox {
-    --datetime-height: 6rem;
-    position: absolute;
-    top: calc(50% - (var(--datetime-height) / 2));
-    left: spacing('2xl');
-    height: var(--datetime-height);
-    aspect-ratio: 1/1;
-    background-color: var(--colour-bg-primary);
-    z-index: 1;
-    font-family: font(heading);
-    text-align: center;
-    border-radius: 10%;
-
-    @include flex-center(column, 0, both);
-  }
-
-  &__date {
-    line-height: 0.9;
-    color: var(--colour-text-secondary);
-    font-size: font-size('4xl');
-  }
-
-  &__month {
-    line-height: 1;
-    color: var(--colour-text-secondary);
-    font-size: font-size(base);
-  }
-
-  &__infobox {
-    position: absolute;
-    background-color: var(--colour-bg-surface);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 50%;
-    width: 100%;
-    background-color: var(--colour-bg-surface);
-    padding: 4.75rem spacing('2xl') spacing('2xl');
-
-    display: grid;
-    gap: spacing(sm);
-    grid-template-rows: 1rem auto 1fr;
-  }
-
-  &__time {
-    color: var(--colour-text-base);
   }
 }

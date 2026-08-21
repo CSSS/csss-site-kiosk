@@ -1,0 +1,49 @@
+@use 'palettes/app' as app;
+
+:root {
+  /* CSSS brand palette */
+  @each $name, $value in app.$csss-brand {
+    --csss-brand-#{$name}: #{$value};
+  }
+
+  /* Application specific palette */
+  @each $name, $value in app.$app {
+    --app-#{$name}: #{$value};
+  }
+
+  /* Surfaces */
+  // For the farthest back background, below interactive components
+  --colour-bg-surface-low: hsl(0, 0%, 88%);
+
+  // For main foreground components e.g. widgets, cards, navbar, etc.
+  --colour-bg-surface: hsl(0, 0%, 100%);
+
+  // Headers and icons
+  --colour-on-surface-strong: hsl(0, 0%, 0%);
+
+  // Body text
+  --colour-on-surface: hsl(0, 0%, 3%);
+
+  // De-emphasized text
+  --colour-on-surface-soft: hsl(0, 0%, 23%);
+
+  --colour-outline: hsl(0, 0%, 62%);
+
+  --colour-on-primary: hsl(0, 0%, 100%);
+
+  // For interactive spots that don't use the primary colours
+  --colour-control: hsl(0, 0%, 81%);
+  --colour-control-active: hsl(0, 0%, 62%);
+
+  /* Utility colours */
+  --colour-danger: var(--app-red);
+  --colour-warning: var(--app-yellow);
+  --colour-success: var(--app-green);
+
+  /* Deprecated tokens, don't use, kept for the bus widget */
+  --colour-accent-blue: var(--csss-brand-blue);
+  --colour-accent-blue-fg: var(--csss-brand-cream);
+
+  --colour-accent-teal: var(--csss-brand-teal);
+  --colour-accent-teal-fg: var(--csss-brand-cream);
+}

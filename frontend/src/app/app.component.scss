@@ -1,14 +1,28 @@
-@use 'utilities/functions' as f;
-
 :host {
+  position: relative;
   max-width: 1080px;
   aspect-ratio: 9 / 16;
   display: grid;
-  grid-template-rows: 15% 15% 1fr 150px;
-  background-color: var(--colour-bg-surface);
-  padding-inline: 5rem;
+  grid-template-rows: 16% 8% 1fr 8%;
+  background-color: var(--colour-primary);
+}
+
+* {
+  position: relative;
+  z-index: 1;
 }
 
 main {
-  min-height: 100%;
+  padding-inline: 8.5%;
+  padding-block: 6%;
+}
+
+.background {
+  position: absolute;
+  height: 70%;
+  width: 100%;
+  bottom: 0;
+  border-radius: var(--widget-radius-top);
+  background-color: var(--colour-bg-surface-low);
+  z-index: 0;
 }

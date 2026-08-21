@@ -1,0 +1,7 @@
+@use 'palettes/cherry' as cherry;
+@use 'utilities/mixins' as mixins;
+
+:root,
+[data-palette='cherry'] {
+  @include mixins.generate-palette(cherry.$palette);
+}

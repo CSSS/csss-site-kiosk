@@ -1,7 +1,8 @@
 @use 'utilities/functions' as *;
 
 :host {
-  --nav-button-background-colour: var(--colour-action-primary);
+  --nav-button-colour: var(--colour-on-surface-strong);
+  --nav-button-colour-active: var(--primary-dark-30);
   height: 100%;
   width: 100%;
   display: flex;
@@ -16,6 +17,8 @@
 }
 
 nav {
+  border-radius: var(--widget-radius-top);
+  background-color: var(--colour-bg-surface);
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -25,10 +28,8 @@ nav {
 
 a {
   display: flex;
+  color: var(--nav-button-colour);
   justify-content: center;
   max-width: 6.25rem;
   align-items: center;
-  background-color: var(--nav-button-background-colour);
-  padding: 2rem;
-  border-radius: 50%;
 }

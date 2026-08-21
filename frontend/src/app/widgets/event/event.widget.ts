@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,6 +8,7 @@ import {
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
 import { placeHolderImgUrl } from '../../../utils/placeholders';
+import { DateCardComponent } from '../../core/date-card/date-card.component';
 
 export interface KioskEvent {
   posterUrl: string;
@@ -18,13 +18,15 @@ export interface KioskEvent {
 
 @Component({
   selector: 'ksk-event-widget',
-  imports: [NgOptimizedImage],
+  imports: [DateCardComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './event.widget.html',
   styleUrl: './event.widget.scss'
 })
 export class EventWidget implements AfterViewInit {
   swiperRef = viewChild.required<ElementRef>('swiperRef');
+
+  testDate = new Date();
 
   events: KioskEvent[] = [
     {
@@ -82,6 +84,7 @@ export class EventWidget implements AfterViewInit {
       },
       autoplay: {
         delay: 5000,
+
         pauseOnMouseEnter: true,
         disableOnInteraction: false
       },

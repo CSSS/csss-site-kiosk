@@ -1,0 +1,57 @@
+@use 'utilities/mixins' as *;
+
+:host {
+  --info-height: 45%;
+  --inline-padding: var(--sp-2xl);
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  @include card();
+}
+
+img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.date {
+  @include badge();
+  position: absolute;
+  bottom: var(--info-height);
+  left: var(--inline-padding);
+  width: 16%;
+  aspect-ratio: 1/1;
+  transform: translate(0, calc(var(--info-height)));
+  z-index: 2;
+}
+
+.day {
+  font-size: var(--font-size-3xl);
+}
+
+.month {
+  text-transform: uppercase;
+  font-size: var(--font-size-lg);
+}
+
+.info {
+  background-color: var(--colour-bg-surface);
+  height: var(--info-height);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  padding-block: var(--sp-2xl);
+  padding-inline: var(--inline-padding);
+}
+
+h2 {
+  margin-bottom: 5%;
+}
+
+p {
+  text-overflow: ellipsis;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+}

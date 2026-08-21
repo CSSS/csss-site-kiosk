@@ -29,42 +29,42 @@
   }
 }
 
-@mixin type-scale($key) {
-  $style: map.get(v.$type-scale, $key);
-
-  @if not $style {
-    @error "Unknown type scale key: #{$key}. Available keys: #{map.keys(v.$type-scale)}";
-  }
-
-  font-size: map.get($style, size);
-  line-height: map.get($style, line-height);
-  font-weight: map.get($style, weight);
-}
-
-@mixin hover-shade($colour, $amount: 85%) {
-  &:hover {
-    background-color: color-mix(in oklch, $color $amount, black);
-  }
-}
-
-@mixin widget(
-  $bg-colour: var(--colour-bg-on-surface),
-  $border-radius: var(--border-radius-default)
-) {
+@mixin widget($bg-colour: var(--colour-bg-surface), $border-radius: var(--widget-radius)) {
   background-color: $bg-colour;
   border-radius: $border-radius;
   overflow: hidden;
+  border: 1px solid var(--colour-outline);
 
   > h2 {
-    color: var(--colour-text-primary);
-    font-size: 2.25rem;
+    color: var(--colour-on-surface-strong);
     text-align: center;
     margin: 1rem 0;
   }
 }
 
-@mixin card($bg-colour: var(--colour-bg-surface), $border-radius: var(--border-radius-default)) {
+@mixin card($bg-colour: var(--colour-bg-surface), $border-radius: var(--radius-lg)) {
   background-color: $bg-colour;
   border-radius: $border-radius;
   overflow: hidden;
+  border: 1px solid var(--colour-outline);
+}
+
+@mixin badge() {
+  background-color: var(--colour-primary-dark-30);
+  color: var(--colour-on-primary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  padding: var(--sp-sm);
+}
+
+@mixin generate-palette($palette) {
+  @each $name, $value in $palette {
+    --colour-#{$name}: #{$value};
+    --colour-#{$name}-light-10: color-mix(in srgb, var(--colour-#{$name}), white 10%);
+    --colour-#{$name}-light-20: color-mix(in srgb, var(--colour-#{$name}), white 20%);
+    --colour-#{$name}-dark-30: color-mix(in srgb, var(--colour-#{$name}), black 30%);
+  }
 }

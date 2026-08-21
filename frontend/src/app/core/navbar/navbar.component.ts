@@ -33,7 +33,7 @@ export class NavbarComponent {
       url: '/events'
     },
     {
-      label: 'CLASS SEARCH',
+      label: 'CLASSES',
       icon: LucidePencil.icon,
       url: '/classes'
     }

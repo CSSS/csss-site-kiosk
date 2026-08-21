@@ -25,14 +25,6 @@
   @return map.get(v.$fonts, $key);
 }
 
-@function font-weight($key) {
-  @if not map.has-key(v.$font-weights, $key) {
-    @error "Unknown font weight key: #{$key}. Available weights: #{map.keys(v.$font-weights)}";
-  }
-
-  @return map.get(v.$font-weights, $key);
-}
-
 @function line-height($key) {
   @if not map.has-key(v.$line-heights, $key) {
     @error "Unknown line height key: #{$key}. Available line heights: #{map.keys(v.$line-heights)}";

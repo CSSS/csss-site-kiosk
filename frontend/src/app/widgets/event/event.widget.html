@@ -1,29 +1,14 @@
-<h2>events</h2>
+<h2>COMMUNITY BOARD</h2>
 <swiper-container init="false" #swiperRef>
   @for (event of events; track $index) {
     <swiper-slide>
-      <div class="card">
-        <img
-          class="card__img"
-          [ngSrc]="event.posterUrl"
-          alt="title"
-          width="540"
-          height="675"
-          priority
-        />
-        <div class="card__datebox">
-          <div class="card__date">19</div>
-          <div class="card__month">JUN</div>
-        </div>
-        <div class="card__infobox">
-          <span class="card__time">4:30PM</span>
-          <h2>Tech Fair Committee</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod, libero officia quasi
-            repellat odit deserunt. Impedit molestiae tenetur nemo accusamus?
-          </p>
-        </div>
-      </div>
+      <ksk-date-card
+        class="card"
+        [date]="testDate"
+        [title]="event.title"
+        description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod, libero officia quasi repellat odit deserunt. Impedit molestiae tenetur nemo accusamus?"
+        [imgSrc]="event.posterUrl"
+      />
     </swiper-slide>
   }
 </swiper-container>
