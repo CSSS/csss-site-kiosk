@@ -44,10 +44,14 @@ function main() {
   app.get('/health', async (_, res) => {
     try {
       const version = (await readFile(VERSION_PATH, 'utf8')).trim();
-      res.type('text/plain').send(version);
+      res.set('Cache-Control', 'no-store').type('text/plain').send(version);
     } catch (err) {
       console.error('Failed to read version:', err);
-      res.status(503).type('text/plain').send('Version unavailable.');
+      res
+        .status(503)
+        .set('Cache-Control', 'no-store')
+        .type('text/plain')
+        .send('Version unavailable.');
     }
   });
 
@@ -71,6 +75,12 @@ function main() {
 
   // Serve the built frontend files
   app.use(express.static(FRONTEND_PATH));
+
+  // Add SPA fallback
+  app.get('/{*splat}', (_, res) => {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.sendFile(join(FRONTEND_PATH, 'index.html'));
+  });
 
   app.listen(PORT, '127.0.0.1', () => {
     console.log(`Kiosk server running on http://localhost:${PORT}`);
