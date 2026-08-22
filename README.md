@@ -97,3 +97,4 @@ The proxy server uses `server/.env`.
 | KIOSK_API_SECRET | `secret_on_backend`     | The authorization bearer key that the CSSS backend server will use to authenticate requests. |
 | PROXY_TARGET     | `http://localhost:3049` | Where the proxy will forward its requests to.                                               |
 | SERVER_PORT      | `8080`                  | The port the proxy will be served from.                                                  |
+# bounty-fix-ref: https://github.com/CSSS/csss-site-kiosk/issues/26
