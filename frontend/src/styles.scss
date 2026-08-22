@@ -28,3 +28,13 @@
     --badge-colour: var(--colour-secondary);
   }
 }
+
+html,
+body,
+app-root {
+  // Disables pinch-to-zoom
+  touch-action: pan-x pan-y;
+
+  // Disables swipe down to refresh
+  overscroll-behavior: none;
+}
