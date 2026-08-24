@@ -12,6 +12,15 @@ export class TimeService implements OnDestroy {
 
   readonly currentTime = this._now.asReadonly();
 
+  readonly startTime = new Date();
+
+  /**
+   * @returns The app's uptime in milliseconds.
+   */
+  get uptime(): number {
+    return this._now().getTime() - this.currentTime().getTime();
+  }
+
   readonly minuteTick$: Observable<number> = toObservable(this._now).pipe(
     map(time => Math.floor(time.getTime() / MINUTE_IN_MS)),
     distinctUntilChanged(),
