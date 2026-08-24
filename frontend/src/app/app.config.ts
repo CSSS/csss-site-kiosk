@@ -1,11 +1,18 @@
 import { DATE_PIPE_DEFAULT_OPTIONS, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  LOCALE_ID,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideApi as provideCsssApi } from '@csss-api';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';
+import { ActivityService } from './core/activity.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +35,9 @@ export const appConfig: ApplicationConfig = {
       useValue: (config: ImageLoaderConfig): string => {
         return `${environment.mediaUrl}/images/${config.src}`;
       }
-    }
+    },
+    provideAppInitializer(() => {
+      inject(ActivityService);
+    })
   ]
 };
