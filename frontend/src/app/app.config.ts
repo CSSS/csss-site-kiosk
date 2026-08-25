@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';
 import { ActivityService } from './core/activity.service';
+import { DebugService } from './core/debug.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +39,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideAppInitializer(() => {
       inject(ActivityService);
+      inject(DebugService);
     })
   ]
 };
