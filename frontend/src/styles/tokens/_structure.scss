@@ -1,4 +1,12 @@
 :root {
+  --header-height: 24%;
+  --navbar-height: 8%;
+  --content-height: calc(100% - var(--header-height) - var(--navbar-height));
+
+  --content-inline-padding: 8.5%;
+  --content-block-padding: 6%;
+  --content-width: calc(100vw - 2 * var(--content-inline-padding));
+
   --sp-xs: 0.25rem;
   --sp-sm: 0.5rem;
   --sp-md: 1rem;

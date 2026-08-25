@@ -3,7 +3,7 @@
   max-width: 1080px;
   aspect-ratio: 9 / 16;
   display: grid;
-  grid-template-rows: 16% 8% 1fr 8%;
+  grid-template-rows: 16% 8% var(--content-height) var(--navbar-height);
   background-color: var(--colour-primary);
 }
 
@@ -13,8 +13,9 @@
 }
 
 main {
-  padding-inline: 8.5%;
-  padding-block: 6%;
+  width: var(--content-width);
+  margin: 0 auto;
+  padding-block: var(--content-block-padding);
 }
 
 .background {

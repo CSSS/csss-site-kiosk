@@ -1,0 +1,26 @@
+<div ngpDialog>
+  @if (modal.current(); as page) {
+    <h2>{{ page.title }}</h2>
+    @switch (page.type) {
+      @case ('component') {
+        <ng-container [ngComponentOutlet]="page.content" />
+      }
+      @case ('template') {
+        <ng-container [ngTemplateOutlet]="page.content" />
+      }
+    }
+  }
+</div>
+<div class="controls">
+  @if (modal.previous()) {
+    <div class="back">
+      <button class="back__button" (click)="modal.back()">
+        <svg class="back__icon" lucideArrowLeft [size]="16"></svg>
+        <div class="back__label">{{ modal.previous()?.title }}</div>
+      </button>
+    </div>
+  }
+  <div class="close">
+    <button (click)="modal.close()"><svg lucideX [size]="16"></svg></button>
+  </div>
+</div>
