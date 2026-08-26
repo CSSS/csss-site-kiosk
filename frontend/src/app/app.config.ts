@@ -13,7 +13,7 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';
 import { ActivityService } from './core/activity.service';
-import { DebugService } from './core/debug.service';
+import { DebugService } from './core/debug/debug.service';
 import { loggingInterceptor } from './core/logging/logging.interceptor';
 
 export const appConfig: ApplicationConfig = {

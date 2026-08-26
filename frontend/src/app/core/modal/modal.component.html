@@ -6,7 +6,7 @@
         <ng-container [ngComponentOutlet]="page.content" />
       }
       @case ('template') {
-        <ng-container [ngTemplateOutlet]="page.content" />
+        <ng-container [ngTemplateOutlet]="page.content" [ngTemplateOutletContext]="page.context" />
       }
     }
   }
