@@ -1,4 +1,4 @@
-import { OnDestroy, Service, signal } from '@angular/core';
+import { computed, OnDestroy, Service, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, Observable, shareReplay } from 'rxjs';
 
@@ -14,12 +14,7 @@ export class TimeService implements OnDestroy {
 
   readonly startTime = new Date();
 
-  /**
-   * @returns The app's uptime in milliseconds.
-   */
-  get uptime(): number {
-    return this._now().getTime() - this.currentTime().getTime();
-  }
+  readonly uptime = computed(() => this.currentTime().getTime() - this.startTime.getTime());
 
   readonly minuteTick$: Observable<number> = toObservable(this._now).pipe(
     map(time => Math.floor(time.getTime() / MINUTE_IN_MS)),

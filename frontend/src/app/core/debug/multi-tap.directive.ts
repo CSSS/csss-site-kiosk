@@ -14,7 +14,7 @@ const TAP_TIMEOUT = 3000;
   selector: '[kskMultiTap]'
 })
 export class MultiTapDirective implements OnInit {
-  multiTapEnabled = input.required<boolean>();
+  multiTapEnabled = input(true);
 
   tapsToTrigger = input<number>(TAPS_TO_TRIGGER);
 

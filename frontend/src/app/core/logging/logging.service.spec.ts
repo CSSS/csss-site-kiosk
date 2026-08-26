@@ -16,18 +16,19 @@ describe('LoggingService', () => {
 
   it('records a timestamped HTTP response', () => {
     const timestamp = new Date('2026-08-24T12:00:00Z');
-    const request = new HttpRequest('GET', '/events');
+    const request = new HttpRequest('GET', '/events?page=2');
     const response = new HttpResponse({ status: 200, body: ['event'] });
     vi.useFakeTimers();
     vi.setSystemTime(timestamp);
 
     service.add(request, response);
 
-    expect(service['_httpLog']).toEqual([
+    expect(service.entries()).toEqual([
       {
+        id: expect.any(String),
         timestamp,
-        request,
-        response
+        url: '/events?page=2',
+        status: 200
       }
     ]);
   });
@@ -42,8 +43,14 @@ describe('LoggingService', () => {
 
     service.add(request, response);
 
-    expect(service['_httpLog']).toHaveLength(1);
-    expect(service['_httpLog'][0]).toMatchObject({ request, response });
+    expect(service.entries()).toEqual([
+      {
+        id: expect.any(String),
+        timestamp: expect.any(Date),
+        url: '/events',
+        status: 503
+      }
+    ]);
   });
 
   it('keeps only the most recent entries when the cache is full', () => {
@@ -54,8 +61,8 @@ describe('LoggingService', () => {
       );
     }
 
-    expect(service['_httpLog']).toHaveLength(MAX_CACHE_SIZE);
-    expect(service['_httpLog'][0].request.url).toBe('/requests/1');
-    expect(service['_httpLog'].at(-1)?.request.url).toBe(`/requests/${MAX_CACHE_SIZE}`);
+    expect(service.entries()).toHaveLength(MAX_CACHE_SIZE);
+    expect(service.entries()[0].url).toBe('/requests/1');
+    expect(service.entries().at(-1)?.url).toBe(`/requests/${MAX_CACHE_SIZE}`);
   });
 });

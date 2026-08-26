@@ -1,17 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
-import { switchMap, timer } from 'rxjs';
+import { inject, OnInit, Service, signal } from '@angular/core';
+import { firstValueFrom, map, switchMap, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BUILD_VERSION } from '../../app.version';
+import { DebugModal } from '../../widgets/debug-panel/debug.modal';
 import { ModalService } from '../modal/modal.service';
 
 export const HEALTH_POLL_INTERVAL = 15 * 1000; // 15 seconds
 
 @Service()
-export class DebugService {
+export class DebugService implements OnInit {
   private readonly http = inject(HttpClient);
 
   private readonly modal = inject(ModalService);
+
+  readonly serverVersion$ = this.http.get('/health', { responseType: 'text' });
+
+  readonly latestReleaseVersion = signal('');
 
   constructor() {
     if (!environment.production) {
@@ -19,7 +24,7 @@ export class DebugService {
     }
 
     timer(HEALTH_POLL_INTERVAL, HEALTH_POLL_INTERVAL)
-      .pipe(switchMap(() => this.http.get('/health', { responseType: 'text' })))
+      .pipe(switchMap(() => this.serverVersion$))
       .subscribe(version => {
         if (BUILD_VERSION !== version) {
           window.location.reload();
@@ -27,7 +32,26 @@ export class DebugService {
       });
   }
 
-  openDebugPanel(): void {
-    console.log('Open Debug Panel');
+  async ngOnInit(): Promise<void> {
+    await this.getLatestReleaseVersion();
+  }
+
+  openDebugModal(): void {
+    this.modal.open({
+      type: 'component',
+      title: 'Debug Panel',
+      content: DebugModal
+    });
+  }
+
+  async getLatestReleaseVersion(): Promise<void> {
+    const res = await firstValueFrom(
+      this.http
+        .get<{ tag_name: string }>(
+          'https://api.github.com/repos/CSSS/csss-site-kiosk/releases/latest'
+        )
+        .pipe(map(res => res.tag_name))
+    );
+    this.latestReleaseVersion.set(res);
   }
 }
