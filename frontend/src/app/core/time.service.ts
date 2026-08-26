@@ -1,6 +1,7 @@
 import { computed, OnDestroy, Service, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, Observable, shareReplay } from 'rxjs';
+import { getCurrentTerm } from '../api/sfu-course-outlines/sfu-course-outlines.service';
 import { IANA_TIMEZONE, LOCALE } from '../config';
 
 const MINUTE_IN_MS = 60_000;
@@ -29,6 +30,8 @@ export class TimeService implements OnDestroy {
   readonly currentDatetime = this._now.asReadonly();
 
   readonly currentYear = computed(() => this.currentDatetime().getUTCFullYear());
+
+  readonly currentTerm = computed(() => getCurrentTerm(this.currentDatetime()));
 
   readonly startTime = new Date();
 

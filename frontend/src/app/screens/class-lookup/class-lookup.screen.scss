@@ -1,7 +1,40 @@
 @use 'utilities/mixins' as *;
 
 :host {
+  display: grid;
+  gap: 5%;
+  grid-template-rows: 80% 1fr;
+  height: 100%;
+}
+
+[class$='-widget'] {
   @include widget();
-  display: grid; // REMOVE ME
-  place-items: center; // REMOVE ME
+}
+
+.class-widget {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.courses {
+  overflow-y: auto;
+  margin: var(--sp-2xl);
+  padding: var(--sp-sm);
+}
+
+.course-list {
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  grid-auto-rows: 1fr;
+  gap: var(--sp-sm);
+  justify-content: center;
+}
+
+.card {
+  font-size: var(--font-size-xs);
+  padding: var(--sp-sm);
+  border: 1px solid var(--colour-primary);
+  border-radius: var(--radius-md);
 }
