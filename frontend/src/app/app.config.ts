@@ -1,5 +1,5 @@
 import { DATE_PIPE_DEFAULT_OPTIONS, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
   inject,
@@ -13,12 +13,14 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';
 import { ActivityService } from './core/activity.service';
+import { DebugService } from './core/debug/debug.service';
+import { loggingInterceptor } from './core/logging/logging.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([loggingInterceptor])),
     provideCsssApi({
       basePath: environment.csssApiUrl
     }),
@@ -38,6 +40,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideAppInitializer(() => {
       inject(ActivityService);
+      inject(DebugService);
     })
   ]
 };

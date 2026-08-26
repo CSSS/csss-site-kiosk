@@ -1,0 +1,82 @@
+@use 'utilities/mixins' as *;
+
+:host {
+  --width: calc(0.8 * var(--content-width));
+  position: fixed;
+  z-index: 1000;
+  height: 100%;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+[ngpDialog] {
+  @include widget();
+
+  position: relative;
+  width: var(--width);
+  height: calc(1.25 * var(--width));
+  margin: 0 auto;
+  top: calc(var(--header-height) + var(--content-block-padding) + 10%);
+  padding: var(--sp-md);
+  anchor-name: --modal;
+}
+
+.controls {
+  position: absolute;
+  position-anchor: --modal;
+  top: calc(anchor(bottom) + var(--sp-md));
+  left: anchor(left);
+  width: var(--width);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  place-items: end;
+  gap: var(--sp-md);
+
+  & > div {
+    height: 100%;
+  }
+
+  & button {
+    background-color: var(--colour-bg-surface);
+    padding: var(--sp-sm);
+    height: 100%;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.close {
+  grid-column-start: 2;
+
+  > button {
+    text-align: center;
+    width: 3rem;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+}
+
+.back {
+  width: 100%;
+  justify-self: stretch;
+
+  &__icon {
+    color: var(--colour-on-surface-strong);
+  }
+
+  &__button {
+    display: flex;
+    gap: var(--sp-sm);
+    max-width: 100%;
+  }
+
+  &__label {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

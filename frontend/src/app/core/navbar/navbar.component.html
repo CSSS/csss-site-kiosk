@@ -6,6 +6,8 @@
       [routerLinkActiveOptions]="{ exact: true }"
       (isActiveChange)="setActiveIndex($event, $index)"
       ariaCurrentWhenActive="page"
+      kskMultiTap
+      (multiTapTriggered)="debug.openDebugModal()"
     >
       <svg [lucideIcon]="item.icon" [size]="48"></svg>
       <div class="nav-button__label">{{ item.label }}</div>

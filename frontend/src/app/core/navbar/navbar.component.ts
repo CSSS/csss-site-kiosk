@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   LucideCalendar,
@@ -7,6 +7,8 @@ import {
   LucidePencil,
   type LucideIconData
 } from '@lucide/angular';
+import { DebugService } from '../debug/debug.service';
+import { MultiTapDirective } from '../debug/multi-tap.directive';
 
 interface NavItem {
   label: string;
@@ -16,7 +18,7 @@ interface NavItem {
 
 @Component({
   selector: 'ksk-navbar',
-  imports: [LucideDynamicIcon, RouterLink, RouterLinkActive],
+  imports: [LucideDynamicIcon, RouterLink, RouterLinkActive, MultiTapDirective],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -40,6 +42,8 @@ export class NavbarComponent {
       url: '/classes'
     }
   ]);
+
+  protected readonly debug = inject(DebugService);
 
   protected setActiveIndex(isActive: boolean, index: number): void {
     if (isActive) {
