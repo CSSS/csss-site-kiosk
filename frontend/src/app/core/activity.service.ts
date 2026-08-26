@@ -2,6 +2,7 @@ import { inject, Service } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { fromEvent, merge, startWith, switchMap, throttleTime, timer } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export const INACTIVITY_TIMEOUT = 1000 * 60 * 5; // 5 minutes
 
@@ -14,6 +15,10 @@ export class ActivityService {
   router = inject(Router);
 
   constructor() {
+    if (!environment.production) {
+      return;
+    }
+
     const click$ = fromEvent(document, 'click');
     const touch$ = fromEvent(document, 'touchstart');
     const move$ = fromEvent(document, 'mousemove');
