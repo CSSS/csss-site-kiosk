@@ -59,7 +59,7 @@ export class EventsCalendarComponent {
   /**
    * Date to highlight
    */
-  protected viewDate = this.timeService.currentTime();
+  protected viewDate = this.timeService.currentDatetime();
 
   /**
    * Number of events that can be displayed before the cell overflows.

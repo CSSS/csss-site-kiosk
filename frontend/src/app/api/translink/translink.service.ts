@@ -50,7 +50,8 @@ export class TranslinkService {
           departList.push({
             routeNumber: departure.route_number,
             secondsUntilDeparture: Math.floor(
-              departure.scheduled_departure_time - this.timeService.currentTime().getTime() / 1000
+              departure.scheduled_departure_time -
+                this.timeService.currentDatetime().getTime() / 1000
             ),
             status: departure.status
           });
