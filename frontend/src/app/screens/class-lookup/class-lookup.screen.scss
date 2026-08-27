@@ -33,7 +33,7 @@ h4 {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
-  grid-auto-rows: 1fr;
+  grid-auto-rows: 100px;
   gap: var(--sp-sm);
   justify-content: center;
 }
