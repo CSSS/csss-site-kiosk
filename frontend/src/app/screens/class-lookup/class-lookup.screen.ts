@@ -1,109 +1,103 @@
 import { TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, effect, inject, signal, untracked } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
-import { combineLatest, map, of, switchMap, withLatestFrom } from 'rxjs';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  model,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgpToggleGroup, NgpToggleGroupItem } from 'ng-primitives/toggle-group';
 import {
   type Department,
-  DEPARTMENTS,
-  getCurrentTerm,
-  isDepartment,
-  type Term
+  DEPARTMENTS
 } from '../../api/sfu-course-outlines/sfu-course-outline.models';
-import { SfuCourseOutlinesService } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
+import {
+  type CourseSummary,
+  DepartmentCourse,
+  SfuCourseOutlinesService,
+  TermYear
+} from '../../api/sfu-course-outlines/sfu-course-outlines.service';
+import { ModalService } from '../../core/modal/modal.service';
+import { TimeService } from '../../core/time.service';
 
 @Component({
   selector: 'ksk-class-lookup-screen',
-  imports: [UpperCasePipe, TitleCasePipe, FormsModule],
+  imports: [UpperCasePipe, TitleCasePipe, NgpToggleGroup, NgpToggleGroupItem],
   templateUrl: './class-lookup.screen.html',
   styleUrl: './class-lookup.screen.scss'
 })
 export class ClassLookupComponent {
-  private _courseApi = inject(SfuCourseOutlinesService);
+  private modalTemplate = viewChild.required<TemplateRef<CourseSummary>>('modal');
 
-  protected currentDate = new Date();
-  protected departments = DEPARTMENTS;
+  private readonly time = inject(TimeService);
 
-  protected readonly selectedYear = signal<number>(this.currentDate.getFullYear());
-  protected readonly selectedTerm = signal<Term | null>(getCurrentTerm(this.currentDate));
-  protected readonly selectedDepartment = signal<Department | ''>('');
-  protected readonly selectedCourse = signal<string>('');
-  protected readonly selectedSection = signal<string>('');
+  private readonly sfuCoursesService = inject(SfuCourseOutlinesService);
 
-  protected year$ = toObservable(this.selectedYear);
-  protected term$ = toObservable(this.selectedTerm);
-  protected department$ = toObservable(this.selectedDepartment);
-  protected course$ = toObservable(this.selectedCourse);
-  protected section$ = toObservable(this.selectedSection);
+  private readonly modal = inject(ModalService);
 
-  yearsResult = toSignal(this._courseApi.getYears().pipe(map(years => years.reverse())), {
-    initialValue: []
+  readonly courseLevels = [100, 200, 300, 400];
+
+  readonly departments = DEPARTMENTS;
+
+  readonly misc = ['required', 'online', 'surrey', 'burnaby'];
+
+  readonly terms = this.sfuCoursesService.terms;
+
+  selectedCourseLevel = model<number[]>(this.courseLevels);
+
+  selectedDepartments = model<Department[]>([...this.departments]);
+
+  selectedTerm = model<TermYear[]>([
+    { year: this.time.currentYear(), term: this.time.currentTerm() }
+  ]);
+
+  selectedMisc = model<string[]>(this.misc);
+
+  readonly courses = rxResource({
+    params: () => this.selectedTerm()[0],
+    stream: ({ params }) => this.sfuCoursesService.getCourses(params.year, params.term),
+    defaultValue: []
   });
-  termsResult = toSignal(this.year$.pipe(switchMap(year => this._courseApi.getTerms(year))), {
-    initialValue: []
+
+  readonly filteredCourses = computed(() => {
+    return this.courses.value().filter(course => {
+      if (
+        course.courseNumber > 500 ||
+        course.title.includes('Practicum') ||
+        course.title.includes('Capstone')
+      ) {
+        return false;
+      }
+
+      return (
+        this.selectedCourseLevel().includes(Math.floor(course.courseNumber / 100) * 100) &&
+        this.selectedDepartments().includes(course.department)
+      );
+    });
   });
 
-  coursesResult = toSignal(
-    combineLatest(this.department$, this.year$, this.term$).pipe(
-      switchMap(([department, year, term]) => {
-        if (!isDepartment(department) || !term) {
-          return of([]);
-        }
-        return this._courseApi.getDepartmentCourses(year, term, department);
-      })
-    ),
-    {
-      initialValue: []
-    }
-  );
+  private readonly destroyRef = inject(DestroyRef);
 
-  sectionsResult = toSignal(
-    this.course$.pipe(
-      withLatestFrom(this.year$, this.term$, this.department$),
-      switchMap(([course, year, term, department]) => {
-        if (!isDepartment(department) || !term || !course) {
-          return of([]);
-        }
-        return this._courseApi.getCourseSections(year, term, department, course);
-      }),
-      map(sections => {
-        return sections.filter(section => section.classType === 'e');
-      })
-    ),
-    {
-      initialValue: []
-    }
-  );
-
-  protected readonly outlineResult = toSignal(
-    this.section$.pipe(
-      withLatestFrom(this.year$, this.term$, this.department$, this.course$),
-      switchMap(([section, year, term, department, course]) => {
-        if (!isDepartment(department) || !term || !course || !section) {
-          return of(null);
-        }
-        return this._courseApi.getCourseOutline(year, term, department, course, section);
-      })
-    )
-  );
-
-  constructor() {
-    // These reset the radio buttons when certain options are clicked
-    effect(() => {
-      this.selectedYear();
-      this.selectedTerm();
-      this.selectedDepartment();
-      untracked(() => {
-        this.selectedCourse.set('');
-        this.selectedSection.set('');
+  protected openDetailsModal(course: DepartmentCourse): void {
+    const termYear = this.selectedTerm()[0];
+    this.sfuCoursesService
+      .getCourseSummary(termYear.year, termYear.term, course)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(summary => {
+        console.log(summary);
+        this.modal.open({
+          type: 'template',
+          title: `${summary.dept} ${summary.courseNumber} \u2014 ${summary.title}`,
+          content: this.modalTemplate(),
+          context: { summary }
+        });
       });
-    });
+  }
 
-    effect(() => {
-      this.selectedCourse();
-      untracked(() => {
-        this.selectedSection.set('');
-      });
-    });
+  protected termCompare(a: TermYear, b: TermYear): boolean {
+    return a.year === b.year && a.term === b.term;
   }
 }

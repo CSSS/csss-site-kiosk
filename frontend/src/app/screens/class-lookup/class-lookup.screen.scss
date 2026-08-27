@@ -1,7 +1,126 @@
 @use 'utilities/mixins' as *;
 
 :host {
+  --outline-colour: var(--colour-secondary);
+  --faded-colour: color-mix(in srgb, var(--colour-primary) 20%, var(--colour-bg-surface));
+  display: grid;
+  gap: 5%;
+  grid-template-rows: 75% 1fr;
+  height: 100%;
+}
+
+[class$='-widget'] {
   @include widget();
-  display: grid; // REMOVE ME
-  place-items: center; // REMOVE ME
+}
+
+.class-widget {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+h4 {
+  text-transform: uppercase;
+}
+
+.courses {
+  overflow-y: auto;
+  margin: 0 var(--sp-2xl) var(--sp-2xl);
+  padding-inline: var(--sp-md);
+}
+
+.course-list {
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+  grid-auto-rows: 100px;
+  gap: var(--sp-sm);
+  justify-content: center;
+}
+
+.card {
+  display: grid;
+  align-content: start;
+  width: 100%;
+  height: 100%;
+  padding: var(--sp-sm);
+  border: 1px solid var(--outline-colour);
+  border-radius: var(--radius-md);
+  background-color: var(--faded-colour);
+
+  p {
+    font-size: var(--font-size-xs);
+  }
+
+  hr {
+    border: 1px solid var(--outline-colour);
+  }
+}
+
+.filter-widget {
+  display: flex;
+  width: 100%;
+  align-items: start;
+  justify-content: space-evenly;
+  padding: var(--sp-lg);
+}
+
+[ngpToggleGroup] {
+  display: grid;
+  gap: var(--sp-md);
+  justify-items: center;
+}
+
+[ngpToggleGroupItem] {
+  background-color: var(--faded-colour);
+  width: 120px;
+  font-size: var(--font-size-xs);
+  text-align: center;
+  border: 1px solid var(--outline-colour);
+  transition:
+    background-color var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1),
+    color var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-heading);
+}
+
+[ngpToggleGroupItem][data-selected] {
+  background-color: var(--colour-primary);
+  color: var(--colour-on-primary);
+}
+
+.modal {
+  overflow-y: auto;
+  height: 100%;
+  padding-inline: var(--sp-lg);
+}
+
+.modal__hr {
+  border: 1px solid var(--colour-primary);
+  margin-block: var(--sp-md);
+}
+
+.modal__table {
+  border-spacing: 0;
+  border-collapse: separate;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--colour-primary);
+  overflow: hidden;
+
+  thead {
+    border-radius: var(--radius-md);
+    background-color: var(--colour-primary);
+    color: var(--colour-on-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+  }
+
+  td {
+    text-align: center;
+    padding: var(--sp-lg);
+  }
+
+  .offering__section {
+    font-family: var(--font-heading);
+  }
 }

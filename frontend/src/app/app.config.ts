@@ -7,7 +7,7 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { provideApi as provideCsssApi } from '@csss-api';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
@@ -19,7 +19,7 @@ import { loggingInterceptor } from './core/logging/logging.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([loggingInterceptor])),
     provideCsssApi({
       basePath: environment.csssApiUrl

@@ -1,4 +1,4 @@
-import { Observable, shareReplay } from 'rxjs';
+import { catchError, Observable, shareReplay, throwError } from 'rxjs';
 
 // 1 hour in milliseconds
 const CACHE_TTL = 60 * 60 * 1000;
@@ -9,7 +9,7 @@ const CACHE_TTL = 60 * 60 * 1000;
  */
 interface CacheEntry<T> {
   value: Observable<T>;
-  expiresAt: number;
+  expiresAt: number; // Unix timestamp
 }
 
 export class ObservableCache {
@@ -35,11 +35,17 @@ export class ObservableCache {
     }
 
     const entryTtl = ttl ?? this.ttl;
-    const value = fetcher().pipe(shareReplay(1));
+    const value = fetcher().pipe(
+      catchError(err => {
+        this.cache.delete(key);
+        return throwError(() => err);
+      }),
+      shareReplay(1)
+    );
 
     this.cache.set(key, {
       value,
-      expiresAt: now + entryTtl
+      expiresAt: Date.now() + entryTtl
     });
 
     return value;

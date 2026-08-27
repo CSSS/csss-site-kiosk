@@ -1,19 +1,20 @@
 import { Routes } from '@angular/router';
-import { ClassLookupComponent } from './screens/class-lookup/class-lookup.screen';
-import { EventsScreen } from './screens/events/events.screen';
-import { HomeScreen } from './screens/home/home.screen';
 
 export const routes: Routes = [
   {
     path: 'classes',
-    component: ClassLookupComponent
+    loadComponent: () =>
+      import('./screens/class-lookup/class-lookup.screen').then(
+        module => module.ClassLookupComponent
+      )
   },
   {
     path: 'events',
-    component: EventsScreen
+    loadComponent: () =>
+      import('./screens/events/events.screen').then(module => module.EventsScreen)
   },
   {
     path: '',
-    component: HomeScreen
+    loadComponent: () => import('./screens/home/home.screen').then(module => module.HomeScreen)
   }
 ];

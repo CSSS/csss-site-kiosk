@@ -65,6 +65,10 @@ export class ModalService {
   }
 
   private _push(page: ModalContent): void {
+    if (this.current()?.title === page.title) {
+      return;
+    }
+
     this.stack.update(stack => [...stack, page]);
   }
 }

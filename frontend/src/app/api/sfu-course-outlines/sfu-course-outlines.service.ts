@@ -1,21 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';
 import { sfuCourseOutlineApi } from '../../config';
+import { TimeService } from '../../core/time.service';
 import { ObservableCache } from '../observable-cache';
-import type {
-  Course,
-  CourseOutline,
-  CourseSection,
-  Department,
-  Term,
-  TermResponse,
-  Year
+import {
+  CourseOutlineSchedule,
+  DEPARTMENTS,
+  TERMS,
+  type Course,
+  type CourseOutline,
+  type CourseSection,
+  type Department,
+  type Term,
+  type TermResponse,
+  type Year
 } from './sfu-course-outline.models';
 
-export type CoursesKey = {
-  year: number;
+export type TermYear = {
   term: Term;
+  year: number;
+};
+
+export type CoursesKey = TermYear & {
   department: Department;
 };
 
@@ -26,6 +34,30 @@ export type SectionsKey = CoursesKey & {
 export type OutlineKey = SectionsKey & {
   courseSection: string;
 };
+
+export type DepartmentCourse = Course & {
+  department: Department;
+  courseNumber: number;
+};
+
+export type Offering = {
+  section: string;
+  instructors: string[];
+  schedule: CourseOutlineSchedule[];
+  campus: string;
+};
+
+export type CourseSummary = TermYear & {
+  dept: string;
+  courseNumber: string;
+  title: string;
+  description: string;
+  offerings: Offering[];
+};
+
+interface DepartmentLoader {
+  [x: string]: Observable<Course[]>;
+}
 
 export type UrlKey = CoursesKey | SectionsKey | OutlineKey;
 
@@ -48,6 +80,32 @@ function makeUrl(input: UrlKey): string {
 }
 
 /**
+ * Returns the term based on the month.
+ * Spring: Jan 1 - April 30
+ * Summer: May 1 - August 31
+ * Fall: September 1 - December 31
+ * @param date - date to check
+ * @returns the term based on the month
+ */
+export function getCurrentTerm(date: Date): Term {
+  // September
+  if (date.getMonth() >= 8) {
+    return 'fall';
+  }
+
+  // May
+  if (date.getMonth() >= 4) {
+    return 'summer';
+  }
+
+  return 'spring';
+}
+
+export function isDepartment(value: string): value is Department {
+  return DEPARTMENTS.includes(value as Department);
+}
+
+/**
  * Documentation for the SFU Course Outlines API can be found at:
  * https://www.sfu.ca/outlines/help/api.html
  *
@@ -56,12 +114,58 @@ function makeUrl(input: UrlKey): string {
  */
 @Service()
 export class SfuCourseOutlinesService {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
+  private readonly time = inject(TimeService);
 
   /**
    * The key to each cache entry is the URL after `BASE_URL?`
    */
   private cache = new ObservableCache();
+
+  readonly terms = toSignal(
+    this.getYears().pipe(
+      switchMap(years => {
+        const reqs: Record<string, Observable<Term[]>> = {};
+        const currentYear = this.time.currentYear();
+
+        for (const year of years.sort((a, b) => a - b)) {
+          if (year >= currentYear) {
+            reqs[year] = this.getTerms(year);
+          }
+        }
+
+        return forkJoin(reqs);
+      }),
+      map(res => {
+        const sortedYears = Object.keys(res).sort((a, b) => parseInt(a) - parseInt(b));
+        const termsToShow: TermYear[] = [];
+        const currentYear = this.time.currentYear();
+        for (const year of sortedYears) {
+          const sortedTerms = res[year].sort((a, b) => TERMS.indexOf(a) - TERMS.indexOf(b));
+
+          // For the current year, make sure we don't fetch anything from previous years.
+          const startIndex =
+            currentYear === parseInt(year) ? TERMS.indexOf(this.time.currentTerm()) : 0;
+
+          for (let i = startIndex; i < sortedTerms.length; i++) {
+            termsToShow.push({
+              year: parseInt(year),
+              term: sortedTerms[i]
+            });
+          }
+        }
+        return termsToShow;
+      })
+    ),
+    {
+      initialValue: [
+        {
+          year: this.time.currentYear(),
+          term: getCurrentTerm(this.time.currentDatetime())
+        }
+      ]
+    }
+  );
 
   getYears(): Observable<number[]> {
     return this.cache.get<number[]>('years', () =>
@@ -96,6 +200,29 @@ export class SfuCourseOutlinesService {
     );
   }
 
+  getCourses(year: number, term: Term): Observable<DepartmentCourse[]> {
+    return forkJoin(
+      DEPARTMENTS.reduce((acc, dept) => {
+        return {
+          ...acc,
+          [dept]: this.getDepartmentCourses(year, term, dept)
+        };
+      }, {} as DepartmentLoader)
+    ).pipe(
+      map(courseMap =>
+        Object.entries(courseMap).flatMap(([department, courses]) => {
+          return courses.map(c => {
+            return {
+              ...c,
+              courseNumber: parseInt(c.value),
+              department: department as Department
+            };
+          });
+        })
+      )
+    );
+  }
+
   getCourseOutline(
     year: number,
     term: Term,
@@ -106,6 +233,44 @@ export class SfuCourseOutlinesService {
     return this.cache.get<CourseOutline>(
       makeKey({ year, term, department, courseNumber, courseSection }),
       () => this.fetcher({ year, term, department, courseNumber, courseSection })
+    );
+  }
+
+  getCourseSummary(year: number, term: Term, course: DepartmentCourse): Observable<CourseSummary> {
+    return this.getCourseSections(year, term, course.department, course.value).pipe(
+      switchMap(sections => {
+        const reqs = [];
+
+        for (const section of sections) {
+          if (section.classType !== 'e') {
+            continue;
+          }
+
+          reqs.push(
+            this.getCourseOutline(year, term, course.department, course.value, section.value)
+          );
+        }
+
+        return forkJoin(reqs);
+      }),
+      map(outlines => {
+        const offerings: Offering[] = outlines.map(o => ({
+          section: o.info.section,
+          instructors: o.instructor?.map(i => i.name) ?? [],
+          schedule: o.courseSchedule,
+          campus: o.courseSchedule[0].campus
+        }));
+
+        return {
+          year,
+          term,
+          dept: course.department.toUpperCase(),
+          courseNumber: course.value.toUpperCase(),
+          title: course.title,
+          description: outlines[0].info.description,
+          offerings
+        };
+      })
     );
   }
 
