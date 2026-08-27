@@ -63,4 +63,8 @@ export class ClassLookupComponent {
       );
     });
   });
+
+  protected termCompare(a: TermYear, b: TermYear): boolean {
+    return a.year === b.year && a.term === b.term;
+  }
 }

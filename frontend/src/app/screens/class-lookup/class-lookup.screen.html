@@ -13,7 +13,13 @@
   </div>
 </section>
 <section class="filter-widget">
-  <div ngpToggleGroup ngpToggleGroupType="single" [(ngpToggleGroupValue)]="selectedTerm">
+  <div
+    ngpToggleGroup
+    ngpToggleGroupType="single"
+    [ngpToggleGroupAllowDeselection]="false"
+    [(ngpToggleGroupValue)]="selectedTerm"
+    [ngpToggleGroupCompareWith]="termCompare"
+  >
     @for (t of terms(); track `${t.term} ${t.term}`) {
       <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="t">
         {{ t.term | titlecase }} {{ t.year }}
