@@ -1,9 +1,11 @@
 @use 'utilities/mixins' as *;
 
 :host {
+  --outline-colour: var(--colour-secondary);
+  --faded-colour: color-mix(in srgb, var(--colour-primary) 20%, var(--colour-bg-surface));
   display: grid;
   gap: 5%;
-  grid-template-rows: 80% 1fr;
+  grid-template-rows: 75% 1fr;
   height: 100%;
 }
 
@@ -18,8 +20,8 @@
 
 .courses {
   overflow-y: auto;
-  margin: var(--sp-2xl);
-  padding: var(--sp-sm);
+  margin: 0 var(--sp-2xl) var(--sp-2xl);
+  padding-inline: var(--sp-md);
 }
 
 .course-list {
@@ -33,8 +35,44 @@
 }
 
 .card {
-  font-size: var(--font-size-xs);
   padding: var(--sp-sm);
-  border: 1px solid var(--colour-primary);
+  border: 1px solid var(--outline-colour);
   border-radius: var(--radius-md);
+  background-color: var(--faded-colour);
+
+  p {
+    font-size: var(--font-size-xs);
+  }
+
+  hr {
+    border: 1px solid var(--outline-colour);
+  }
+}
+
+.filter-widget {
+  display: flex;
+  width: 100%;
+  align-items: start;
+  justify-content: space-evenly;
+  padding: var(--sp-lg);
+}
+
+[ngpToggleGroup] {
+  display: grid;
+  gap: var(--sp-md);
+  justify-items: center;
+}
+
+[ngpToggleGroupItem] {
+  background-color: var(--faded-colour);
+  width: 120px;
+  font-size: var(--font-size-xs);
+  text-align: center;
+  border: 1px solid var(--outline-colour);
+  transition: background-color var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-heading);
+}
+
+[ngpToggleGroupItem][data-selected] {
+  background-color: var(--colour-primary);
 }

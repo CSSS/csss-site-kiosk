@@ -36,6 +36,7 @@ export type OutlineKey = SectionsKey & {
 
 export type DepartmentCourse = Course & {
   department: Department;
+  courseNumber: number;
 };
 
 interface DepartmentLoader {
@@ -153,7 +154,6 @@ export class SfuCourseOutlinesService {
   courses = toSignal(
     forkJoin(
       DEPARTMENTS.reduce((acc, dept) => {
-        console.log(acc);
         return {
           ...acc,
           [dept]: this.getDepartmentCourses(this.time.currentYear(), this.time.currentTerm(), dept)
@@ -161,17 +161,15 @@ export class SfuCourseOutlinesService {
       }, {} as DepartmentLoader)
     ).pipe(
       map(courseMap =>
-        Object.entries(courseMap).reduce((acc, [department, courses]) => {
-          return [
-            ...acc,
-            ...courses.map(c => {
-              return {
-                ...c,
-                department: department as Department
-              };
-            })
-          ];
-        }, [] as DepartmentCourse[])
+        Object.entries(courseMap).flatMap(
+          ([department, courses]) =>
+            courses.map(course => ({
+              ...course,
+              courseNumber: parseInt(course.value),
+              department: department as Department
+            })),
+          [] as DepartmentCourse[]
+        )
       )
     ),
     {
@@ -209,6 +207,32 @@ export class SfuCourseOutlinesService {
   ): Observable<CourseSection[]> {
     return this.cache.get<CourseSection[]>(makeKey({ year, term, department, courseNumber }), () =>
       this.fetcher({ year, term, department, courseNumber })
+    );
+  }
+
+  getCourses(year: number, term: Term): Observable<DepartmentCourse[]> {
+    return forkJoin(
+      DEPARTMENTS.reduce((acc, dept) => {
+        return {
+          ...acc,
+          [dept]: this.getDepartmentCourses(year, term, dept)
+        };
+      }, {} as DepartmentLoader)
+    ).pipe(
+      map(courseMap =>
+        Object.entries(courseMap).reduce((acc, [department, courses]) => {
+          return [
+            ...acc,
+            ...courses.map(c => {
+              return {
+                ...c,
+                courseNumber: parseInt(c.value),
+                department: department as Department
+              };
+            })
+          ];
+        }, [] as DepartmentCourse[])
+      )
     );
   }
 

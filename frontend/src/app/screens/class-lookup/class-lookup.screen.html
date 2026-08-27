@@ -2,13 +2,43 @@
   <h2>Courses</h2>
   <div class="courses">
     <ul class="course-list">
-      @for (c of courses(); track c.title) {
+      @for (c of filteredCourses(); track `${c.department}-${c.courseNumber}`) {
         <li class="card">
-          <div>{{ c.department | uppercase }} {{ c.value | uppercase }}</div>
-          <div>{{ c.title }}</div>
+          <h4>{{ c.department | uppercase }} {{ c.value | uppercase }}</h4>
+          <hr />
+          <p>{{ c.title }}</p>
         </li>
       }
     </ul>
   </div>
 </section>
-<section class="filter-widget"></section>
+<section class="filter-widget">
+  <div ngpToggleGroup ngpToggleGroupType="single" [(ngpToggleGroupValue)]="selectedTerm">
+    @for (t of terms(); track `${t.term} ${t.term}`) {
+      <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="t">
+        {{ t.term | titlecase }} {{ t.year }}
+      </button>
+    }
+  </div>
+  <div ngpToggleGroup ngpToggleGroupType="multiple" [(ngpToggleGroupValue)]="selectedCourseLevel">
+    @for (l of courseLevels; track `${l}`) {
+      <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="l">
+        {{ l }}
+      </button>
+    }
+  </div>
+  <div ngpToggleGroup ngpToggleGroupType="multiple" [(ngpToggleGroupValue)]="selectedDepartments">
+    @for (d of departments; track `${d}`) {
+      <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="d">
+        {{ d | uppercase }}
+      </button>
+    }
+  </div>
+  <!-- <div ngpToggleGroup ngpToggleGroupType="multiple" [(ngpToggleGroupValue)]="selectedMisc"> -->
+  <!--   @for (m of misc; track `${m}`) { -->
+  <!--     <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="m"> -->
+  <!--       {{ m | titlecase }} -->
+  <!--     </button> -->
+  <!--   } -->
+  <!-- </div> -->
+</section>
