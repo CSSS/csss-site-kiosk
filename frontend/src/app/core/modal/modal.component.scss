@@ -21,6 +21,11 @@
   anchor-name: --modal;
 }
 
+.content {
+  height: 100%;
+  overflow: hidden;
+}
+
 .controls {
   position: absolute;
   position-anchor: --modal;

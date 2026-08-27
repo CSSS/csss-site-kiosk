@@ -1,14 +1,19 @@
 <div ngpDialog>
   @if (modal.current(); as page) {
     <h2>{{ page.title }}</h2>
-    @switch (page.type) {
-      @case ('component') {
-        <ng-container [ngComponentOutlet]="page.content" />
+    <div class="content">
+      @switch (page.type) {
+        @case ('component') {
+          <ng-container [ngComponentOutlet]="page.content" />
+        }
+        @case ('template') {
+          <ng-container
+            [ngTemplateOutlet]="page.content"
+            [ngTemplateOutletContext]="page.context"
+          />
+        }
       }
-      @case ('template') {
-        <ng-container [ngTemplateOutlet]="page.content" [ngTemplateOutletContext]="page.context" />
-      }
-    }
+    </div>
   }
 </div>
 <div class="controls">

@@ -52,40 +52,44 @@
 </section>
 
 <ng-template #modal let-summary="summary">
-  <div>{{ summary.description || 'No description' }}</div>
-  <hr class="modal__hr" />
-  <table class="modal__table">
-    <thead>
-      <tr>
-        <th>Section</th>
-        <th>Instructor</th>
-        <th>Schedule</th>
-        <th>Location</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (o of summary.offerings; track o.section) {
+  <div class="modal">
+    <div>{{ summary.description || 'No description' }}</div>
+    <hr class="modal__hr" />
+    <table class="modal__table">
+      <thead>
         <tr>
-          <td class="offering__section">{{ o.section }}</td>
-          <td>{{ o.instructors.join('/') || 'TBD' }}</td>
-          <td>
-            @if (o.schedule && o.schedule.length > 0) {
-              @for (s of o.schedule; track $index) {
-                @if (s.sectionCode === 'OLC' && !s.days) {
-                  <div>Online</div>
-                } @else if (s.sectionCode === 'IND' && !s.days) {
-                  <div>Independent</div>
-                } @else {
-                  <div>{{ s.days }} @ {{ s.startTime }} - {{ s.endTime }}</div>
-                }
-              }
-            } @else {
-              <div>TBD</div>
-            }
-          </td>
-          <td>{{ o.campus || 'TBD' }}</td>
+          <th>Section</th>
+          <th>Instructor</th>
+          <th>Schedule</th>
+          <th>Location</th>
         </tr>
-      }
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @for (o of summary.offerings; track o.section) {
+          <tr>
+            <td class="offering__section">{{ o.section }}</td>
+            <td>{{ o.instructors.join('/') || 'TBD' }}</td>
+            <td>
+              @if (o.schedule && o.schedule.length > 0) {
+                @for (s of o.schedule; track $index) {
+                  @if (s.sectionCode === 'OLC' && !s.days) {
+                    <div>Online</div>
+                  } @else if (s.sectionCode === 'IND' && !s.days) {
+                    <div>Independent</div>
+                  } @else if (s.sectionCode === 'SEM' && !s.days) {
+                    <div>Seminar</div>
+                  } @else {
+                    <div>{{ s.days }} @ {{ s.startTime }} - {{ s.endTime }}</div>
+                  }
+                }
+              } @else {
+                <div>TBD</div>
+              }
+            </td>
+            <td>{{ o.campus || 'TBD' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </ng-template>

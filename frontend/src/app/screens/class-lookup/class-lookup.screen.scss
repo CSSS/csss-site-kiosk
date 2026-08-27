@@ -88,6 +88,12 @@ h4 {
   color: var(--colour-on-primary);
 }
 
+.modal {
+  overflow-y: auto;
+  height: 100%;
+  padding-inline: var(--sp-lg);
+}
+
 .modal__hr {
   border: 1px solid var(--colour-primary);
   margin-block: var(--sp-md);

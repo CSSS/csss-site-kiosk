@@ -32,9 +32,10 @@
   background-color: $bg-colour;
   border-radius: $border-radius;
   overflow: hidden;
-  display: block;
+  display: grid;
   height: 100%;
   width: 100%;
+  grid-template-rows: auto 1fr;
   border: 1px solid var(--colour-outline);
 
   > h2:first-of-type {
