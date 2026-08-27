@@ -18,6 +18,10 @@
   grid-template-rows: auto 1fr;
 }
 
+h4 {
+  text-transform: uppercase;
+}
+
 .courses {
   overflow-y: auto;
   margin: 0 var(--sp-2xl) var(--sp-2xl);
@@ -35,6 +39,10 @@
 }
 
 .card {
+  display: grid;
+  align-content: start;
+  width: 100%;
+  height: 100%;
   padding: var(--sp-sm);
   border: 1px solid var(--outline-colour);
   border-radius: var(--radius-md);
@@ -69,10 +77,44 @@
   font-size: var(--font-size-xs);
   text-align: center;
   border: 1px solid var(--outline-colour);
-  transition: background-color var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1),
+    color var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
   font-family: var(--font-heading);
 }
 
 [ngpToggleGroupItem][data-selected] {
   background-color: var(--colour-primary);
+  color: var(--colour-on-primary);
+}
+
+.modal__hr {
+  border: 1px solid var(--colour-primary);
+  margin-block: var(--sp-md);
+}
+
+.modal__table {
+  border-spacing: 0;
+  border-collapse: separate;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--colour-primary);
+  overflow: hidden;
+
+  thead {
+    border-radius: var(--radius-md);
+    background-color: var(--colour-primary);
+    color: var(--colour-on-primary);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+  }
+
+  td {
+    text-align: center;
+    padding: var(--sp-lg);
+  }
+
+  .offering__section {
+    font-family: var(--font-heading);
+  }
 }

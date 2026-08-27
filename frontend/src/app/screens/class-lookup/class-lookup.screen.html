@@ -3,10 +3,12 @@
   <div class="courses">
     <ul class="course-list">
       @for (c of filteredCourses(); track `${c.department}-${c.courseNumber}`) {
-        <li class="card">
-          <h4>{{ c.department | uppercase }} {{ c.value | uppercase }}</h4>
-          <hr />
-          <p>{{ c.title }}</p>
+        <li>
+          <button class="card" (click)="openDetailsModal(c)">
+            <h4>{{ c.department }} {{ c.value }}</h4>
+            <hr />
+            <p>{{ c.title }}</p>
+          </button>
         </li>
       }
     </ul>
@@ -48,3 +50,42 @@
   <!--   } -->
   <!-- </div> -->
 </section>
+
+<ng-template #modal let-summary="summary">
+  <div>{{ summary.description || 'No description' }}</div>
+  <hr class="modal__hr" />
+  <table class="modal__table">
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th>Instructor</th>
+        <th>Schedule</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (o of summary.offerings; track o.section) {
+        <tr>
+          <td class="offering__section">{{ o.section }}</td>
+          <td>{{ o.instructors.join('/') || 'TBD' }}</td>
+          <td>
+            @if (o.schedule && o.schedule.length > 0) {
+              @for (s of o.schedule; track $index) {
+                @if (s.sectionCode === 'OLC' && !s.days) {
+                  <div>Online</div>
+                } @else if (s.sectionCode === 'IND' && !s.days) {
+                  <div>Independent</div>
+                } @else {
+                  <div>{{ s.days }} @ {{ s.startTime }} - {{ s.endTime }}</div>
+                }
+              }
+            } @else {
+              <div>TBD</div>
+            }
+          </td>
+          <td>{{ o.campus || 'TBD' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</ng-template>

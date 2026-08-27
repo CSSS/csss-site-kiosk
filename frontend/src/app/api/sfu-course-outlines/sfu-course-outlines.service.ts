@@ -6,6 +6,7 @@ import { sfuCourseOutlineApi } from '../../config';
 import { TimeService } from '../../core/time.service';
 import { ObservableCache } from '../observable-cache';
 import {
+  CourseOutlineSchedule,
   DEPARTMENTS,
   TERMS,
   type Course,
@@ -37,6 +38,21 @@ export type OutlineKey = SectionsKey & {
 export type DepartmentCourse = Course & {
   department: Department;
   courseNumber: number;
+};
+
+export type Offering = {
+  section: string;
+  instructors: string[];
+  schedule: CourseOutlineSchedule[];
+  campus: string;
+};
+
+export type CourseSummary = TermYear & {
+  dept: string;
+  courseNumber: string;
+  title: string;
+  description: string;
+  offerings: Offering[];
 };
 
 interface DepartmentLoader {
@@ -151,32 +167,6 @@ export class SfuCourseOutlinesService {
     }
   );
 
-  courses = toSignal(
-    forkJoin(
-      DEPARTMENTS.reduce((acc, dept) => {
-        return {
-          ...acc,
-          [dept]: this.getDepartmentCourses(this.time.currentYear(), this.time.currentTerm(), dept)
-        };
-      }, {} as DepartmentLoader)
-    ).pipe(
-      map(courseMap =>
-        Object.entries(courseMap).flatMap(
-          ([department, courses]) =>
-            courses.map(course => ({
-              ...course,
-              courseNumber: parseInt(course.value),
-              department: department as Department
-            })),
-          [] as DepartmentCourse[]
-        )
-      )
-    ),
-    {
-      initialValue: [] as DepartmentCourse[]
-    }
-  );
-
   getYears(): Observable<number[]> {
     return this.cache.get<number[]>('years', () =>
       this.http
@@ -220,18 +210,15 @@ export class SfuCourseOutlinesService {
       }, {} as DepartmentLoader)
     ).pipe(
       map(courseMap =>
-        Object.entries(courseMap).reduce((acc, [department, courses]) => {
-          return [
-            ...acc,
-            ...courses.map(c => {
-              return {
-                ...c,
-                courseNumber: parseInt(c.value),
-                department: department as Department
-              };
-            })
-          ];
-        }, [] as DepartmentCourse[])
+        Object.entries(courseMap).flatMap(([department, courses]) => {
+          return courses.map(c => {
+            return {
+              ...c,
+              courseNumber: parseInt(c.value),
+              department: department as Department
+            };
+          });
+        })
       )
     );
   }
@@ -246,6 +233,44 @@ export class SfuCourseOutlinesService {
     return this.cache.get<CourseOutline>(
       makeKey({ year, term, department, courseNumber, courseSection }),
       () => this.fetcher({ year, term, department, courseNumber, courseSection })
+    );
+  }
+
+  getCourseSummary(year: number, term: Term, course: DepartmentCourse): Observable<CourseSummary> {
+    return this.getCourseSections(year, term, course.department, course.value).pipe(
+      switchMap(sections => {
+        const reqs = [];
+
+        for (const section of sections) {
+          if (section.classType !== 'e') {
+            continue;
+          }
+
+          reqs.push(
+            this.getCourseOutline(year, term, course.department, course.value, section.value)
+          );
+        }
+
+        return forkJoin(reqs);
+      }),
+      map(outlines => {
+        const offerings: Offering[] = outlines.map(o => ({
+          section: o.info.section,
+          instructors: o.instructor?.map(i => i.name) ?? [],
+          schedule: o.courseSchedule,
+          campus: o.courseSchedule[0].campus
+        }));
+
+        return {
+          year,
+          term,
+          dept: course.department.toUpperCase(),
+          courseNumber: course.value.toUpperCase(),
+          title: course.title,
+          description: outlines[0].info.description,
+          offerings
+        };
+      })
     );
   }
 

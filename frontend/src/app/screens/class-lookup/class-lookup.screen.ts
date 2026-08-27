@@ -1,15 +1,26 @@
 import { TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, computed, inject, model } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  model,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgpToggleGroup, NgpToggleGroupItem } from 'ng-primitives/toggle-group';
 import {
   type Department,
   DEPARTMENTS
 } from '../../api/sfu-course-outlines/sfu-course-outline.models';
 import {
+  type CourseSummary,
+  DepartmentCourse,
   SfuCourseOutlinesService,
   TermYear
 } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
+import { ModalService } from '../../core/modal/modal.service';
 import { TimeService } from '../../core/time.service';
 
 @Component({
@@ -19,9 +30,13 @@ import { TimeService } from '../../core/time.service';
   styleUrl: './class-lookup.screen.scss'
 })
 export class ClassLookupComponent {
+  private modalTemplate = viewChild.required<TemplateRef<CourseSummary>>('modal');
+
   private readonly time = inject(TimeService);
 
   private readonly sfuCoursesService = inject(SfuCourseOutlinesService);
+
+  private readonly modal = inject(ModalService);
 
   readonly courseLevels = [100, 200, 300, 400];
 
@@ -63,6 +78,24 @@ export class ClassLookupComponent {
       );
     });
   });
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  protected openDetailsModal(course: DepartmentCourse): void {
+    const termYear = this.selectedTerm()[0];
+    this.sfuCoursesService
+      .getCourseSummary(termYear.year, termYear.term, course)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(summary => {
+        console.log(summary);
+        this.modal.open({
+          type: 'template',
+          title: `${summary.dept} ${summary.courseNumber} \u2014 ${summary.title}`,
+          content: this.modalTemplate(),
+          context: { summary }
+        });
+      });
+  }
 
   protected termCompare(a: TermYear, b: TermYear): boolean {
     return a.year === b.year && a.term === b.term;
