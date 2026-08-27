@@ -17,6 +17,31 @@ interface HttpLogResult {
   status: number;
 }
 
+function generateUUID(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+
+  const hex = [];
+  const buffer = new Uint8Array(16);
+  crypto.getRandomValues(buffer);
+
+  // Set the 4 bits for version 4 (0100)
+  buffer[6] = (buffer[6] & 0x0f) | 0x40;
+  // Set the 2 bits for clock_seq_hi_and_reserved (10)
+  buffer[8] = (buffer[8] & 0x3f) | 0x80;
+
+  for (let i = 0; i < 16; i++) {
+    // Add hyphens at standard UUID positions
+    if (i === 4 || i === 6 || i === 8 || i === 10) {
+      hex.push('-');
+    }
+    hex.push(buffer[i].toString(16).padStart(2, '0'));
+  }
+
+  return hex.join('');
+}
+
 @Service()
 export class LoggingService {
   private _httpLog = signal<HttpLogEntry[]>([]);
@@ -34,7 +59,7 @@ export class LoggingService {
 
   add(req: HttpRequest<unknown>, res: HttpResponse<unknown> | HttpErrorResponse): void {
     const logEntry = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       timestamp: new Date(),
       request: req,
       response: res
