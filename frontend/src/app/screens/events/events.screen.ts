@@ -1,5 +1,6 @@
-import { Tab, TabContent, TabList, TabPanel, Tabs } from '@angular/aria/tabs';
 import { Component, signal } from '@angular/core';
+import { SlidingTabDirective } from '@core/sliding-tabs/sliding-tab.directive';
+import { SlidingTabsComponent } from '@core/sliding-tabs/sliding-tabs.component';
 import { KioskCalendarEvent } from '@screens/events/event.types';
 import { EventsBrowserComponent } from '@screens/events/events-browser/events-browser.component';
 import { EventsCalendarComponent } from '@screens/events/events-calendar/events-calendar.component';
@@ -9,18 +10,13 @@ import { EventsCalendarComponent } from '@screens/events/events-calendar/events-
   imports: [
     EventsCalendarComponent,
     EventsBrowserComponent,
-    TabList,
-    Tab,
-    Tabs,
-    TabPanel,
-    TabContent
+    SlidingTabDirective,
+    SlidingTabsComponent
   ],
   templateUrl: './events.screen.html',
   styleUrl: './events.screen.scss'
 })
 export class EventsScreen {
-  readonly tabSelected = signal<'browse' | 'calendar'>('browse');
-
   /**
    * TODO: Have this fetched from the web server.
    */
