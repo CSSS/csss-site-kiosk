@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { LoggingService } from '@core/logging/logging.service';
 import { tap } from 'rxjs';
-import { LoggingService } from './logging.service';
 
 export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method !== 'GET') {

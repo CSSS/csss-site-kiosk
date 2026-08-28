@@ -1,4 +1,4 @@
-import { DurationPipe } from './duration.pipe';
+import { DurationPipe } from '@core/duration.pipe';
 
 describe('DurationPipe', () => {
   const pipe = new DurationPipe();

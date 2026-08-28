@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EventsScreen } from './events.screen';
+import { EventsScreen } from '@screens/events/events.screen';
 
 describe('EventsScreen', () => {
   let component: EventsScreen;

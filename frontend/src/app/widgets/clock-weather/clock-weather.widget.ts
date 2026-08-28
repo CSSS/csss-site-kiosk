@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { TimeService } from '../../core/time.service';
+import { TimeService } from '@core/time.service';
 
 @Component({
   selector: 'ksk-clock-weather-widget',

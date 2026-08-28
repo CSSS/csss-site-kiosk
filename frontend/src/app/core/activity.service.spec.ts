@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ActivityService, INACTIVITY_TIMEOUT } from './activity.service';
+import { ActivityService, INACTIVITY_TIMEOUT } from '@core/activity.service';
 
 describe('ActivityService', () => {
   let navigateByUrl: ReturnType<typeof vi.fn>;

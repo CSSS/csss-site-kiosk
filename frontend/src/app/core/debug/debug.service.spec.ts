@@ -1,8 +1,8 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { DebugService, HEALTH_POLL_INTERVAL } from '@core/debug/debug.service';
 import { BUILD_VERSION } from '../../app.version';
-import { DebugService, HEALTH_POLL_INTERVAL } from './debug.service';
 
 describe('DebugService', () => {
   const reload = vi.fn();

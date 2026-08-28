@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateCardComponent } from './date-card.component';
+import { DateCardComponent } from '@core/date-card/date-card.component';
 
 describe('DateCardComponent', () => {
   let component: DateCardComponent;

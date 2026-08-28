@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpRequest, HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { LoggingService, MAX_CACHE_SIZE } from './logging.service';
+import { LoggingService, MAX_CACHE_SIZE } from '@core/logging/logging.service';
 
 describe('LoggingService', () => {
   let service: LoggingService;

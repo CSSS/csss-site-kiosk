@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EventsBrowserComponent } from './events-browser.component';
+import { EventsBrowserComponent } from '@screens/events/events-browser/events-browser.component';
 
 describe('EventsBrowserComponent', () => {
   let component: EventsBrowserComponent;

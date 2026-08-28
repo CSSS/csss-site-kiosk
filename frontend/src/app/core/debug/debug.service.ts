@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, OnInit, Service, signal } from '@angular/core';
+import { ModalService } from '@core/modal/modal.service';
 import type { KioskVersion } from '@csss-kiosk/shared';
+import { DebugModal } from '@widgets/debug-panel/debug.modal';
 import { firstValueFrom, map, type Observable, switchMap, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BUILD_VERSION } from '../../app.version';
-import { DebugModal } from '../../widgets/debug-panel/debug.modal';
-import { ModalService } from '../modal/modal.service';
 
 export const HEALTH_POLL_INTERVAL = 15 * 1000; // 15 seconds
 

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TimeService } from '@core/time.service';
 import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';
 import { sfuCourseOutlineApi } from '../../config';
-import { TimeService } from '../../core/time.service';
 import { ObservableCache } from '../observable-cache';
 import {
   CourseOutlineSchedule,

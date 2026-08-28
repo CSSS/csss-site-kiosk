@@ -5,10 +5,10 @@ import {
   ElementRef,
   viewChild
 } from '@angular/core';
+import { DateCardComponent } from '@core/date-card/date-card.component';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
 import { placeHolderImgUrl } from '../../../utils/placeholders';
-import { DateCardComponent } from '../../core/date-card/date-card.component';
 
 export interface KioskEvent {
   posterUrl: string;

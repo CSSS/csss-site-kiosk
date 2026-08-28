@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ClassLookupComponent } from './class-lookup.screen';
+import { ClassLookupComponent } from '@screens/class-lookup/class-lookup.screen';
 
 describe('ClassLookupComponent', () => {
   let component: ClassLookupComponent;

@@ -9,6 +9,8 @@ import {
   viewChild
 } from '@angular/core';
 import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ModalService } from '@core/modal/modal.service';
+import { TimeService } from '@core/time.service';
 import { NgpToggleGroup, NgpToggleGroupItem } from 'ng-primitives/toggle-group';
 import {
   type Department,
@@ -20,8 +22,6 @@ import {
   SfuCourseOutlinesService,
   TermYear
 } from '../../api/sfu-course-outlines/sfu-course-outlines.service';
-import { ModalService } from '../../core/modal/modal.service';
-import { TimeService } from '../../core/time.service';
 
 @Component({
   selector: 'ksk-class-lookup-screen',

@@ -1,6 +1,6 @@
 import { computed, inject, Service, signal, TemplateRef, Type } from '@angular/core';
+import { ModalComponent } from '@core/modal/modal.component';
 import { NgpDialogManager, NgpDialogRef } from 'ng-primitives/dialog';
-import { ModalComponent } from './modal.component';
 
 export type ModalContent<T = unknown> =
   | {
