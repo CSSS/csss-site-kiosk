@@ -7,34 +7,34 @@
     <div class="route__content">
       <div class="route__time" [style.font-size]="displayTime > 99 ? '2.5rem' : '3.5rem'">
         @if (nextDeparture) {
-        {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
+          {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
         } @else {
-        --
+          --
         }
       </div>
       <div class="route__units">
         @if (nextDeparture) {
-        MIN
+          MIN
         }
       </div>
     </div>
   </div>
   @if (departs && departs.length && isDropdownOpen()) {
-  <div class="route__dropdown">
-    @for (departure of departs; track $index) {
-    @if ($index !== 0) {
-    @let displayTime = getDisplayTime(departure.secondsUntilDeparture);
-    <div>
-      <span class="route__time" [style.font-size]="displayTime > 99 ? '1.5rem' : '2.5rem'">
-        {{ displayTime | number: '2.0-0' }}
-      </span>
-      <span class="route__units">MIN</span>
+    <div class="route__dropdown">
+      @for (departure of departs; track $index) {
+        @if ($index !== 0) {
+          @let displayTime = getDisplayTime(departure.secondsUntilDeparture);
+          <div>
+            <span class="route__time" [style.font-size]="displayTime > 99 ? '1.5rem' : '2.5rem'">
+              {{ displayTime | number: '2.0-0' }}
+            </span>
+            <span class="route__units">MIN</span>
+          </div>
+          @if (!$last) {
+            <hr />
+          }
+        }
+      }
     </div>
-    @if (!$last) {
-    <hr />
-    }
-    }
-    }
-  </div>
   }
 </div>
