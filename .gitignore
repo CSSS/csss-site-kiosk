@@ -6,6 +6,7 @@ frontend/src/app/api/generated/**/*
 # Compiled output
 /dist
 /frontend/dist
+/server/dist
 /tmp
 /frontend/tmp
 /out-tsc

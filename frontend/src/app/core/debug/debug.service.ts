@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, OnInit, Service, signal } from '@angular/core';
-import { firstValueFrom, map, switchMap, timer } from 'rxjs';
+import type { KioskVersion } from '@csss-kiosk/shared';
+import { firstValueFrom, map, type Observable, switchMap, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BUILD_VERSION } from '../../app.version';
 import { DebugModal } from '../../widgets/debug-panel/debug.modal';
@@ -14,7 +15,9 @@ export class DebugService implements OnInit {
 
   private readonly modal = inject(ModalService);
 
-  readonly serverVersion$ = this.http.get('/health', { responseType: 'text' });
+  readonly serverVersion$: Observable<KioskVersion> = this.http.get('/health', {
+    responseType: 'text'
+  });
 
   readonly latestReleaseVersion = signal('');
 

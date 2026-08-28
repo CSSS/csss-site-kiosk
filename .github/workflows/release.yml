@@ -7,7 +7,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 permissions:
   contents: write
@@ -22,14 +22,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: "26"
+          node-version: '26'
           cache: npm
 
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: "21"
+          java-version: '21'
 
       - name: Install dependencies
         run: npm ci
@@ -39,7 +39,9 @@ jobs:
           printf "export const BUILD_VERSION = '%s';\n" "${GITHUB_REF_NAME}" \
             > frontend/src/app/app.version.ts
 
-      - name: Build frontend
+      # The server compiler and type-only workspace are development dependencies,
+      # so compile before reinstalling production dependencies.
+      - name: Build application
         run: npm run build
 
       # Reinstall only the server's runtime dependencies before packaging.
@@ -53,9 +55,14 @@ jobs:
           mkdir -p release/server
           mkdir -p release/frontend/dist/csss-site-kiosk/browser
 
-          cp server/server.js release/server/
+          cp server/dist/server.js release/server/
           cp -r node_modules release/server/node_modules
           rm -f release/server/node_modules/server
+          rm -f release/server/node_modules/@csss-kiosk/shared
+          rm -rf release/server/node_modules/typescript
+          rm -f release/server/node_modules/.bin/tsc
+          rm -f release/server/node_modules/.bin/tsserver
+          rmdir release/server/node_modules/@csss-kiosk 2>/dev/null || true
 
           cp -r frontend/dist/csss-site-kiosk/browser/. \
             release/frontend/dist/csss-site-kiosk/browser/
@@ -67,11 +74,40 @@ jobs:
         run: |
           test -f release/VERSION
           test -f release/server/server.js
+          test ! -e release/server/server.ts
+          test ! -e release/server/dist
           test ! -e release/server/package.json
           test ! -e release/server/.env.example
+          test ! -e release/shared
           test -d release/server/node_modules/express
+          test ! -e release/server/node_modules/typescript
+          test ! -e release/server/node_modules/@types
+          test ! -L release/server/node_modules/server
+          test ! -L release/server/node_modules/@csss-kiosk/shared
+          test -z "$(find release -xtype l -print -quit)"
           test -f release/frontend/dist/csss-site-kiosk/browser/index.html
+          test -z "$(find release -type f -name '*.ts' ! -name '*.d.ts' -print -quit)"
           node --check release/server/server.js
+
+          KIOSK_API_SECRET=release-test \
+            PROXY_TARGET=http://127.0.0.1:1 \
+            SERVER_PORT=18080 \
+            node release/server/server.js &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          health=""
+          for _ in {1..20}; do
+            if health=$(curl --fail --silent http://127.0.0.1:18080/health); then
+              break
+            fi
+            sleep 0.5
+          done
+
+          test "$health" = "${GITHUB_REF_NAME}"
+          kill "$server_pid"
+          wait "$server_pid" || true
+          trap - EXIT
 
       - name: Zip release package
         run: |
