@@ -1,11 +1,12 @@
+import type { KioskVersion } from '@csss-kiosk/shared';
 import dotenv from 'dotenv';
 import express from 'express';
-import { readFile } from 'fs/promises';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { readFile } from 'node:fs/promises';
+import { basename, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-function getSecret() {
+function getSecret(): string {
   const secret = process.env.KIOSK_API_SECRET;
   if (!secret) {
     throw new Error('`KIOSK_API_SECRET` not set in .env.');
@@ -13,16 +14,25 @@ function getSecret() {
   return secret;
 }
 
-function main() {
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-  dotenv.config({ path: join(__dirname, '.env') });
+function main(): void {
+  const entrypointDirectory = dirname(fileURLToPath(import.meta.url));
+  const serverDirectory =
+    basename(entrypointDirectory) === 'dist' ? dirname(entrypointDirectory) : entrypointDirectory;
+  dotenv.config({ path: join(serverDirectory, '.env') });
 
-  const PORT = process.env.SERVER_PORT || 8080;
+  const PORT = Number(process.env.SERVER_PORT ?? 8080);
   const PROXY_TARGET = process.env.PROXY_TARGET;
 
   // The folder our frontend is served from.
-  const FRONTEND_PATH = join(__dirname, '..', 'frontend', 'dist', 'csss-site-kiosk', 'browser');
-  const VERSION_PATH = join(__dirname, '..', 'VERSION');
+  const FRONTEND_PATH = join(
+    serverDirectory,
+    '..',
+    'frontend',
+    'dist',
+    'csss-site-kiosk',
+    'browser'
+  );
+  const VERSION_PATH = join(serverDirectory, '..', 'VERSION');
 
   const app = express();
 
@@ -32,7 +42,7 @@ function main() {
   }
 
   // This is the secret that will be used to communicate with the web server.
-  let cachedSecret;
+  let cachedSecret: string;
   try {
     cachedSecret = getSecret();
     console.log('Secret successfully loaded.');
@@ -43,7 +53,7 @@ function main() {
 
   app.get('/health', async (_, res) => {
     try {
-      const version = (await readFile(VERSION_PATH, 'utf8')).trim();
+      const version: KioskVersion = (await readFile(VERSION_PATH, 'utf8')).trim();
       res.set('Cache-Control', 'no-store').type('text/plain').send(version);
     } catch (err) {
       console.error('Failed to read version:', err);
@@ -67,7 +77,10 @@ function main() {
         },
         error: (err, _, res) => {
           console.error('Proxy error:', err.message);
-          res.status(502).json({ error: 'Proxy failed to reach server.' });
+          if ('writeHead' in res) {
+            res.writeHead(502, { 'Content-Type': 'application/json' });
+          }
+          res.end(JSON.stringify({ error: 'Proxy failed to reach server.' }));
         }
       }
     })

@@ -4,14 +4,15 @@
   "private": true,
   "workspaces": [
     "frontend",
-    "server"
+    "server",
+    "shared"
   ],
   "scripts": {
     "ng": "npm run ng --workspace frontend --",
     "api:url": "npm run api:url --workspace frontend",
     "api:file": "npm run api:file --workspace frontend",
     "start": "npm run build && npm run start:server",
-    "build": "npm run build --workspace frontend",
+    "build": "npm run build --workspace frontend && npm run build --workspace server",
     "watch": "npm run watch --workspace frontend --",
     "test": "npm run test --workspace frontend --",
     "lint": "npm run lint --workspace frontend --",
@@ -20,7 +21,7 @@
     "start:frontend": "npm run start --workspace frontend --",
     "start:server": "npm run start --workspace server --",
     "dev:build": "npm run dev:build --workspace frontend --",
-    "dev:server": "npm run start:server",
+    "dev:server": "npm run dev --workspace server --",
     "dev": "concurrently --kill-others-on-fail \"npm run dev:build\" \"npm run dev:server\"",
     "start:kiosk": "npm start"
   },

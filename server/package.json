@@ -5,7 +5,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.ts",
+    "dev": "node --watch server.ts",
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +18,11 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "http-proxy-middleware": "^4.2.0"
+  },
+  "devDependencies": {
+    "@csss-kiosk/shared": "*",
+    "@types/express": "^5.0.0",
+    "@types/node": "^26.0.0",
+    "typescript": "~6.0.3"
   }
 }

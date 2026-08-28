@@ -6,7 +6,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: "0 9 * * 1"
+    - cron: '0 9 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -45,7 +45,7 @@ jobs:
             --disable-version-check \
             --error \
             --sarif-output=reports/opengrep.sarif \
-            frontend/src/ server/server.js
+            frontend/src/ server/server.ts shared/src/
 
       - name: Upload Opengrep report
         if: always()
