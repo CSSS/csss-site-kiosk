@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 5% auto 1fr;
+  align-content: end;
   color: var(--colour-on-surface);
 }
 
@@ -15,6 +15,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--sp-md);
+  padding-block: var(--sp-md);
 }
 
 .cal-cell-top {
@@ -27,7 +28,7 @@
   display: flex;
   gap: var(--sp-xs);
   flex-direction: column;
-  min-height: 8rem;
+  min-height: 7rem;
   padding: 0.2rem;
 }
 
