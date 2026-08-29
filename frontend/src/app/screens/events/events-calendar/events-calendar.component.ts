@@ -19,6 +19,7 @@ import {
   provideCalendar
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'ksk-events-calendar',
@@ -53,6 +54,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
   styleUrl: './events-calendar.component.scss'
 })
 export class EventsCalendarComponent {
+  private readonly eventsService = inject(EventsService);
+
   events = input.required<KioskCalendarEvent[]>();
 
   view = CalendarView.Month;

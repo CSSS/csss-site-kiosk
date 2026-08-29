@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { SlidingTabDirective } from '@core/sliding-tabs/sliding-tab.directive';
 import { SlidingTabsComponent } from '@core/sliding-tabs/sliding-tabs.component';
-import { KioskCalendarEvent } from '@screens/events/event.types';
 import { EventsBrowserComponent } from '@screens/events/events-browser/events-browser.component';
 import { EventsCalendarComponent } from '@screens/events/events-calendar/events-calendar.component';
+import { KioskCalendarEvent } from './event.types';
 
 @Component({
   selector: 'ksk-events-screen',
@@ -17,6 +17,7 @@ import { EventsCalendarComponent } from '@screens/events/events-calendar/events-
   styleUrl: './events.screen.scss'
 })
 export class EventsScreen {
+  // private readonly eventsService = inject(EventsService);
   /**
    * TODO: Have this fetched from the web server.
    */

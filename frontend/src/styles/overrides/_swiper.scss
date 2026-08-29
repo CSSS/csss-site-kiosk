@@ -3,5 +3,11 @@ swiper-container {
   --swiper-pagination-bullet-inactive-color: var(--colour-control-active);
   --swiper-pagination-bullet-size: 1.5rem;
   --swiper-pagination-bullet-horizontal-gap: 1.25rem;
+  --swiper-pagination-bottom: 10%;
   height: var(--swiper-container-height);
+}
+
+swiper-slide {
+  width: fit-content;
+  height: fit-content;
 }

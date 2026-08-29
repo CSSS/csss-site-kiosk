@@ -45,14 +45,15 @@ img {
   z-index: 1;
   padding-block: 15%;
   padding-inline: var(--inline-padding);
-}
 
-h2 {
-  margin-bottom: 5%;
-}
+  &__title {
+    margin-bottom: 5%;
+    font-size: 10cqw;
+  }
 
-p {
-  text-overflow: ellipsis;
-  line-clamp: 3;
-  -webkit-line-clamp: 3;
+  &__description {
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+  }
 }

@@ -1,28 +1,37 @@
 <h2>Next</h2>
 <div class="next">
-  @if (displayEvents.length > 0) {
-    @let event = displayEvents[0];
+  @if (events().length > 0) {
+    @let event = events()[0];
     <div class="next__img">
-      <img [ngSrc]="event.posterUrl" alt="title" [width]="400" [height]="500" />
+      <img
+        [ngSrc]="getFallbackPosterUrl(0, event?.posterUrl)"
+        alt="title"
+        [width]="400"
+        [height]="500"
+      />
     </div>
     <div class="next__info">
-      <h2>{{ event.title }}</h2>
-      <div class="datetime"><svg lucideCalendar></svg>{{ event.date | date: 'longDate' }}</div>
-      <div class="datetime"><svg lucideClock></svg>{{ event.date | date: 'shortTime' }}</div>
+      <h2>{{ event.name }}</h2>
+      <div class="datetime">
+        <svg lucideCalendar></svg>{{ event.start_datetime | date: 'longDate' }}
+      </div>
+      <div class="datetime">
+        <svg lucideClock></svg>{{ event.start_datetime | date: 'shortTime' }}
+      </div>
       <div></div>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, autem.</p>
+      <p>{{ event.description }}</p>
     </div>
   }
 </div>
 <h2>Upcoming</h2>
 <div class="upcoming">
   <swiper-container init="false" #swiperRef>
-    @for (event of displayEvents | slice: 1; track event.title) {
+    @for (event of events() | slice: 1; track event.eid) {
       <swiper-slide>
         <ksk-date-card
-          [date]="event.date"
-          [title]="event.title"
-          [imgSrc]="event.posterUrl"
+          [date]="event.startDatetime"
+          [title]="event.name"
+          [imgSrc]="getFallbackPosterUrl($index, event.posterUrl)"
           [width]="DUMMY_IMG_W"
           [height]="DUMMY_IMG_H"
         />
