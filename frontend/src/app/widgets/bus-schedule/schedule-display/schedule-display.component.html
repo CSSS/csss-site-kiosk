@@ -4,18 +4,19 @@
   <h2 class="route__label">{{ routeNumber() }}</h2>
   <div class="status" (click)="isDropdownOpen.update(val => !val)">
     @let displayTime = getDisplayTime(nextDeparture?.secondsUntilDeparture ?? 0);
-    <div class="route__time" [style.font-size]="displayTime > 99 ? '2.5rem' : '3.5rem'">
-      @if (nextDeparture) {
-        {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
-      } @else {
-        --
-      }
-    </div>
-    <br />
-    <div class="route__units">
-      @if (nextDeparture) {
-        MIN
-      }
+    <div class="route__content">
+      <div class="route__time" [style.font-size]="displayTime > 99 ? '2.5rem' : '3.5rem'">
+        @if (nextDeparture) {
+          {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
+        } @else {
+          --
+        }
+      </div>
+      <div class="route__units">
+        @if (nextDeparture) {
+          MIN
+        }
+      </div>
     </div>
   </div>
   @if (departs && departs.length && isDropdownOpen()) {
