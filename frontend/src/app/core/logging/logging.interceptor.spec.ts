@@ -7,9 +7,9 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { loggingInterceptor } from '@core/logging/logging.interceptor';
+import { LoggingService } from '@core/logging/logging.service';
 import { Observable, of, throwError } from 'rxjs';
-import { loggingInterceptor } from './logging.interceptor';
-import { LoggingService } from './logging.service';
 
 describe('loggingInterceptor', () => {
   const add = vi.fn();

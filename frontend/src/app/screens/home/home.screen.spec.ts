@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { provideRouter } from '@angular/router';
-import { BusScheduleWidget } from '../../widgets/bus-schedule/bus-schedule.widget';
-import { MockBusScheduleWidget } from '../../widgets/bus-schedule/bus-schedule.widget.mock';
-import { EventWidget } from '../../widgets/event/event.widget';
-import { MockEventWidget } from '../../widgets/event/event.widget.mock';
-import { HomeScreen } from './home.screen';
+import { HomeScreen } from '@screens/home/home.screen';
+import { BusScheduleWidget } from '@widgets/bus-schedule/bus-schedule.widget';
+import { MockBusScheduleWidget } from '@widgets/bus-schedule/bus-schedule.widget.mock';
+import { EventWidget } from '@widgets/event/event.widget';
+import { MockEventWidget } from '@widgets/event/event.widget.mock';
 
 describe('HomeScreen', () => {
   let component: HomeScreen;

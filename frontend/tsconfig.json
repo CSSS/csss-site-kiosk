@@ -14,12 +14,11 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@csss-api": [
-        "./src/app/api/generated/csss-api"
-      ],
-      "@styles/*": [
-        "./src/styles/*"
-      ]
+      "@core/*": ["./src/app/core/*"],
+      "@csss-api": ["./src/app/api/generated/csss-api"],
+      "@screens/*": ["./src/app/screens/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@widgets/*": ["./src/app/widgets/*"]
     }
   },
   "angularCompilerOptions": {

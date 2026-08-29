@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { EventWidget } from '@widgets/event/event.widget';
 import { register } from 'swiper/element';
-import { EventWidget } from './event.widget';
 
 describe('EventWidget', () => {
   let component: EventWidget;

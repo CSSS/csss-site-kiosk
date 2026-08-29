@@ -1,5 +1,11 @@
 import { Component, inject, input } from '@angular/core';
+import { TimeService } from '@core/time.service';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
+import { KioskCalendarEvent } from '@screens/events/event.types';
+import {
+  CustomCalendarDateFormatter,
+  CustomCalendarUtils
+} from '@screens/events/events-calendar/calendar-utils';
 import {
   CalendarDateFormatter,
   CalendarDatePipe,
@@ -13,9 +19,6 @@ import {
   provideCalendar
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { TimeService } from '../../../core/time.service';
-import { KioskCalendarEvent } from '../events.screen';
-import { CustomCalendarDateFormatter, CustomCalendarUtils } from './calendar-utils';
 
 @Component({
   selector: 'ksk-events-calendar',

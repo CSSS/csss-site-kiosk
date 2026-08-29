@@ -1,9 +1,9 @@
 import { Component, signal, TemplateRef, viewChild, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ModalComponent } from '@core/modal/modal.component';
+import { ModalContent, ModalService } from '@core/modal/modal.service';
 import { NgpDialogRef } from 'ng-primitives/dialog';
 import { provideExitAnimationManager } from 'ng-primitives/internal';
-import { ModalComponent } from './modal.component';
-import { ModalContent, ModalService } from './modal.service';
 
 @Component({
   template: '<p class="component-content">{{ content }}</p>'

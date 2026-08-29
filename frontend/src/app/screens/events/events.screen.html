@@ -1,23 +1,9 @@
-<!-- TODO: Make a generic tabs component -->
 <h2>Events</h2>
-<div ngTabs>
-  <div
-    class="sliding-window"
-    [style.transform]="tabSelected() === 'calendar' ? 'translateX(-50%)' : 'translateX(0)'"
-  >
-    <div ngTabPanel [preserveContent]="true" value="browse">
-      <ng-template ngTabContent><ksk-events-browser [events]="events()" /></ng-template>
-    </div>
-    <div ngTabPanel [preserveContent]="true" value="calendar">
-      <ng-template ngTabContent><ksk-events-calendar [events]="events()" /></ng-template>
-    </div>
-  </div>
-  <div
-    ngTabList
-    [(selectedTab)]="tabSelected"
-    [class.calendar-selected]="tabSelected() === 'calendar'"
-  >
-    <div ngTab class="h3" value="browse">Browse</div>
-    <div ngTab class="h3" value="calendar">Calendar</div>
-  </div>
-</div>
+<ksk-sliding-tabs selectedTab="browser">
+  <ng-template kskSlidingTab value="browser" label="Browse" [preserveContent]="true">
+    <ksk-events-browser [events]="events()" />
+  </ng-template>
+  <ng-template kskSlidingTab value="calendar" label="Calendar" [preserveContent]="true">
+    <ksk-events-calendar [events]="events()" />
+  </ng-template>
+</ksk-sliding-tabs>

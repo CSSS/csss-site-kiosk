@@ -3,7 +3,7 @@
   @if (displayEvents.length > 0) {
     @let event = displayEvents[0];
     <div class="next__img">
-      <img [ngSrc]="event.posterUrl" alt="title" fill />
+      <img [ngSrc]="event.posterUrl" alt="title" [width]="400" [height]="500" />
     </div>
     <div class="next__info">
       <h2>{{ event.title }}</h2>

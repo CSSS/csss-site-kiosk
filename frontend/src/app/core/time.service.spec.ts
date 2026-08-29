@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
-import { TimeService } from './time.service';
+import { TimeService } from '@core/time.service';
 
 describe('TimeService', () => {
   let service: TimeService;

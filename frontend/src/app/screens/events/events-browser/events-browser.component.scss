@@ -6,7 +6,7 @@
 
   display: grid;
   grid-template-rows: auto 1fr auto 1fr;
-  padding: var(--sp-3xl);
+  padding-inline: var(--sp-3xl);
   gap: var(--sp-md);
 
   > div {
@@ -21,16 +21,17 @@ h2 {
 .next {
   background-color: var(--colour-bg-surface);
   position: relative;
-  @include widget();
   display: grid;
+  border: 1px solid var(--colour-outline);
   grid-template-columns: 1fr 1fr;
-  padding: var(--sp-md);
+  overflow: hidden;
 }
 
 .next__info {
   display: flex;
   flex-direction: column;
   gap: var(--sp-md);
+  padding: var(--sp-md);
 }
 
 .next__img {
@@ -44,7 +45,7 @@ h2 {
 }
 
 img {
-  height: 90%;
+  height: 100%;
   object-fit: contain;
 }
 

@@ -1,11 +1,11 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugService } from '@core/debug/debug.service';
+import { LoggingService } from '@core/logging/logging.service';
+import { TimeService } from '@core/time.service';
+import { DebugModal } from '@widgets/debug-panel/debug.modal';
 import { of } from 'rxjs';
 import { BUILD_VERSION } from '../../app.version';
-import { DebugService } from '../../core/debug/debug.service';
-import { LoggingService } from '../../core/logging/logging.service';
-import { TimeService } from '../../core/time.service';
-import { DebugModal } from './debug.modal';
 
 describe('DebugModal', () => {
   const getLatestReleaseVersion = vi.fn();

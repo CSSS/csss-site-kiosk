@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MultiTapDirective } from './multi-tap.directive';
+import { MultiTapDirective } from '@core/debug/multi-tap.directive';
 
 @Component({
   imports: [MultiTapDirective],

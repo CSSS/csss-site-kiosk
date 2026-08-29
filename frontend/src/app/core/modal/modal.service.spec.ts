@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { ModalComponent } from '@core/modal/modal.component';
+import { ModalContent, ModalService } from '@core/modal/modal.service';
 import { NgpDialogManager } from 'ng-primitives/dialog';
 import { Subject } from 'rxjs';
-import { ModalComponent } from './modal.component';
-import { ModalContent, ModalService } from './modal.service';
 
 @Component({ template: '' })
 class TestPageComponent {

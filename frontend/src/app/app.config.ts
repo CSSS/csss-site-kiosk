@@ -8,13 +8,13 @@ import {
   provideBrowserGlobalErrorListeners
 } from '@angular/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { ActivityService } from '@core/activity.service';
+import { DebugService } from '@core/debug/debug.service';
+import { loggingInterceptor } from '@core/logging/logging.interceptor';
 import { provideApi as provideCsssApi } from '@csss-api';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';
-import { ActivityService } from './core/activity.service';
-import { DebugService } from './core/debug/debug.service';
-import { loggingInterceptor } from './core/logging/logging.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

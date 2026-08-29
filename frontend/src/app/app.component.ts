@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './core/navbar/navbar.component';
-import { ClockWeatherWidget } from './widgets/clock-weather/clock-weather.widget';
+import { NavbarComponent } from '@core/navbar/navbar.component';
+import { ClockWeatherWidget } from '@widgets/clock-weather/clock-weather.widget';
 
 @Component({
   selector: 'ksk-root',

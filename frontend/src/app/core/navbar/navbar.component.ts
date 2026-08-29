@@ -1,5 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { DebugService } from '@core/debug/debug.service';
+import { MultiTapDirective } from '@core/debug/multi-tap.directive';
 import {
   LucideCalendar,
   LucideDynamicIcon,
@@ -7,8 +9,6 @@ import {
   LucidePencil,
   type LucideIconData
 } from '@lucide/angular';
-import { DebugService } from '../debug/debug.service';
-import { MultiTapDirective } from '../debug/multi-tap.directive';
 
 interface NavItem {
   label: string;

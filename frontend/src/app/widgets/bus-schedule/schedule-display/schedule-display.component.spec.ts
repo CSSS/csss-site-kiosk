@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ScheduleDisplayComponent } from './schedule-display.component';
+import { ScheduleDisplayComponent } from '@widgets/bus-schedule/schedule-display/schedule-display.component';
 
 describe('ScheduleDisplayComponent', () => {
   let component: ScheduleDisplayComponent;

@@ -1,4 +1,5 @@
 import { inject, Service } from '@angular/core';
+import { TimeService } from '@core/time.service';
 import {
   KioskService as TranslinkApiService,
   type TransLinkScheduleResponse,
@@ -6,7 +7,6 @@ import {
 } from '@csss-api';
 import { map, type Observable } from 'rxjs';
 import { IANA_TIMEZONE, LOCALE } from '../../config';
-import { TimeService } from '../../core/time.service';
 import { ObservableCache } from '../observable-cache';
 
 export interface DepartureInfo {

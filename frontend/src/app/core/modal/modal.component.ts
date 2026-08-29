@@ -1,8 +1,8 @@
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import { Component, inject, input, TemplateRef } from '@angular/core';
+import { ModalService } from '@core/modal/modal.service';
 import { LucideArrowLeft, LucideX } from '@lucide/angular';
 import { NgpDialog, NgpDialogOverlay, provideDialogState } from 'ng-primitives/dialog';
-import { ModalService } from './modal.service';
 
 @Component({
   hostDirectives: [NgpDialogOverlay],

@@ -58,15 +58,26 @@ h4 {
 }
 
 .filter-widget {
-  display: flex;
+  @include widget();
+
+  &__content {
+    width: 100%;
+    padding-inline: var(--sp-lg);
+    display: grid;
+    gap: var(--sp-sm);
+  }
+}
+
+.toggle-field {
+  display: grid;
+  grid-template-columns: 10% 1fr;
   width: 100%;
-  align-items: start;
-  justify-content: space-evenly;
-  padding: var(--sp-lg);
 }
 
 [ngpToggleGroup] {
   display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: var(--sp-md);
   justify-items: center;
 }
@@ -86,41 +97,4 @@ h4 {
 [ngpToggleGroupItem][data-selected] {
   background-color: var(--colour-primary);
   color: var(--colour-on-primary);
-}
-
-.modal {
-  overflow-y: auto;
-  height: 100%;
-  padding-inline: var(--sp-lg);
-}
-
-.modal__hr {
-  border: 1px solid var(--colour-primary);
-  margin-block: var(--sp-md);
-}
-
-.modal__table {
-  border-spacing: 0;
-  border-collapse: separate;
-  width: 100%;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--colour-primary);
-  overflow: hidden;
-
-  thead {
-    border-radius: var(--radius-md);
-    background-color: var(--colour-primary);
-    color: var(--colour-on-primary);
-    font-family: var(--font-heading);
-    font-size: var(--font-size-lg);
-  }
-
-  td {
-    text-align: center;
-    padding: var(--sp-lg);
-  }
-
-  .offering__section {
-    font-family: var(--font-heading);
-  }
 }

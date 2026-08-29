@@ -1,0 +1,28 @@
+<div ngTabs class="sliding-tabs">
+  <div class="viewport">
+    <div class="track" [style.transform]="trackTransform()">
+      @for (tab of tabs(); track tab.value()) {
+        <div ngTabPanel [preserveContent]="tab.preserveContent()" [value]="tab.value()">
+          <ng-template ngTabContent>
+            <ng-container [ngTemplateOutlet]="tab.template" />
+          </ng-template>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div ngTabList class="tab-list" [(selectedTab)]="selectedTab">
+    @for (tab of tabs(); track tab.value()) {
+      <button ngTab class="h3" type="button" [value]="tab.value()">{{ tab.label() }}</button>
+    }
+
+    @if (tabs().length > 0) {
+      <span
+        aria-hidden="true"
+        class="indicator"
+        [style.width.%]="indicatorWidth()"
+        [style.transform]="indicatorTransform()"
+      ></span>
+    }
+  </div>
+</div>

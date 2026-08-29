@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BusScheduleWidget } from '../../widgets/bus-schedule/bus-schedule.widget';
-import { EventWidget } from '../../widgets/event/event.widget';
+import { BusScheduleWidget } from '@widgets/bus-schedule/bus-schedule.widget';
+import { EventWidget } from '@widgets/event/event.widget';
 
 @Component({
   selector: 'ksk-home-screen',

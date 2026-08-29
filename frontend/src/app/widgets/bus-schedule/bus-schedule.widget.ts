@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TimeService } from '@core/time.service';
+import { ScheduleDisplayComponent } from '@widgets/bus-schedule/schedule-display/schedule-display.component';
 import { catchError, combineLatest, filter, map, of, shareReplay, switchMap } from 'rxjs';
 import { DepartureInfo, TranslinkService } from '../../api/translink/translink.service';
-import { TimeService } from '../../core/time.service';
-import { ScheduleDisplayComponent } from './schedule-display/schedule-display.component';
 
 @Component({
   selector: 'ksk-bus-schedule-widget',

@@ -1,46 +1,52 @@
 <section class="class-widget">
   <h2>Courses</h2>
-  <div class="courses">
-    <ul class="course-list">
-      @for (c of filteredCourses(); track `${c.department}-${c.courseNumber}`) {
-        <li>
-          <button class="card" (click)="openDetailsModal(c)">
-            <h4>{{ c.department }} {{ c.value }}</h4>
-            <hr />
-            <p>{{ c.title }}</p>
-          </button>
-        </li>
-      }
-    </ul>
-  </div>
+  <ksk-sliding-tabs class="courses">
+    @for (term of terms(); track `${term.year}-${term.term}`) {
+      <ng-template
+        kskSlidingTab
+        [value]="termKey(term)"
+        [label]="termLabel(term) | titlecase"
+        [preserveContent]="true"
+        ><ksk-course-cards
+          [selectedCourseLevels]="selectedCourseLevels()"
+          [selectedDepartments]="selectedDepartments()"
+          [term]="term"
+        ></ksk-course-cards
+      ></ng-template>
+    }
+  </ksk-sliding-tabs>
 </section>
 <section class="filter-widget">
-  <div
-    ngpToggleGroup
-    ngpToggleGroupType="single"
-    [ngpToggleGroupAllowDeselection]="false"
-    [(ngpToggleGroupValue)]="selectedTerm"
-    [ngpToggleGroupCompareWith]="termCompare"
-  >
-    @for (t of terms(); track `${t.term} ${t.term}`) {
-      <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="t">
-        {{ t.term | titlecase }} {{ t.year }}
-      </button>
-    }
-  </div>
-  <div ngpToggleGroup ngpToggleGroupType="multiple" [(ngpToggleGroupValue)]="selectedCourseLevel">
-    @for (l of courseLevels; track `${l}`) {
-      <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="l">
-        {{ l }}
-      </button>
-    }
-  </div>
-  <div ngpToggleGroup ngpToggleGroupType="multiple" [(ngpToggleGroupValue)]="selectedDepartments">
-    @for (d of departments; track `${d}`) {
-      <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="d">
-        {{ d | uppercase }}
-      </button>
-    }
+  <h2>Filters</h2>
+  <div class="filter-widget__content">
+    <div class="toggle-field">
+      <h3>Levels</h3>
+      <div
+        ngpToggleGroup
+        ngpToggleGroupType="multiple"
+        [(ngpToggleGroupValue)]="selectedCourseLevels"
+      >
+        @for (l of courseLevels; track `${l}`) {
+          <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="l">
+            {{ l }}
+          </button>
+        }
+      </div>
+    </div>
+    <div class="toggle-field">
+      <h3>Dept</h3>
+      <div
+        ngpToggleGroup
+        ngpToggleGroupType="multiple"
+        [(ngpToggleGroupValue)]="selectedDepartments"
+      >
+        @for (d of departments; track `${d}`) {
+          <button class="button" ngpToggleGroupItem [ngpToggleGroupItemValue]="d">
+            {{ d | uppercase }}
+          </button>
+        }
+      </div>
+    </div>
   </div>
   <!-- <div ngpToggleGroup ngpToggleGroupType="multiple" [(ngpToggleGroupValue)]="selectedMisc"> -->
   <!--   @for (m of misc; track `${m}`) { -->
@@ -50,46 +56,3 @@
   <!--   } -->
   <!-- </div> -->
 </section>
-
-<ng-template #modal let-summary="summary">
-  <div class="modal">
-    <div>{{ summary.description || 'No description' }}</div>
-    <hr class="modal__hr" />
-    <table class="modal__table">
-      <thead>
-        <tr>
-          <th>Section</th>
-          <th>Instructor</th>
-          <th>Schedule</th>
-          <th>Location</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (o of summary.offerings; track o.section) {
-          <tr>
-            <td class="offering__section">{{ o.section }}</td>
-            <td>{{ o.instructors.join('/') || 'TBD' }}</td>
-            <td>
-              @if (o.schedule && o.schedule.length > 0) {
-                @for (s of o.schedule; track $index) {
-                  @if (s.sectionCode === 'OLC' && !s.days) {
-                    <div>Online</div>
-                  } @else if (s.sectionCode === 'IND' && !s.days) {
-                    <div>Independent</div>
-                  } @else if (s.sectionCode === 'SEM' && !s.days) {
-                    <div>Seminar</div>
-                  } @else {
-                    <div>{{ s.days }} @ {{ s.startTime }} - {{ s.endTime }}</div>
-                  }
-                }
-              } @else {
-                <div>TBD</div>
-              }
-            </td>
-            <td>{{ o.campus || 'TBD' }}</td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
-</ng-template>

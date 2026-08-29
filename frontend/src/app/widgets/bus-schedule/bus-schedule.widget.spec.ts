@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BusScheduleWidget } from './bus-schedule.widget';
+import { BusScheduleWidget } from '@widgets/bus-schedule/bus-schedule.widget';
 
 describe('BusScheduleWidget', () => {
   let component: BusScheduleWidget;
