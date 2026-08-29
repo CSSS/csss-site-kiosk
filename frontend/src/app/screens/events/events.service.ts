@@ -6,13 +6,7 @@ import { ObservableCache } from '../../api/observable-cache';
 import { KioskEvent } from './event.types';
 
 const ONE_MINUTE = 60 * 1000;
-const FIFTEEN_MINUTES = ONE_MINUTE * 15;
 
-function cacheKey(year: number, month: number): string {
-  return year + '-' + month;
-}
-
-// TODO: Make this poll so that events are always fresh.
 @Service()
 export class EventsService {
   private readonly eventApi = inject(CsssEventApi);
@@ -22,6 +16,7 @@ export class EventsService {
   private readonly cache = new ObservableCache();
 
   // TODO: Swap this to use the current events endpoint when it's done.
+  // TODO: Make this poll so that events are always fresh.
   getCurrentEvents(): Observable<KioskEvent[]> {
     return this.cache.get<KioskEvent[]>(
       'current',
@@ -45,23 +40,6 @@ export class EventsService {
           })
         ),
       ONE_MINUTE
-    );
-  }
-
-  getEventsForMonth(year: number, month: number): Observable<KioskEvent[]> {
-    return this.cache.get<KioskEvent[]>(
-      cacheKey(year, month),
-      () =>
-        this.eventApi
-          .getEventsForThisYearMonth(year, month)
-          .pipe(
-            map(events =>
-              events.map(
-                e => new KioskEvent(e, new Date(e.start_datetime), new Date(e.end_datetime))
-              )
-            )
-          ),
-      FIFTEEN_MINUTES
     );
   }
 }

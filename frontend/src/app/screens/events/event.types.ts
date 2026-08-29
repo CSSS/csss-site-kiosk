@@ -1,8 +1,9 @@
 import { type Event, EventStatusEnum } from '@csss-api';
 import { CalendarEvent } from 'angular-calendar';
 
-export type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> &
-  Required<Pick<CalendarEvent, 'meta'>>;
+export type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> & {
+  meta: KioskEvent;
+};
 
 export class KioskEvent implements Event {
   name: string;
@@ -34,5 +35,15 @@ export class KioskEvent implements Event {
     this.group_id = event.group_id;
     this.startDatetime = startDatetime;
     this.endDateTime = endDatetime;
+  }
+
+  getCalendarEvent(): KioskCalendarEvent {
+    return {
+      id: this.eid,
+      start: this.startDatetime,
+      end: this.endDateTime,
+      title: this.name,
+      meta: this
+    };
   }
 }

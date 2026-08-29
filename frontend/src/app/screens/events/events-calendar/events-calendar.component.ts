@@ -1,7 +1,7 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { TimeService } from '@core/time.service';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
-import { KioskCalendarEvent } from '@screens/events/event.types';
 import {
   CustomCalendarDateFormatter,
   CustomCalendarUtils
@@ -9,6 +9,7 @@ import {
 import {
   CalendarDateFormatter,
   CalendarDatePipe,
+  CalendarEvent,
   CalendarMonthViewComponent,
   CalendarNextViewDirective,
   CalendarPreviousViewDirective,
@@ -19,6 +20,7 @@ import {
   provideCalendar
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { map } from 'rxjs';
 import { EventsService } from '../events.service';
 
 @Component({
@@ -56,25 +58,31 @@ import { EventsService } from '../events.service';
 export class EventsCalendarComponent {
   private readonly eventsService = inject(EventsService);
 
-  events = input.required<KioskCalendarEvent[]>();
-
-  view = CalendarView.Month;
-
-  private timeService = inject(TimeService);
+  private readonly timeService = inject(TimeService);
 
   /**
    * Date to highlight
    */
   protected viewDate = this.timeService.currentDatetime();
 
+  protected view = CalendarView.Month;
+
+  protected events = toSignal(
+    this.eventsService
+      .getCurrentEvents()
+      .pipe(map(events => events.map(e => e.getCalendarEvent()))),
+    { initialValue: [] }
+  );
+
   /**
    * Number of events that can be displayed before the cell overflows.
+   * One day we can calculate this based off the heights or use it to calculate the event heights.
    */
   protected readonly maxEvents = 4;
 
   protected eventClicked(
-    event: KioskCalendarEvent,
-    day: { date: Date; events: KioskCalendarEvent[] },
+    event: CalendarEvent,
+    day: { date: Date; events: CalendarEvent[] },
     domEvent: MouseEvent
   ): void {
     domEvent.stopPropagation();
@@ -87,7 +95,7 @@ export class EventsCalendarComponent {
       events
     }: {
       date: Date;
-      events: KioskCalendarEvent[];
+      events: CalendarEvent[];
     },
     domEvent?: MouseEvent
   ): void {
