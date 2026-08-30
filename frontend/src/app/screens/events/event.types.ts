@@ -1,5 +1,6 @@
 import { type Event, EventStatusEnum } from '@csss-api';
 import { CalendarEvent } from 'angular-calendar';
+import { LOCALE } from '../../config';
 
 const TIME_RANGE_FORMATTER: Intl.DateTimeFormatOptions = {
   hour: 'numeric',
@@ -55,8 +56,8 @@ export class KioskEvent implements Event {
   }
 
   get timeRange(): string {
-    const start = this.startDatetime.toLocaleTimeString('en-CA', TIME_RANGE_FORMATTER);
-    const end = this.endDatetime.toLocaleTimeString('en-CA', TIME_RANGE_FORMATTER);
+    const start = this.startDatetime.toLocaleTimeString(LOCALE, TIME_RANGE_FORMATTER);
+    const end = this.endDatetime.toLocaleTimeString(LOCALE, TIME_RANGE_FORMATTER);
 
     return `${start} - ${end}`;
   }
@@ -65,8 +66,8 @@ export class KioskEvent implements Event {
    * Used if the event is multi-day.
    */
   get datetimeRange(): [string, string] {
-    const start = this.startDatetime.toLocaleString('en-CA', DATETIME_RANGE_FORMATTER);
-    const end = this.endDatetime.toLocaleString('en-CA', DATETIME_RANGE_FORMATTER);
+    const start = this.startDatetime.toLocaleString(LOCALE, DATETIME_RANGE_FORMATTER);
+    const end = this.endDatetime.toLocaleString(LOCALE, DATETIME_RANGE_FORMATTER);
 
     return [start, end];
   }
