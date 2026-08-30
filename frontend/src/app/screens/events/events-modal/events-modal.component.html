@@ -1,0 +1,34 @@
+<img
+  class="poster"
+  [ngSrc]="getFallbackPosterUrl(2, event().posterUrl)"
+  [height]="400"
+  [width]="500"
+/>
+@if (event().url; as url) {
+  <section class="link">
+    <qrcode [qrdata]="url" [width]="180" [margin]="0"></qrcode>
+    <p>{{ url }}</p>
+  </section>
+}
+<section class="details">
+  @if (event().isMultiDayEvent) {
+    @let dateRange = event().datetimeRange;
+    <div class="h3 multiday">
+      <svg lucideClock [size]="24"></svg>{{ dateRange[0] }} - <br />{{ dateRange[1] }}
+    </div>
+  } @else {
+    <div class="h3">
+      <svg lucideCalendar [size]="24"></svg>{{ event().startDatetime | date: 'longDate' }}
+    </div>
+    <div class="h3"><svg lucideClock [size]="24"></svg>{{ event().timeRange }}</div>
+  }
+  @if (event().location) {
+    <div class="h3"><svg lucideMapPin [size]="24"></svg>{{ event().location }}</div>
+  }
+  @if (event().organizer) {
+    <div class="h3"><svg lucideUsersRound [size]="24"></svg>{{ event().organizer }}</div>
+  }
+</section>
+<section class="description">
+  <p>{{ event().description }}</p>
+</section>

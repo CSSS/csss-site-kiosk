@@ -8,7 +8,7 @@
   font-family: var(--font-heading);
 
   &__label {
-    @include badge();
+    @include date-badge();
     width: 4.25rem;
     position: relative;
     top: var(--sp-xl);

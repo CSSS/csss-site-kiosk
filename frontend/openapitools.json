@@ -10,13 +10,14 @@
         "output": "#{cwd}/src/app/api/generated/csss-api",
         "globalProperty": {
           "apis": "Kiosk:Event",
-          "models": "Event:EventCreate:EventUpdate:EventDelete:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
+          "models": "Event:EventCreate:EventDelete:EventStatusEnum:EventUpdate:GroupEvent:GroupEventDeleteResponse:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
           "supportingFiles": "",
           "generateRecursiveDependentModels": "true"
         },
         "additionalProperties": {
           "ngVersion": "22.0.0",
           "supportsES6": "true",
+          "useSquareBracketsInArrayNames": true,
           "fileNaming": "kebab-case",
           "withInterfaces": true
         }
@@ -27,13 +28,14 @@
         "output": "#{cwd}/src/app/api/generated/csss-api",
         "globalProperty": {
           "apis": "Kiosk:Event",
-          "models": "Event:EventCreate:EventUpdate:EventDelete:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
+          "models": "Event:EventCreate:EventDelete:EventStatusEnum:EventUpdate:GroupEvent:GroupEventDeleteResponse:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
           "supportingFiles": "",
           "generateRecursiveDependentModels": "true"
         },
         "additionalProperties": {
           "ngVersion": "22.0.0",
           "supportsES6": "true",
+          "useSquareBracketsInArrayNames": true,
           "fileNaming": "kebab-case",
           "withInterfaces": true
         }

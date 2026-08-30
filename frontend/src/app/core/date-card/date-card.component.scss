@@ -16,7 +16,7 @@ img {
 }
 
 .date {
-  @include badge();
+  @include date-badge();
   position: absolute;
   bottom: var(--info-height);
   left: var(--inline-padding);
@@ -24,16 +24,6 @@ img {
   aspect-ratio: 1/1;
   transform: translate(0, calc(var(--info-height)));
   z-index: 2;
-  container-type: inline-size;
-}
-
-.day {
-  font-size: 70cqw;
-}
-
-.month {
-  text-transform: uppercase;
-  font-size: 30cqw;
 }
 
 .info {
@@ -45,14 +35,18 @@ img {
   z-index: 1;
   padding-block: 15%;
   padding-inline: var(--inline-padding);
-}
 
-h2 {
-  margin-bottom: 5%;
-}
+  &__title {
+    margin-bottom: 5%;
+    font-size: 8cqw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-p {
-  text-overflow: ellipsis;
-  line-clamp: 3;
-  -webkit-line-clamp: 3;
+  &__description {
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+  }
 }

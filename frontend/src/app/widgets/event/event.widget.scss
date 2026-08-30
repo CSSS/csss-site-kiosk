@@ -24,7 +24,6 @@ swiper-slide {
   @include flex-center(row);
   position: relative;
   height: var(--card-height);
-  width: 36.25rem;
 }
 
 .swiper-slide-active .card::after {

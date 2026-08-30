@@ -1,7 +1,8 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ModalService } from '@core/modal/modal.service';
 import { TimeService } from '@core/time.service';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
-import { KioskCalendarEvent } from '@screens/events/event.types';
 import {
   CustomCalendarDateFormatter,
   CustomCalendarUtils
@@ -19,6 +20,10 @@ import {
   provideCalendar
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { map } from 'rxjs';
+import { KioskCalendarEvent } from '../event.types';
+import { EventsModalComponent } from '../events-modal/events-modal.component';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'ksk-events-calendar',
@@ -53,42 +58,46 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
   styleUrl: './events-calendar.component.scss'
 })
 export class EventsCalendarComponent {
-  events = input.required<KioskCalendarEvent[]>();
+  private readonly eventsService = inject(EventsService);
 
-  view = CalendarView.Month;
+  private readonly timeService = inject(TimeService);
 
-  private timeService = inject(TimeService);
+  private readonly modal = inject(ModalService);
 
   /**
    * Date to highlight
    */
   protected viewDate = this.timeService.currentDatetime();
 
+  protected view = CalendarView.Month;
+
+  protected events = toSignal(
+    this.eventsService
+      .getCurrentEvents()
+      .pipe(map(events => events.map(e => e.getCalendarEvent()))),
+    { initialValue: [] }
+  );
+
   /**
    * Number of events that can be displayed before the cell overflows.
+   * One day we can calculate this based off the heights or use it to calculate the event heights.
    */
   protected readonly maxEvents = 4;
 
   protected eventClicked(
     event: KioskCalendarEvent,
-    day: { date: Date; events: KioskCalendarEvent[] },
+    _: { date: Date; events: KioskCalendarEvent[] },
     domEvent: MouseEvent
   ): void {
     domEvent.stopPropagation();
-    console.log('Event', event, day);
-  }
 
-  protected dayClicked(
-    {
-      date,
-      events
-    }: {
-      date: Date;
-      events: KioskCalendarEvent[];
-    },
-    domEvent?: MouseEvent
-  ): void {
-    domEvent?.stopPropagation();
-    console.log('Day', date, events);
+    this.modal.open({
+      type: 'component',
+      content: EventsModalComponent,
+      title: event.title,
+      inputs: {
+        event: event.meta
+      }
+    });
   }
 }
