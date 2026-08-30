@@ -33,11 +33,12 @@
           {{ event.title }}
         </button>
       }
-      @if (day.events.length > maxEvents) {
-        <button class="cal__event" (click)="dayClicked(day, $event)">
-          +{{ day.events.length - maxEvents + 1 }} more
-        </button>
-      }
+      <!-- TODO: Make something appear if they click a day and there are events there. -->
+      <!-- @if (day.events.length > maxEvents) { -->
+      <!--   <button class="cal__event" (click)="dayClicked(day, $event)"> -->
+      <!--     +{{ day.events.length - maxEvents + 1 }} more -->
+      <!--   </button> -->
+      <!-- } -->
     }
   </div>
 </ng-template>

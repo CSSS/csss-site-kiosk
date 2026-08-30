@@ -1,6 +1,21 @@
 import { type Event, EventStatusEnum } from '@csss-api';
 import { CalendarEvent } from 'angular-calendar';
 
+const TIME_RANGE_FORMATTER: Intl.DateTimeFormatOptions = {
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true
+};
+
+const DATETIME_RANGE_FORMATTER: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true
+};
+
 export type KioskCalendarEvent = Omit<CalendarEvent, 'meta'> & {
   meta: KioskEvent;
 };
@@ -18,8 +33,9 @@ export class KioskEvent implements Event {
   eid: number;
   group_id?: string | null;
   startDatetime: Date;
-  endDateTime: Date;
+  endDatetime: Date;
   posterUrl?: string | null;
+  isMultiDayEvent?: boolean;
 
   constructor(event: Event, startDatetime: Date, endDatetime: Date) {
     this.name = event.name;
@@ -34,14 +50,32 @@ export class KioskEvent implements Event {
     this.eid = event.eid;
     this.group_id = event.group_id;
     this.startDatetime = startDatetime;
-    this.endDateTime = endDatetime;
+    this.endDatetime = endDatetime;
+    this.isMultiDayEvent = this.startDatetime.toDateString() !== this.endDatetime.toDateString();
+  }
+
+  get timeRange(): string {
+    const start = this.startDatetime.toLocaleTimeString('en-CA', TIME_RANGE_FORMATTER);
+    const end = this.endDatetime.toLocaleTimeString('en-CA', TIME_RANGE_FORMATTER);
+
+    return `${start} - ${end}`;
+  }
+
+  /**
+   * Used if the event is multi-day.
+   */
+  get datetimeRange(): [string, string] {
+    const start = this.startDatetime.toLocaleString('en-CA', DATETIME_RANGE_FORMATTER);
+    const end = this.endDatetime.toLocaleString('en-CA', DATETIME_RANGE_FORMATTER);
+
+    return [start, end];
   }
 
   getCalendarEvent(): KioskCalendarEvent {
     return {
       id: this.eid,
       start: this.startDatetime,
-      end: this.endDateTime,
+      end: this.endDatetime,
       title: this.name,
       meta: this
     };

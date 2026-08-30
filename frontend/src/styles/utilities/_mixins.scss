@@ -63,6 +63,17 @@
   place-items: center;
   line-height: 1;
   padding: var(--sp-sm);
+  container-type: inline-size;
+  container-name: badge;
+
+  > .day {
+    font-size: 70cqw;
+  }
+
+  > .month {
+    text-transform: uppercase;
+    font-size: 30cqw;
+  }
 }
 
 @mixin generate-palette($palette) {

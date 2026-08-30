@@ -12,6 +12,7 @@
 @layer overrides {
   @include meta.load-css('overrides/calendar');
   @include meta.load-css('overrides/swiper');
+  @include meta.load-css('overrides/qrcode');
 }
 
 @layer tokens {

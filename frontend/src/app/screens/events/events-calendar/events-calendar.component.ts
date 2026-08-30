@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ModalService } from '@core/modal/modal.service';
 import { TimeService } from '@core/time.service';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
 import {
@@ -9,7 +10,6 @@ import {
 import {
   CalendarDateFormatter,
   CalendarDatePipe,
-  CalendarEvent,
   CalendarMonthViewComponent,
   CalendarNextViewDirective,
   CalendarPreviousViewDirective,
@@ -21,6 +21,8 @@ import {
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { map } from 'rxjs';
+import { KioskCalendarEvent } from '../event.types';
+import { EventsModalComponent } from '../events-modal/events-modal.component';
 import { EventsService } from '../events.service';
 
 @Component({
@@ -60,6 +62,8 @@ export class EventsCalendarComponent {
 
   private readonly timeService = inject(TimeService);
 
+  private readonly modal = inject(ModalService);
+
   /**
    * Date to highlight
    */
@@ -81,25 +85,20 @@ export class EventsCalendarComponent {
   protected readonly maxEvents = 4;
 
   protected eventClicked(
-    event: CalendarEvent,
-    day: { date: Date; events: CalendarEvent[] },
+    event: KioskCalendarEvent,
+    day: { date: Date; events: KioskCalendarEvent[] },
     domEvent: MouseEvent
   ): void {
     domEvent.stopPropagation();
     console.log('Event', event, day);
-  }
 
-  protected dayClicked(
-    {
-      date,
-      events
-    }: {
-      date: Date;
-      events: CalendarEvent[];
-    },
-    domEvent?: MouseEvent
-  ): void {
-    domEvent?.stopPropagation();
-    console.log('Day', date, events);
+    this.modal.open({
+      type: 'component',
+      content: EventsModalComponent,
+      title: event.title,
+      inputs: {
+        event: event.meta
+      }
+    });
   }
 }

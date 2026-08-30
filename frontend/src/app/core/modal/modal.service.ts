@@ -13,7 +13,7 @@ export type ModalContent<T = unknown> =
       type: 'component';
       title: string;
       content: Type<unknown>;
-      data?: T;
+      inputs?: Record<string, unknown>;
     };
 
 @Service()

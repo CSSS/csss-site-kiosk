@@ -1,0 +1,63 @@
+@use 'utilities/mixins' as *;
+
+:host {
+  height: 100%;
+  width: 100%;
+  padding: var(--sp-md);
+
+  display: grid;
+  column-gap: var(--sp-md);
+  grid-template: auto auto 1fr / auto 1fr;
+  grid-template-areas:
+    'poster link'
+    'poster details'
+    'description description';
+}
+
+.h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.h3.multiday {
+  font-size: var(--font-size-lg);
+}
+
+.poster {
+  grid-area: poster;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.link {
+  grid-area: link;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: var(--sp-sm);
+  min-width: 0;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.details {
+  grid-area: details;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.description {
+  grid-area: description;
+  overflow: auto;
+  padding-top: var(--sp-3xl);
+}
