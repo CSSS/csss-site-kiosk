@@ -54,7 +54,7 @@
   container-name: card;
 }
 
-@mixin badge($bg-colour: secondary, $text-colour: secondary) {
+@mixin date-badge($bg-colour: secondary, $text-colour: secondary) {
   background-color: var(--colour-#{$bg-colour});
   color: var(--colour-on-#{$text-colour});
   border-radius: var(--radius-md);

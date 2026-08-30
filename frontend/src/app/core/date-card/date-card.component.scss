@@ -16,7 +16,7 @@ img {
 }
 
 .date {
-  @include badge();
+  @include date-badge();
   position: absolute;
   bottom: var(--info-height);
   left: var(--inline-padding);
@@ -38,7 +38,10 @@ img {
 
   &__title {
     margin-bottom: 5%;
-    font-size: 10cqw;
+    font-size: 8cqw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__description {

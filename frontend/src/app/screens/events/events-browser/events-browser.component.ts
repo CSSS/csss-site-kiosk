@@ -30,7 +30,7 @@ export class EventsBrowserComponent implements AfterViewInit {
 
   events = toSignal(this.eventsService.getCurrentEvents(), { initialValue: [] });
 
-  DUMMY_IMG_H = 344;
+  DUMMY_IMG_H = 400;
   DUMMY_IMG_W = (this.DUMMY_IMG_H * 4) / 5;
 
   swiperRef = viewChild.required<ElementRef>('swiperRef');

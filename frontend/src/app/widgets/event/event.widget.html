@@ -1,13 +1,13 @@
 <h2>Community Board</h2>
 <swiper-container init="false" #swiperRef>
-  @for (event of events; track $index) {
+  @for (event of events(); track event.eid) {
     <swiper-slide>
       <ksk-date-card
         class="card"
-        [date]="event.date"
-        [title]="event.title"
-        description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod, libero officia quasi repellat odit deserunt. Impedit molestiae tenetur nemo accusamus?"
-        [imgSrc]="event.posterUrl"
+        [date]="event.startDatetime"
+        [title]="event.name"
+        [description]="event.description"
+        [imgSrc]="getFallbackPosterUrl(0, event?.posterUrl)"
         [width]="cardWidth"
         [height]="(cardWidth * 5) / 4"
       />

@@ -86,11 +86,10 @@ export class EventsCalendarComponent {
 
   protected eventClicked(
     event: KioskCalendarEvent,
-    day: { date: Date; events: KioskCalendarEvent[] },
+    _: { date: Date; events: KioskCalendarEvent[] },
     domEvent: MouseEvent
   ): void {
     domEvent.stopPropagation();
-    console.log('Event', event, day);
 
     this.modal.open({
       type: 'component',

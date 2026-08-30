@@ -1,21 +1,17 @@
 import {
-  AfterViewInit,
+  afterRenderEffect,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
+  inject,
   viewChild
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DateCardComponent } from '@core/date-card/date-card.component';
+import { EventsService } from '@screens/events/events.service';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
 import { placeHolderImgUrl } from '../../../utils/placeholders';
-
-export interface KioskEvent {
-  posterUrl: string;
-  title: string;
-  location?: string;
-  date: Date;
-}
 
 @Component({
   selector: 'ksk-event-widget',
@@ -24,57 +20,37 @@ export interface KioskEvent {
   templateUrl: './event.widget.html',
   styleUrl: './event.widget.scss'
 })
-export class EventWidget implements AfterViewInit {
-  swiperRef = viewChild.required<ElementRef>('swiperRef');
+export class EventWidget {
+  private readonly eventsService = inject(EventsService);
 
-  cardWidth = 520;
+  protected swiperRef = viewChild.required<ElementRef>('swiperRef');
 
-  events: KioskEvent[] = [
-    {
-      posterUrl: placeHolderImgUrl(0),
-      title: 'First Poster',
-      location: 'Location',
-      date: new Date()
-    },
-    {
-      posterUrl: placeHolderImgUrl(1),
-      title: 'Second Poster',
-      location: 'Location',
-      date: new Date()
-    },
-    {
-      posterUrl: placeHolderImgUrl(2),
-      title: 'Third Poster',
-      location: 'Location',
-      date: new Date()
-    },
-    {
-      posterUrl: placeHolderImgUrl(3),
-      title: 'First Poster',
-      location: 'Location',
-      date: new Date()
-    },
-    {
-      posterUrl: placeHolderImgUrl(4),
-      title: 'Second Poster',
-      location: 'Location',
-      date: new Date()
-    },
-    {
-      posterUrl: placeHolderImgUrl(5),
-      title: 'Third Poster',
-      location: 'Location',
-      date: new Date()
-    },
-    {
-      posterUrl: placeHolderImgUrl(6),
-      title: 'Third Poster',
-      location: 'Location',
-      date: new Date()
-    }
-  ];
+  protected cardWidth = 520;
 
-  ngAfterViewInit(): void {
+  events = toSignal(this.eventsService.getCurrentEvents(), { initialValue: [] });
+
+  private swiperInitialized = false;
+
+  constructor() {
+    afterRenderEffect({
+      write: () => {
+        const eventCount = this.events().length;
+        const swiperEl = this.swiperRef().nativeElement;
+
+        if (!swiperEl.swiper?.initialized) {
+          if (eventCount > 0) {
+            this.initializeSwiper();
+          }
+
+          return;
+        }
+
+        swiperEl.swiper.update();
+      }
+    });
+  }
+
+  initializeSwiper(): void {
     const swiperEl = this.swiperRef().nativeElement;
 
     const swiperParams = {
@@ -107,5 +83,9 @@ export class EventWidget implements AfterViewInit {
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
+  }
+
+  getFallbackPosterUrl(index: number, url?: string | null): string {
+    return url ?? placeHolderImgUrl(index);
   }
 }
