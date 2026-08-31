@@ -34,12 +34,13 @@ export class ModalService {
    *
    * @param page - modal content to open
    */
-  open(page: ModalContent): void {
+  open(page: ModalContent): NgpDialogRef {
     if (!this.dialogRef) {
-      this._openModal(page);
-    } else {
-      this._push(page);
+      return this._openModal(page);
     }
+
+    this._push(page);
+    return this.dialogRef;
   }
 
   /**
@@ -53,15 +54,18 @@ export class ModalService {
     this.dialogRef?.close();
   }
 
-  private _openModal(page: ModalContent): void {
+  private _openModal(page: ModalContent): NgpDialogRef {
     this.stack.set([page]);
 
-    this.dialogRef = this.dialogManager.open(ModalComponent);
+    const dialogRef = this.dialogManager.open(ModalComponent);
+    this.dialogRef = dialogRef;
 
-    this.dialogRef.afterClosed.subscribe(() => {
+    dialogRef.afterClosed.subscribe(() => {
       this.stack.set([]);
       this.dialogRef = undefined;
     });
+
+    return dialogRef;
   }
 
   private _push(page: ModalContent): void {

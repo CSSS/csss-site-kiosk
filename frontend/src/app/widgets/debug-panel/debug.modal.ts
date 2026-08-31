@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { DebugService } from '@core/debug/debug.service';
 import { DurationPipe } from '@core/duration.pipe';
 import { LoggingService } from '@core/logging/logging.service';
@@ -13,14 +12,17 @@ import { BUILD_VERSION } from '../../app.version';
   styleUrl: './debug.modal.scss',
   templateUrl: './debug.modal.html'
 })
-export class DebugModal {
+export class DebugModal implements OnInit {
   protected readonly timeService = inject(TimeService);
   protected readonly loggingService = inject(LoggingService);
   protected readonly debugService = inject(DebugService);
 
   appVersion = BUILD_VERSION;
   requestLogs = computed(() => this.loggingService.entries().reverse());
-  serverVersion = toSignal(this.debugService.serverVersion$);
+  serverVersion = this.debugService.serverVersion;
+  latestReleaseVersion = this.debugService.latestReleaseVersion;
+
+  ngOnInit(): void {}
 
   protected refreshPage(): void {
     window.location.reload();

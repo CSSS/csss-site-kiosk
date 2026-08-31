@@ -1,4 +1,4 @@
-.wrapper {
+:host {
   --row-height: 0.7rem;
   --table-height: calc(21 * var(--row-height));
   position: relative;
@@ -21,9 +21,6 @@
 }
 
 .requests {
-  display: grid;
-  grid-template-columns: auto 1fr;
-
   .request-log {
     overflow: auto;
     position: relative;

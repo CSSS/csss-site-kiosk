@@ -1,40 +1,61 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injector, OnInit, Service, signal } from '@angular/core';
-import type { KioskVersion } from '@csss-kiosk/shared';
-import { firstValueFrom, map, type Observable, switchMap, timer } from 'rxjs';
+import { inject, Injector, Service } from '@angular/core';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map, switchMap, take, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BUILD_VERSION } from '../../app.version';
 
 export const HEALTH_POLL_INTERVAL = 15 * 1000; // 15 seconds
 
 @Service()
-export class DebugService implements OnInit {
+export class DebugService {
   private readonly http = inject(HttpClient);
 
   private readonly injector = inject(Injector);
 
-  readonly serverVersion$: Observable<KioskVersion> = this.http.get('/health', {
-    responseType: 'text'
+  private readonly healthRequest$ = this.http.get('/health', { responseType: 'text' });
+
+  readonly serverVersion = toSignal(this.healthRequest$, { initialValue: '' });
+
+  protected readonly route = inject(ActivatedRoute);
+
+  protected readonly router = inject(Router);
+
+  readonly latestReleaseVersion = rxResource({
+    stream: () =>
+      this.http
+        .get<{ tag_name: string }>(
+          'https://api.github.com/repos/CSSS/csss-site-kiosk/releases/latest'
+        )
+        .pipe(map(res => res.tag_name))
   });
 
-  readonly latestReleaseVersion = signal('');
-
   constructor() {
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        take(1)
+      )
+      .subscribe(() => {
+        const debugParam = this.route.snapshot.queryParamMap.get('debug');
+
+        if (debugParam === '1') {
+          this.openDebugModal();
+        }
+      });
+
     if (!environment.production) {
       return;
     }
 
     timer(HEALTH_POLL_INTERVAL, HEALTH_POLL_INTERVAL)
-      .pipe(switchMap(() => this.serverVersion$))
+      .pipe(switchMap(() => this.healthRequest$))
       .subscribe(version => {
         if (BUILD_VERSION !== version) {
           window.location.reload();
         }
       });
-  }
-
-  async ngOnInit(): Promise<void> {
-    await this.getLatestReleaseVersion();
   }
 
   async openDebugModal(): Promise<void> {
@@ -43,22 +64,28 @@ export class DebugService implements OnInit {
       import('@widgets/debug-panel/debug.modal'),
       import('@core/modal/modal.service')
     ]);
-    const modal = this.injector.get(ModalService);
-    modal.open({
+
+    // This adds a query parameter of debug=true
+    // so that refreshing the page will open the dialog.
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { debug: 1 },
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    });
+    const dialogRef = this.injector.get(ModalService).open({
       type: 'component',
       title: 'Debug Panel',
       content: DebugModal
     });
-  }
 
-  async getLatestReleaseVersion(): Promise<void> {
-    const res = await firstValueFrom(
-      this.http
-        .get<{ tag_name: string }>(
-          'https://api.github.com/repos/CSSS/csss-site-kiosk/releases/latest'
-        )
-        .pipe(map(res => res.tag_name))
-    );
-    this.latestReleaseVersion.set(res);
+    dialogRef.afterClosed.subscribe(() => {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { debug: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true
+      });
+    });
   }
 }
