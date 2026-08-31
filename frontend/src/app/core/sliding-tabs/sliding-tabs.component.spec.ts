@@ -7,13 +7,13 @@ import { SlidingTabsComponent } from '@core/sliding-tabs/sliding-tabs.component'
   imports: [SlidingTabDirective, SlidingTabsComponent],
   template: `
     <ksk-sliding-tabs [(selectedTab)]="selectedTab">
-      <ng-template kskSlidingTab value="first" label="First">
+      <ng-template kskSlidingTab value="first" label="First" [preserveContent]="true">
         <p class="first-content">First content</p>
       </ng-template>
-      <ng-template kskSlidingTab value="second" label="Second">
+      <ng-template kskSlidingTab value="second" label="Second" [preserveContent]="true">
         <p class="second-content">Second content</p>
       </ng-template>
-      <ng-template kskSlidingTab value="third" label="Third">
+      <ng-template kskSlidingTab value="third" label="Third" [preserveContent]="true">
         <p class="third-content">Third content</p>
       </ng-template>
     </ksk-sliding-tabs>

@@ -4,13 +4,16 @@ import { DebugService } from '@core/debug/debug.service';
 import { LoggingService } from '@core/logging/logging.service';
 import { TimeService } from '@core/time.service';
 import { DebugModal } from '@widgets/debug-panel/debug.modal';
-import { of } from 'rxjs';
 import { BUILD_VERSION } from '../../app.version';
 
 describe('DebugModal', () => {
-  const getLatestReleaseVersion = vi.fn();
+  const reloadLatestRelease = vi.fn();
   const reload = vi.fn();
-  const latestReleaseVersion = signal('v1.2.3');
+  const latestReleaseValue = signal('v1.2.3');
+  const serverInfo = signal({
+    version: 'server-v4.5.6',
+    startedAt: new Date('2026-08-24T12:00:00Z').getTime()
+  });
   const entries = signal([
     {
       id: 'older',
@@ -29,9 +32,13 @@ describe('DebugModal', () => {
   let fixture: ComponentFixture<DebugModal>;
 
   beforeEach(async () => {
-    getLatestReleaseVersion.mockReset();
+    reloadLatestRelease.mockReset();
     reload.mockReset();
-    latestReleaseVersion.set('v1.2.3');
+    latestReleaseValue.set('v1.2.3');
+    serverInfo.set({
+      version: 'server-v4.5.6',
+      startedAt: new Date('2026-08-24T12:00:00Z').getTime()
+    });
     entries.set([
       {
         id: 'older',
@@ -57,9 +64,11 @@ describe('DebugModal', () => {
         {
           provide: DebugService,
           useValue: {
-            getLatestReleaseVersion,
-            latestReleaseVersion,
-            serverVersion$: of('server-v4.5.6')
+            latestReleaseVersion: {
+              reload: reloadLatestRelease,
+              value: latestReleaseValue
+            },
+            serverInfo
           }
         },
         {
@@ -70,6 +79,7 @@ describe('DebugModal', () => {
           provide: TimeService,
           useValue: {
             startTime: new Date('2026-08-24T12:00:00Z'),
+            currentDatetime: signal(new Date('2026-08-24T13:01:01Z')),
             uptime: signal(3_661_000)
           }
         }
@@ -90,9 +100,13 @@ describe('DebugModal', () => {
     const text = fixture.nativeElement.textContent;
 
     expect(text).toContain(BUILD_VERSION);
+    expect(text).toContain('server-v4.5.6');
     expect(text).toContain('v1.2.3');
     expect(text).toContain('1h 1m 1s');
-    expect(component.serverVersion()).toBe('server-v4.5.6');
+    expect(component.serverInfo()).toEqual({
+      version: 'server-v4.5.6',
+      startedAt: new Date('2026-08-24T12:00:00Z').getTime()
+    });
   });
 
   it('renders request logs in reverse chronological order', () => {
@@ -110,7 +124,7 @@ describe('DebugModal', () => {
 
     button.click();
 
-    expect(getLatestReleaseVersion).toHaveBeenCalledOnce();
+    expect(reloadLatestRelease).toHaveBeenCalledOnce();
   });
 
   it('refreshes the page from the controls', () => {

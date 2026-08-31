@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { DebugService } from '@core/debug/debug.service';
 import { DurationPipe } from '@core/duration.pipe';
 import { LoggingService } from '@core/logging/logging.service';
@@ -18,9 +17,10 @@ export class DebugModal {
   protected readonly loggingService = inject(LoggingService);
   protected readonly debugService = inject(DebugService);
 
-  appVersion = BUILD_VERSION;
+  frontendVersion = BUILD_VERSION;
   requestLogs = computed(() => this.loggingService.entries().reverse());
-  serverVersion = toSignal(this.debugService.serverVersion$);
+  serverInfo = this.debugService.serverInfo;
+  latestReleaseVersion = this.debugService.latestReleaseVersion;
 
   protected refreshPage(): void {
     window.location.reload();
