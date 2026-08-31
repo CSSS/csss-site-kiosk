@@ -13,7 +13,6 @@ import { Pagination } from 'swiper/modules';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { LucideCalendar, LucideClock } from '@lucide/angular';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
-import 'swiper/css';
 import 'swiper/css/pagination';
 import { placeHolderImgUrl } from '../../../../utils/placeholders';
 import { EventsService } from '../events.service';
