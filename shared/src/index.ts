@@ -1,1 +1,4 @@
-export type KioskVersion = string;
+export interface ServerHealth {
+  version: string;
+  startedAt: number;
+}

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injector, Service } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ServerHealth } from '@csss-kiosk/shared';
 import { filter, map, switchMap, take, timer } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { BUILD_VERSION } from '../../app.version';
@@ -14,9 +15,14 @@ export class DebugService {
 
   private readonly injector = inject(Injector);
 
-  private readonly healthRequest$ = this.http.get('/health', { responseType: 'text' });
+  private readonly healthRequest$ = this.http.get<ServerHealth>('/health');
 
-  readonly serverVersion = toSignal(this.healthRequest$, { initialValue: '' });
+  readonly serverInfo = toSignal(this.healthRequest$, {
+    initialValue: {
+      version: '',
+      startedAt: 0
+    }
+  });
 
   protected readonly route = inject(ActivatedRoute);
 
@@ -51,8 +57,8 @@ export class DebugService {
 
     timer(HEALTH_POLL_INTERVAL, HEALTH_POLL_INTERVAL)
       .pipe(switchMap(() => this.healthRequest$))
-      .subscribe(version => {
-        if (BUILD_VERSION !== version) {
+      .subscribe(res => {
+        if (BUILD_VERSION !== res.version) {
           window.location.reload();
         }
       });

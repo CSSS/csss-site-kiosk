@@ -34,7 +34,7 @@ describe('DebugService', () => {
 
     const request = httpTesting.expectOne('/health');
     expect(request.request.method).toBe('GET');
-    expect(request.request.responseType).toBe('text');
+    expect(request.request.responseType).toBe('application/json');
     request.flush('new-version');
 
     expect(reload).toHaveBeenCalledOnce();
@@ -44,7 +44,10 @@ describe('DebugService', () => {
     vi.advanceTimersByTime(HEALTH_POLL_INTERVAL);
 
     const request = httpTesting.expectOne('/health');
-    request.flush(BUILD_VERSION);
+    request.flush({
+      version: BUILD_VERSION,
+      startedAT: Date.now()
+    });
 
     expect(reload).not.toHaveBeenCalled();
   });

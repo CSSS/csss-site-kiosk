@@ -1,4 +1,3 @@
-import type { KioskVersion } from '@csss-kiosk/shared';
 import dotenv from 'dotenv';
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -15,6 +14,7 @@ function getSecret(): string {
 }
 
 function main(): void {
+  const startedAt = Date.now();
   const entrypointDirectory = dirname(fileURLToPath(import.meta.url));
   const serverDirectory =
     basename(entrypointDirectory) === 'dist' ? dirname(entrypointDirectory) : entrypointDirectory;
@@ -53,8 +53,11 @@ function main(): void {
 
   app.get('/health', async (_, res) => {
     try {
-      const version: KioskVersion = (await readFile(VERSION_PATH, 'utf8')).trim();
-      res.set('Cache-Control', 'no-store').type('text/plain').send(version);
+      const version = (await readFile(VERSION_PATH, 'utf8')).trim();
+      res.set('Cache-Control', 'no-store').type('application/json').send({
+        version,
+        startedAt
+      });
     } catch (err) {
       console.error('Failed to read version:', err);
       res

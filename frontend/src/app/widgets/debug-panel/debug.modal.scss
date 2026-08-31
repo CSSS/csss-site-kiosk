@@ -1,29 +1,31 @@
 :host {
   --row-height: 0.7rem;
-  --table-height: calc(21 * var(--row-height));
+  --table-height: calc(26 * var(--row-height));
   position: relative;
   display: grid;
   gap: var(--sp-md);
   height: 100%;
-  grid-template-rows: auto auto var(--table-height) 1fr;
+  grid-template-rows: auto auto calc(1.5rem + var(--table-height)) auto;
 }
 
-.label {
-  font-size: var(--font-size-lg);
-  font-family: var(--font-heading);
-  line-height: var(--line-height-tight);
-}
-
-.app-info {
+.info {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  gap: var(--sp-sm);
+  grid-template-columns: 1fr 1fr;
+
+  h3 {
+    text-align: center;
+  }
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 }
 
 .requests {
   .request-log {
     overflow: auto;
-    position: relative;
+    height: var(--table-height);
   }
 
   table {
@@ -53,4 +55,11 @@
 .controls {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+}
+
+.release {
+  display: flex;
+  gap: var(--sp-sm);
+  align-items: center;
 }

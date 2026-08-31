@@ -1,19 +1,37 @@
-<section class="app-info">
-  <div class="label">Frontend Version</div>
-  <div>{{ appVersion }}</div>
-  <div class="label">Server Version</div>
-  <div>{{ serverVersion() }}</div>
-  <div class="label">Latest Release</div>
-  <div>{{ latestReleaseVersion.value() }}</div>
-</section>
-<section class="app-info">
-  <div class="label">Start Time</div>
-  <div>{{ timeService.startTime | date: 'medium' }}</div>
-  <div class="label">Uptime</div>
-  <div>{{ timeService.uptime() | duration }}</div>
+<section class="info">
+  <section>
+    <h3>Frontend</h3>
+    <div class="field">
+      <h4>Version</h4>
+      <p>{{ frontendVersion }}</p>
+    </div>
+    <div class="field">
+      <h4>Started</h4>
+      <p>{{ timeService.startTime | date: 'medium' }}</p>
+    </div>
+    <div class="field">
+      <h4>Uptime</h4>
+      <p>{{ timeService.uptime() | duration }}</p>
+    </div>
+  </section>
+  <section>
+    <h3>Server</h3>
+    <div class="field">
+      <h4>Version</h4>
+      <p>{{ serverInfo().version }}</p>
+    </div>
+    <div class="field">
+      <h4>Started</h4>
+      <p>{{ serverInfo().startedAt | date: 'medium' }}</p>
+    </div>
+    <div class="field">
+      <h4>Uptime</h4>
+      <p>{{ timeService.currentDatetime().getTime() - serverInfo().startedAt | duration }}</p>
+    </div>
+  </section>
 </section>
 <section class="requests">
-  <div class="label">Request Log</div>
+  <h3>Request Log</h3>
   <div class="request-log">
     <table>
       <thead>
@@ -36,8 +54,9 @@
   </div>
 </section>
 <section class="controls">
-  <div>
+  <div class="release">
     <button class="button" (click)="latestReleaseVersion.reload()">Check latest release</button>
+    <div>{{ latestReleaseVersion.value() }}</div>
   </div>
-  <div><button class="button" (click)="refreshPage()">Refresh page</button></div>
+  <button class="button" (click)="refreshPage()">Refresh page</button>
 </section>
