@@ -22,6 +22,6 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('a')?.textContent).toContain('Home');
+    expect(compiled.querySelector('a')?.textContent).toContain('HOME');
   });
 });

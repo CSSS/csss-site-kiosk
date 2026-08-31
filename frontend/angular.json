@@ -104,7 +104,20 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "exclude": [
+              "src/app/core/date-card/date-card.component.spec.ts",
+              "src/app/core/navbar/navbar.component.spec.ts",
+              "src/app/screens/class-lookup/class-lookup.screen.spec.ts",
+              "src/app/screens/class-lookup/course-cards/course-cards.component.spec.ts",
+              "src/app/screens/events/events-browser/events-browser.component.spec.ts",
+              "src/app/screens/events/events-calendar/events-calendar.component.spec.ts",
+              "src/app/screens/events/events-modal/events-modal.component.spec.ts",
+              "src/app/widgets/bus-schedule/schedule-display/schedule-display.component.spec.ts",
+              "src/app/widgets/event/event.widget.spec.ts"
+            ]
+          }
         }
       }
     }

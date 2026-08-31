@@ -1,11 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ActivityService, INACTIVITY_TIMEOUT } from '@core/activity.service';
+import { environment } from '../../environments/environment';
 
 describe('ActivityService', () => {
+  const originalProduction = environment.production;
   let navigateByUrl: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
+    environment.production = true;
     vi.useFakeTimers();
     navigateByUrl = vi.fn();
     TestBed.configureTestingModule({
@@ -22,6 +25,8 @@ describe('ActivityService', () => {
 
   afterEach(() => {
     TestBed.resetTestingModule();
+    environment.production = originalProduction;
+    vi.clearAllTimers();
     vi.useRealTimers();
   });
 
