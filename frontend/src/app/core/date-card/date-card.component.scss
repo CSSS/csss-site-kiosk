@@ -45,8 +45,12 @@ img {
   }
 
   &__description {
+    --description-lines: 4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--description-lines);
+    line-clamp: var(--content-lines);
+    overflow: hidden;
     text-overflow: ellipsis;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
   }
 }
