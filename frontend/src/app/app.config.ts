@@ -1,11 +1,5 @@
-import {
-  DATE_PIPE_DEFAULT_OPTIONS,
-  IMAGE_LOADER,
-  ImageLoaderConfig,
-  registerLocaleData
-} from '@angular/common';
+import { DATE_PIPE_DEFAULT_OPTIONS, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import localeCa from '@angular/common/locales/en-CA';
 import {
   ApplicationConfig,
   inject,
@@ -21,8 +15,6 @@ import { provideApi as provideCsssApi } from '@csss-api';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { LOCALE } from './config';
-
-registerLocaleData(localeCa, LOCALE);
 
 export const appConfig: ApplicationConfig = {
   providers: [
