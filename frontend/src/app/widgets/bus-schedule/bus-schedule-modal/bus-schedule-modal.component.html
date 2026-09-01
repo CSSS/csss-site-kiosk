@@ -1,0 +1,41 @@
+<div ngpDialog [attr.aria-label]="'Route ' + routeNumber() + ' departures'">
+  <section class="bus-schedule-modal">
+    <div class="bus-schedule-modal__header">
+      <img
+        class="bus-schedule-modal__image"
+        src="/bus-widget/header.png"
+        alt=""
+        aria-hidden="true"
+      />
+      <h1 class="bus-schedule-modal__route">{{ routeNumber() }}</h1>
+    </div>
+
+    <div class="bus-schedule-modal__schedule">
+      @if (upcomingDepartures().length > 0) {
+        @for (departure of upcomingDepartures(); track $index) {
+          @let displayTime = getDisplayTime(departure.secondsUntilDeparture);
+
+          <div class="bus-schedule-modal__departure">
+            <span
+              class="bus-schedule-modal__time"
+              [style.font-size]="displayTime > 99 ? '1.5rem' : '2.5rem'"
+            >
+              {{ displayTime | number: '2.0-0' }}
+            </span>
+            <span class="bus-schedule-modal__units">MIN</span>
+          </div>
+
+          @if (!$last) {
+            <hr />
+          }
+        }
+      } @else {
+        <div class="bus-schedule-modal__empty">No upcoming departures</div>
+      }
+    </div>
+  </section>
+</div>
+
+<div class="controls">
+  <button class="close" (click)="closeScheduleModal()"><svg lucideX [size]="16"></svg></button>
+</div>

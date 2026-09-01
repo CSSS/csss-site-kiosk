@@ -41,23 +41,6 @@
     width: 100%;
     text-align: center;
   }
-
-  &__dropdown {
-    position: absolute;
-    top: 80%;
-    bottom: 100%;
-    background-color: var(--colour-bg-surface);
-    color: black;
-    height: 9.125rem;
-    width: 50%;
-    border-radius: var(--sp-md);
-    z-index: -1;
-    padding-top: 15%;
-    padding-inline: var(--sp-xs);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
 }
 
 .status {
