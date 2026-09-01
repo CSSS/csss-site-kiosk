@@ -71,6 +71,12 @@
     font-family: var(--font-body);
     font-size: var(--font-size-sm);
     line-height: var(--line-height-tight);
+    justify-self: center;
+    width: 85%;
+
+    hr {
+      border-color: #9d9d9d;
+    }
   }
 
   &__empty {

@@ -1,13 +1,35 @@
 .bus-departure-card {
+  --bus-departure-colour: #018522;
+  --bus-departure-bg-colour: rgb(1 133 34 / 10%);
+
   display: grid;
   grid-template-columns: 4.5rem minmax(0, 1fr);
   align-items: center;
   gap: var(--sp-md);
+  justify-self: center;
+  width: 85%;
+
+  &--arrived,
+  &--on-time {
+    --bus-departure-colour: #018522;
+    --bus-departure-bg-colour: rgb(1 133 34 / 10%);
+  }
+
+  &--early {
+    --bus-departure-colour: #9a6110;
+    --bus-departure-bg-colour: rgb(154 97 16 / 10%);
+  }
+
+  &--cancelled,
+  &--delayed {
+    --bus-departure-colour: #d12f2a;
+    --bus-departure-bg-colour: rgb(209 47 42 / 10%);
+  }
 
   &__time {
     display: grid;
     justify-items: center;
-    color: var(--colour-on-surface-strong);
+    color: var(--bus-departure-colour);
     line-height: 1;
   }
 
@@ -27,8 +49,9 @@
     gap: var(--sp-md);
     min-width: 0;
     padding: var(--sp-md);
-    border: 1px solid var(--colour-outline);
+    border: 1px solid var(--bus-departure-colour);
     border-radius: var(--radius-md);
+    background-color: var(--bus-departure-bg-colour);
   }
 
   &__summary {
@@ -44,15 +67,17 @@
     min-width: 3.25rem;
     min-height: 2.75rem;
     padding: var(--sp-xs) var(--sp-sm);
-    border: 1px solid var(--colour-outline);
+    border: 1px solid #9d9d9d;
     border-radius: var(--radius-sm);
-    color: var(--colour-on-surface-strong);
+    background-color: white;
+    color: black;
     font-size: var(--font-size-lg);
     font-weight: 700;
   }
 
   &__location,
-  &__destination {
+  &__destination,
+  &__status {
     min-width: 0;
     color: var(--colour-on-surface);
     font-family: var(--font-body);
@@ -60,9 +85,21 @@
     line-height: var(--line-height-tight);
   }
 
+  &__meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--sp-md);
+  }
+
   &__location {
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__status {
+    color: var(--bus-departure-colour);
     white-space: nowrap;
   }
 }

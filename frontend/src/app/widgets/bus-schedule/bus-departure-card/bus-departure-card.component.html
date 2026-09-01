@@ -1,4 +1,11 @@
-<article class="bus-departure-card">
+<article
+  class="bus-departure-card"
+  [class.bus-departure-card--arrived]="statusDetails().variant === 'arrived'"
+  [class.bus-departure-card--cancelled]="statusDetails().variant === 'cancelled'"
+  [class.bus-departure-card--delayed]="statusDetails().variant === 'delayed'"
+  [class.bus-departure-card--early]="statusDetails().variant === 'early'"
+  [class.bus-departure-card--on-time]="statusDetails().variant === 'on-time'"
+>
   <div class="bus-departure-card__time">
     <span
       class="bus-departure-card__minutes"
@@ -14,6 +21,9 @@
       <span class="bus-departure-card__route">{{ departure().routeNumber }}</span>
       <span class="bus-departure-card__location">{{ location() }}</span>
     </div>
-    <div class="bus-departure-card__destination">{{ destination() }}</div>
+    <div class="bus-departure-card__meta">
+      <span class="bus-departure-card__destination">{{ destination() }}</span>
+      <span class="bus-departure-card__status">{{ statusDetails().text }}</span>
+    </div>
   </div>
 </article>
