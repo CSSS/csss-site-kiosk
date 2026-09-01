@@ -11,26 +11,34 @@
     </div>
 
     <div class="bus-schedule-modal__schedule">
-      @if (upcomingDepartures().length > 0) {
-        @for (departure of upcomingDepartures(); track $index) {
-          @let displayTime = getDisplayTime(departure.secondsUntilDeparture);
+      <div class="bus-schedule-modal__section-heading">
+        <hr />
+        <span>Next</span>
+        <hr />
+      </div>
 
-          <div class="bus-schedule-modal__departure">
-            <span
-              class="bus-schedule-modal__time"
-              [style.font-size]="displayTime > 99 ? '1.5rem' : '2.5rem'"
-            >
-              {{ displayTime | number: '2.0-0' }}
-            </span>
-            <span class="bus-schedule-modal__units">MIN</span>
-          </div>
-
-          @if (!$last) {
-            <hr />
-          }
-        }
+      @if (nextDeparture(); as departure) {
+        <ksk-bus-departure-card
+          [departure]="departure"
+          [location]="routeDetails().location"
+          [destination]="routeDetails().destination"
+        />
       } @else {
         <div class="bus-schedule-modal__empty">No upcoming departures</div>
+      }
+
+      <div class="bus-schedule-modal__section-heading">
+        <hr />
+        <span>Upcoming</span>
+        <hr />
+      </div>
+
+      @for (departure of upcomingDepartures(); track $index) {
+        <ksk-bus-departure-card
+          [departure]="departure"
+          [location]="routeDetails().location"
+          [destination]="routeDetails().destination"
+        />
       }
     </div>
   </section>

@@ -1,0 +1,19 @@
+<article class="bus-departure-card">
+  <div class="bus-departure-card__time">
+    <span
+      class="bus-departure-card__minutes"
+      [style.font-size]="displayTime() > 99 ? '2rem' : '3rem'"
+    >
+      {{ displayTime() | number: '1.0-0' }}
+    </span>
+    <span class="bus-departure-card__units">MIN</span>
+  </div>
+
+  <div class="bus-departure-card__details">
+    <div class="bus-departure-card__summary">
+      <span class="bus-departure-card__route">{{ departure().routeNumber }}</span>
+      <span class="bus-departure-card__location">{{ location() }}</span>
+    </div>
+    <div class="bus-departure-card__destination">{{ destination() }}</div>
+  </div>
+</article>

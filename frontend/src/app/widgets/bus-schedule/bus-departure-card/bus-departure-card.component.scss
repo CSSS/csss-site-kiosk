@@ -1,0 +1,68 @@
+.bus-departure-card {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--sp-md);
+
+  &__time {
+    display: grid;
+    justify-items: center;
+    color: var(--colour-on-surface-strong);
+    line-height: 1;
+  }
+
+  &__minutes {
+    font-weight: 700;
+    line-height: 0.85;
+    text-align: center;
+  }
+
+  &__units {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
+
+  &__details {
+    display: grid;
+    gap: var(--sp-md);
+    min-width: 0;
+    padding: var(--sp-md);
+    border: 1px solid var(--colour-outline);
+    border-radius: var(--radius-md);
+  }
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    min-width: 0;
+  }
+
+  &__route {
+    display: grid;
+    place-items: center;
+    min-width: 3.25rem;
+    min-height: 2.75rem;
+    padding: var(--sp-xs) var(--sp-sm);
+    border: 1px solid var(--colour-outline);
+    border-radius: var(--radius-sm);
+    color: var(--colour-on-surface-strong);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+
+  &__location,
+  &__destination {
+    min-width: 0;
+    color: var(--colour-on-surface);
+    font-family: var(--font-body);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
+  }
+
+  &__location {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
