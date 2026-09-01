@@ -15,31 +15,31 @@ export interface BusScheduleModalData {
 }
 
 interface BusRouteDetails {
-  location: string;
   destination: string;
+  platform: string;
 }
 
 const fallbackRoute: BusRouteDetails = {
-  location: 'Upper Bus Loop',
-  destination: 'Destination unavailable'
+  destination: 'Destination unavailable',
+  platform: 'Upper Bus Loop'
 };
 
 const routeDetails: Record<string, BusRouteDetails> = {
   R5: {
-    location: 'Platform 2',
-    destination: 'Hastings St to Burrard Station'
+    destination: 'Hastings St to Burrard Station',
+    platform: 'Platform 2'
   },
   '143': {
-    location: 'Platform 2',
-    destination: 'Burquitlam Station'
+    destination: 'Burquitlam Station',
+    platform: 'Platform 2'
   },
   '144': {
-    location: 'Platform 2',
-    destination: 'Metrotown Station'
+    destination: 'Metrotown Station',
+    platform: 'Platform 2'
   },
   '145': {
-    location: 'Platform 2',
-    destination: 'Production Way-University Station'
+    destination: 'Production Way-University Station',
+    platform: 'Platform 2'
   }
 };
 

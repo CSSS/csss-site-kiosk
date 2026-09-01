@@ -22,6 +22,12 @@
 }
 
 .bus-schedule-modal {
+  --section-width: 90%;
+  --section-line-colour: #9d9d9d;
+  --section-heading-to-card-space: var(--sp-md);
+  --section-card-to-heading-space: var(--sp-2xl);
+  --section-card-space: var(--sp-xl);
+
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
@@ -39,26 +45,36 @@
     height: auto;
   }
 
-  &__route {
+  &__route-details {
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-md);
+    padding-inline: var(--sp-xl);
     color: var(--colour-on-primary);
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-xl);
     font-weight: 700;
-    line-height: 1;
+    line-height: var(--line-height-tight);
     text-align: center;
 
-    transform: translateY(-1.5rem);
+    transform: translateY(-2rem);
+  }
+
+  &__divider {
+    align-self: center;
+    width: 2px;
+    height: 2.25rem;
+    background-color: var(--colour-on-primary);
   }
 
   &__schedule {
     display: grid;
     align-content: start;
-    gap: var(--sp-md);
+    gap: 0;
     min-height: 0;
-    padding: var(--sp-md);
+    padding: 0 var(--sp-md) var(--sp-md);
     color: var(--colour-on-surface);
   }
 
@@ -66,28 +82,36 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    gap: var(--sp-sm);
+    gap: var(--sp-md);
     color: var(--colour-on-surface-soft);
     font-family: var(--font-body);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
     line-height: var(--line-height-tight);
     justify-self: center;
-    width: 85%;
+    width: var(--section-width);
 
     hr {
-      border-color: #9d9d9d;
+      width: 100%;
+      border: 1px solid var(--section-line-colour);
     }
+  }
+
+  &__section-heading+ksk-bus-departure-card {
+    margin-top: var(--section-heading-to-card-space);
+  }
+
+  ksk-bus-departure-card+&__section-heading {
+    margin-top: var(--section-card-to-heading-space);
+  }
+
+  ksk-bus-departure-card+ksk-bus-departure-card {
+    margin-top: var(--section-card-space);
   }
 
   &__empty {
     display: grid;
     place-items: center;
     color: var(--colour-on-surface-soft);
-  }
-
-  hr {
-    width: 100%;
-    border: 1px solid var(--colour-outline);
   }
 }
 

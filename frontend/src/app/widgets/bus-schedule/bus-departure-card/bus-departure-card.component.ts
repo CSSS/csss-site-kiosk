@@ -19,10 +19,6 @@ interface DepartureStatusDetails {
 export class BusDepartureCardComponent {
   readonly departure = input.required<DepartureInfo>();
 
-  readonly location = input.required<string>();
-
-  readonly destination = input.required<string>();
-
   readonly delaySeconds = input<number>();
 
   protected readonly displayTime = computed(() => {

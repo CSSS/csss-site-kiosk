@@ -7,7 +7,11 @@
         alt=""
         aria-hidden="true"
       />
-      <h1 class="bus-schedule-modal__route">{{ routeNumber() }}</h1>
+      <h1 class="bus-schedule-modal__route-details">
+        <span>{{ routeDetails().destination }}</span>
+        <span class="bus-schedule-modal__divider" aria-hidden="true"></span>
+        <span>{{ routeDetails().platform }}</span>
+      </h1>
     </div>
 
     <div class="bus-schedule-modal__schedule">
@@ -18,11 +22,7 @@
       </div>
 
       @if (nextDeparture(); as departure) {
-        <ksk-bus-departure-card
-          [departure]="departure"
-          [location]="routeDetails().location"
-          [destination]="routeDetails().destination"
-        />
+        <ksk-bus-departure-card [departure]="departure" />
       } @else {
         <div class="bus-schedule-modal__empty">No upcoming departures</div>
       }
@@ -34,11 +34,7 @@
       </div>
 
       @for (departure of upcomingDepartures(); track $index) {
-        <ksk-bus-departure-card
-          [departure]="departure"
-          [location]="routeDetails().location"
-          [destination]="routeDetails().destination"
-        />
+        <ksk-bus-departure-card [departure]="departure" />
       }
     </div>
   </section>
