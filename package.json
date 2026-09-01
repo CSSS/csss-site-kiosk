@@ -33,7 +33,7 @@
     "concurrently": "^10.0.5"
   },
   "allowScripts": {
-    "@openapitools/openapi-generator-cli@2.40.1": true,
+    "@openapitools/openapi-generator-cli@2.40.1": false,
     "@parcel/watcher@2.5.6": true,
     "@scarf/scarf": false,
     "esbuild@0.28.2": true,
