@@ -1,20 +1,12 @@
-import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { LucideCalendar, LucideClock, LucideMapPin, LucideUsersRound } from '@lucide/angular';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { placeHolderImgUrl } from '../../../../utils/placeholders';
+import { EventDetailsComponent } from '../event-details/event-details.component';
 import { KioskEvent } from '../event.types';
 
 @Component({
-  imports: [
-    NgOptimizedImage,
-    DatePipe,
-    LucideCalendar,
-    LucideClock,
-    LucideMapPin,
-    LucideUsersRound,
-    QRCodeComponent
-  ],
+  imports: [NgOptimizedImage, QRCodeComponent, EventDetailsComponent],
   selector: 'ksk-events-modal',
   styleUrl: './events-modal.component.scss',
   templateUrl: './events-modal.component.html'

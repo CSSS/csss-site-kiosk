@@ -1,0 +1,18 @@
+@let e = event();
+@if (e.isMultiDayEvent) {
+  @let dateRange = e.datetimeRange;
+  <div class="detail">
+    <svg lucideClock [size]="24"></svg>{{ dateRange[0] }} - <br />{{ dateRange[1] }}
+  </div>
+} @else {
+  <div class="detail">
+    <svg lucideCalendar [size]="24"></svg>{{ e.startDatetime | date: 'longDate' }}
+  </div>
+  <div class="detail"><svg lucideClock [size]="24"></svg>{{ e.timeRange }}</div>
+}
+@if (e.location) {
+  <div class="detail"><svg lucideMapPin [size]="24"></svg>{{ event().location }}</div>
+}
+@if (e.organizer) {
+  <div class="detail"><svg lucideUsersRound [size]="24"></svg>{{ event().organizer }}</div>
+}
