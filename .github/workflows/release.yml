@@ -56,6 +56,7 @@ jobs:
           mkdir -p release/frontend/dist/csss-site-kiosk/browser
 
           cp server/dist/server.js release/server/
+          printf '{"private":true,"type":"module"}\n' > release/server/package.json
           cp -r node_modules release/server/node_modules
           rm -f release/server/node_modules/server
           rm -f release/server/node_modules/@csss-kiosk/shared
@@ -76,7 +77,8 @@ jobs:
           test -f release/server/server.js
           test ! -e release/server/server.ts
           test ! -e release/server/dist
-          test ! -e release/server/package.json
+          test -f release/server/package.json
+          test "$(node -p "require('./release/server/package.json').type")" = "module"
           test ! -e release/server/.env.example
           test ! -e release/shared
           test -d release/server/node_modules/express
@@ -104,7 +106,9 @@ jobs:
             sleep 0.5
           done
 
-          test "$health" = "${GITHUB_REF_NAME}"
+          jq --exit-status --arg version "${GITHUB_REF_NAME}" \
+            '.version == $version and (.startedAt | type == "number")' \
+            <<< "$health" >/dev/null
           kill "$server_pid"
           wait "$server_pid" || true
           trap - EXIT
