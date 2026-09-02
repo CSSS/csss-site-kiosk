@@ -29,6 +29,10 @@
     --badge-colour: var(--colour-secondary);
   }
 
+  html {
+    scrollbar-color: var(--colour-secondary) var(--colour-bg-surface);
+  }
+
   .button {
     background-color: var(--colour-primary);
     font-family: var(--font-body);

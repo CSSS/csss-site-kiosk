@@ -32,6 +32,7 @@ section {
 
   &__description {
     max-height: 50cqh;
+    padding-right: var(--sp-sm);
     overflow-y: auto;
   }
 }

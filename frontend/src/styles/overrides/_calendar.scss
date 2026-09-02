@@ -10,6 +10,10 @@ mwl-calendar-open-day-events {
   display: none !important;
 }
 
+mwl-calendar-month-cell.cal-today {
+  background-color: color-mix(in oklch, var(--colour-accent), var(--colour-bg-surface) 70%);
+}
+
 .cal-tooltip {
   font-family: var(--font-heading);
 }
