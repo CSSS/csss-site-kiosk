@@ -29,8 +29,6 @@ export class EventWidget {
 
   events = toSignal(this.eventsService.getCurrentEvents(), { initialValue: [] });
 
-  private swiperInitialized = false;
-
   constructor() {
     afterRenderEffect({
       write: () => {
@@ -68,7 +66,6 @@ export class EventWidget {
       },
       autoplay: {
         delay: 5000,
-
         pauseOnMouseEnter: true,
         disableOnInteraction: false
       },

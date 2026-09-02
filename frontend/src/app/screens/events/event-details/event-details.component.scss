@@ -1,0 +1,11 @@
+:host {
+  display: grid;
+  row-gap: var(--sp-xs);
+  height: 100%;
+}
+
+.detail {
+  display: flex;
+  column-gap: var(--sp-sm);
+  align-items: center;
+}

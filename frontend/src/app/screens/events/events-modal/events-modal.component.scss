@@ -14,16 +14,6 @@
     'description description';
 }
 
-.h3 {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-md);
-}
-
-.h3.multiday {
-  font-size: var(--font-size-lg);
-}
-
 .poster {
   grid-area: poster;
   width: 100%;
@@ -46,14 +36,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-
-.details {
-  grid-area: details;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-md);
 }
 
 .description {

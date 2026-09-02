@@ -1,6 +1,6 @@
-import { DatePipe, NgOptimizedImage, SlicePipe } from '@angular/common';
+import { NgOptimizedImage, SlicePipe } from '@angular/common';
 import {
-  AfterViewInit,
+  afterRenderEffect,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
@@ -11,30 +11,49 @@ import { DateCardComponent } from '@core/date-card/date-card.component';
 import { Pagination } from 'swiper/modules';
 
 import { toSignal } from '@angular/core/rxjs-interop';
-import { LucideCalendar, LucideClock } from '@lucide/angular';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css/pagination';
 import { placeHolderImgUrl } from '../../../../utils/placeholders';
+import { EventDetailsComponent } from '../event-details/event-details.component';
 import { EventsService } from '../events.service';
 
 @Component({
   selector: 'ksk-events-browser',
-  imports: [NgOptimizedImage, SlicePipe, DateCardComponent, DatePipe, LucideCalendar, LucideClock],
+  imports: [NgOptimizedImage, SlicePipe, DateCardComponent, EventDetailsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './events-browser.component.html',
   styleUrl: './events-browser.component.scss'
 })
-export class EventsBrowserComponent implements AfterViewInit {
+export class EventsBrowserComponent {
   private readonly eventsService = inject(EventsService);
 
   events = toSignal(this.eventsService.getCurrentEvents(), { initialValue: [] });
 
-  DUMMY_IMG_H = 400;
-  DUMMY_IMG_W = (this.DUMMY_IMG_H * 4) / 5;
+  IMG_H = 400;
+  IMG_W = (this.IMG_H * 4) / 5;
 
   swiperRef = viewChild.required<ElementRef>('swiperRef');
 
-  ngAfterViewInit(): void {
+  constructor() {
+    afterRenderEffect({
+      write: () => {
+        const eventCount = this.events().length;
+        const swiperEl = this.swiperRef().nativeElement;
+
+        if (!swiperEl.swiper?.initialized) {
+          if (eventCount > 0) {
+            this.initializeSwiper();
+          }
+
+          return;
+        }
+
+        swiperEl.swiper.update();
+      }
+    });
+  }
+
+  initializeSwiper(): void {
     const swiperEl = this.swiperRef().nativeElement;
 
     const swiperParams = {
