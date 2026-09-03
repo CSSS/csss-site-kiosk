@@ -35,7 +35,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: IMAGE_LOADER,
       useValue: (config: ImageLoaderConfig): string => {
-        return `${environment.mediaUrl}/images/${config.src}`;
+        return `${environment.mediaUrl}${config.src}`;
       }
     },
     provideAppInitializer(() => {

@@ -11,7 +11,6 @@ import { DateCardComponent } from '@core/date-card/date-card.component';
 import { EventsService } from '@screens/events/events.service';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
-import { placeHolderImgUrl } from '../../../utils/placeholders';
 
 @Component({
   selector: 'ksk-event-widget',
@@ -80,9 +79,5 @@ export class EventWidget {
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
-  }
-
-  getFallbackPosterUrl(index: number, url?: string | null): string {
-    return url ?? placeHolderImgUrl(index);
   }
 }

@@ -1,9 +1,4 @@
-<img
-  class="poster"
-  [ngSrc]="getFallbackPosterUrl(2, event().posterUrl)"
-  [height]="400"
-  [width]="500"
-/>
+<img class="poster" [ngSrc]="event().image_url" [height]="400" [width]="500" />
 @if (event().url; as url) {
   <section class="link">
     <qrcode [qrdata]="url" [width]="180" [margin]="0"></qrcode>

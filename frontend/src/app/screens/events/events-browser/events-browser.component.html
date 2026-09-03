@@ -4,12 +4,7 @@
     @if (events().length > 0) {
       @let event = events()[0];
       <div class="next__img">
-        <img
-          [ngSrc]="getFallbackPosterUrl(0, event?.posterUrl)"
-          alt="title"
-          [height]="IMG_H"
-          [width]="IMG_W"
-        />
+        <img [ngSrc]="event.image_url" alt="title" [height]="IMG_H" [width]="IMG_W" />
       </div>
       <div class="next__info">
         <h3>{{ event.name }}</h3>
@@ -27,7 +22,7 @@
         <ksk-date-card
           [date]="event.startDatetime"
           [title]="event.name"
-          [imgSrc]="getFallbackPosterUrl($index, event.posterUrl)"
+          [imgSrc]="event.image_url"
           [width]="IMG_W"
           [height]="IMG_H"
         />

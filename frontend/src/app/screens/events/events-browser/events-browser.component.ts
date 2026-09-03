@@ -13,7 +13,6 @@ import { Pagination } from 'swiper/modules';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css/pagination';
-import { placeHolderImgUrl } from '../../../../utils/placeholders';
 import { EventDetailsComponent } from '../event-details/event-details.component';
 import { EventsService } from '../events.service';
 
@@ -72,9 +71,5 @@ export class EventsBrowserComponent {
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
-  }
-
-  getFallbackPosterUrl(index: number, url?: string | null): string {
-    return url ?? placeHolderImgUrl(index);
   }
 }
