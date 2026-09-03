@@ -51,7 +51,7 @@ export class KioskEvent implements Event {
     this.image_id = event.image_id;
     this.eid = event.eid;
     this.group_id = event.group_id;
-    this.image_url = event.image_url ?? '/placeholder.webp';
+    this.image_url = event.image_url ?? '/media/images/placeholder.webp';
     this.startDatetime = startDatetime;
     this.endDatetime = endDatetime;
     this.isMultiDayEvent = this.startDatetime.toDateString() !== this.endDatetime.toDateString();
