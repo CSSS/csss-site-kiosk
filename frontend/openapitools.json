@@ -19,7 +19,8 @@
           "supportsES6": "true",
           "useSquareBracketsInArrayNames": true,
           "fileNaming": "kebab-case",
-          "withInterfaces": true
+          "withInterfaces": true,
+          "useSingleRequestParameter": true
         }
       },
       "csss-backend-file": {
@@ -37,7 +38,8 @@
           "supportsES6": "true",
           "useSquareBracketsInArrayNames": true,
           "fileNaming": "kebab-case",
-          "withInterfaces": true
+          "withInterfaces": true,
+          "useSingleRequestParameter": true
         }
       }
     }

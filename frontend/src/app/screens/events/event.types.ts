@@ -33,9 +33,10 @@ export class KioskEvent implements Event {
   image_id?: number | null;
   eid: number;
   group_id?: string | null;
+  image_url?: string | null;
+
   startDatetime: Date;
   endDatetime: Date;
-  posterUrl?: string | null;
   isMultiDayEvent?: boolean;
 
   constructor(event: Event, startDatetime: Date, endDatetime: Date) {
