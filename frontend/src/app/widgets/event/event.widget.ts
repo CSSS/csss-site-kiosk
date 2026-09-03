@@ -8,6 +8,9 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DateCardComponent } from '@core/date-card/date-card.component';
+import { ModalService } from '@core/modal/modal.service';
+import type { KioskEvent } from '@screens/events/event.types';
+import { EventsModalComponent } from '@screens/events/events-modal/events-modal.component';
 import { EventsService } from '@screens/events/events.service';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
@@ -21,6 +24,8 @@ import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swipe
 })
 export class EventWidget {
   private readonly eventsService = inject(EventsService);
+
+  private readonly modal = inject(ModalService);
 
   protected swiperRef = viewChild.required<ElementRef>('swiperRef');
 
@@ -79,5 +84,16 @@ export class EventWidget {
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
+  }
+
+  openEventModal(event: KioskEvent): void {
+    this.modal.open({
+      type: 'component',
+      title: event.name,
+      content: EventsModalComponent,
+      inputs: {
+        event: event
+      }
+    });
   }
 }

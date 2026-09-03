@@ -10,6 +10,7 @@
         [imgSrc]="event.image_url"
         [width]="cardWidth"
         [height]="(cardWidth * 5) / 4"
+        (tapped)="openEventModal(event)"
       />
     </swiper-slide>
   }

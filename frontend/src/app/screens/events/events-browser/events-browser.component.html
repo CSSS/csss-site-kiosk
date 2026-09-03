@@ -25,6 +25,7 @@
           [imgSrc]="event.image_url"
           [width]="IMG_W"
           [height]="IMG_H"
+          (tapped)="openEventModal(event)"
         />
       </swiper-slide>
     }

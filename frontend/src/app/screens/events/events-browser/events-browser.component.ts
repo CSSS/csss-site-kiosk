@@ -11,9 +11,12 @@ import { DateCardComponent } from '@core/date-card/date-card.component';
 import { Pagination } from 'swiper/modules';
 
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ModalService } from '@core/modal/modal.service';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css/pagination';
 import { EventDetailsComponent } from '../event-details/event-details.component';
+import { KioskEvent } from '../event.types';
+import { EventsModalComponent } from '../events-modal/events-modal.component';
 import { EventsService } from '../events.service';
 
 @Component({
@@ -25,6 +28,8 @@ import { EventsService } from '../events.service';
 })
 export class EventsBrowserComponent {
   private readonly eventsService = inject(EventsService);
+
+  private readonly modal = inject(ModalService);
 
   events = toSignal(this.eventsService.getCurrentEvents(), { initialValue: [] });
 
@@ -71,5 +76,16 @@ export class EventsBrowserComponent {
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
+  }
+
+  openEventModal(event: KioskEvent): void {
+    this.modal.open({
+      type: 'component',
+      title: event.name,
+      content: EventsModalComponent,
+      inputs: {
+        event: event
+      }
+    });
   }
 }
