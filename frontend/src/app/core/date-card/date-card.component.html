@@ -1,4 +1,14 @@
-<img [ngSrc]="imgSrc()" [alt]="title()" [width]="width()" [height]="height()" />
+@if (useFallbackImage()) {
+  <img [src]="fallbackImageSrc" [alt]="title()" [width]="width()" [height]="height()" />
+} @else {
+  <img
+    [ngSrc]="imgSrc()"
+    [alt]="title()"
+    [width]="width()"
+    [height]="height()"
+    (error)="handleImageError()"
+  />
+}
 <div class="date">
   <div class="day">{{ date() | date: 'd' }}</div>
   <div class="month">{{ date() | date: 'MMM' }}</div>
