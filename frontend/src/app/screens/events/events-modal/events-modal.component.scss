@@ -22,6 +22,8 @@
 }
 
 .link {
+  --qr-code-size: 180px;
+
   grid-area: link;
   width: 100%;
   display: flex;
@@ -30,6 +32,16 @@
   text-align: center;
   gap: var(--sp-sm);
   min-width: 0;
+
+  qrcode {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    flex: 0 0 var(--qr-code-size);
+    width: var(--qr-code-size);
+    height: var(--qr-code-size);
+    background-color: white;
+  }
 
   p {
     white-space: nowrap;

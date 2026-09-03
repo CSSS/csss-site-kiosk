@@ -7,9 +7,10 @@
         [date]="event.startDatetime"
         [title]="event.name"
         [description]="event.description"
-        [imgSrc]="getFallbackPosterUrl(0, event?.posterUrl)"
+        [imgSrc]="event.image_url"
         [width]="cardWidth"
         [height]="(cardWidth * 5) / 4"
+        (tapped)="openEventModal(event)"
       />
     </swiper-slide>
   }
