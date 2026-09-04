@@ -1,30 +1,14 @@
-@use 'utilities/mixins' as *;
-
 :host {
-  --width: calc(0.8 * var(--content-width));
-  position: fixed;
-  z-index: 1000;
+  display: block;
   height: 100%;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-[ngpDialog] {
-  @include widget();
-
-  position: relative;
-  width: var(--width);
-  height: calc(1.25 * var(--width));
-  margin: 0 auto;
-  top: calc(var(--header-height) + var(--content-block-padding) + 10%);
-  padding: 0;
-  anchor-name: --bus-schedule-modal;
 }
 
 .bus-schedule-modal {
   --section-width: 90%;
   --section-line-colour: #9d9d9d;
   --section-heading-to-card-space: var(--sp-md);
+  --section-heading-to-empty-space: var(--sp-lg);
+  --section-empty-to-heading-space: var(--sp-lg);
   --section-card-to-heading-space: var(--sp-2xl);
   --section-card-space: var(--sp-xl);
 
@@ -100,6 +84,14 @@
     margin-top: var(--section-heading-to-card-space);
   }
 
+  &__section-heading+&__empty {
+    margin-top: var(--section-heading-to-empty-space);
+  }
+
+  &__empty+&__section-heading {
+    margin-top: var(--section-empty-to-heading-space);
+  }
+
   ksk-bus-departure-card+&__section-heading {
     margin-top: var(--section-card-to-heading-space);
   }
@@ -113,25 +105,4 @@
     place-items: center;
     color: var(--colour-on-surface-soft);
   }
-}
-
-.controls {
-  position: absolute;
-  position-anchor: --bus-schedule-modal;
-  top: calc(anchor(bottom) + var(--sp-md));
-  left: anchor(left);
-  width: var(--width);
-
-  display: grid;
-  place-items: end center;
-}
-
-.close {
-  background-color: var(--colour-bg-surface);
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  aspect-ratio: 1 / 1;
-  padding: var(--sp-sm);
-  border-radius: 50%;
 }

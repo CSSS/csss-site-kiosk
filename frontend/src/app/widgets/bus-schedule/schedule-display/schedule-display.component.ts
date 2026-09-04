@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
+import { ModalService } from '@core/modal/modal.service';
 import { BusStatus } from '@csss-api';
-import { NgpDialogManager } from 'ng-primitives/dialog';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 import { BusScheduleModalComponent } from '../bus-schedule-modal/bus-schedule-modal.component';
 
@@ -23,7 +23,7 @@ export class ScheduleDisplayComponent {
   readonly routeNumber = input.required<string>();
   readonly departures = input<DepartureInfo[]>();
 
-  private readonly dialogManager = inject(NgpDialogManager);
+  private readonly modal = inject(ModalService);
 
   protected getDisplayTime(timeDiff: number): number {
     if (timeDiff < 60) {
@@ -38,10 +38,17 @@ export class ScheduleDisplayComponent {
   }
 
   protected openScheduleModal(): void {
-    this.dialogManager.open(BusScheduleModalComponent, {
-      data: {
+    this.modal.open({
+      type: 'component',
+      title: `Route ${this.routeNumber()} departures`,
+      content: BusScheduleModalComponent,
+      inputs: {
         routeNumber: this.routeNumber(),
         departures: this.departures() ?? []
+      },
+      layout: {
+        padding: '0',
+        showTitle: false
       }
     });
   }

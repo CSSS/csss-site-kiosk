@@ -1,18 +1,6 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { LucideX } from '@lucide/angular';
-import {
-  NgpDialog,
-  NgpDialogOverlay,
-  NgpDialogRef,
-  provideDialogState
-} from 'ng-primitives/dialog';
+import { Component, computed, input } from '@angular/core';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 import { BusDepartureCardComponent } from '../bus-departure-card/bus-departure-card.component';
-
-export interface BusScheduleModalData {
-  routeNumber: string;
-  departures: DepartureInfo[];
-}
 
 interface BusRouteDetails {
   destination: string;
@@ -45,18 +33,13 @@ const routeDetails: Record<string, BusRouteDetails> = {
 
 @Component({
   selector: 'ksk-bus-schedule-modal',
-  hostDirectives: [NgpDialogOverlay],
-  imports: [LucideX, NgpDialog, BusDepartureCardComponent],
-  providers: [provideDialogState()],
+  imports: [BusDepartureCardComponent],
   templateUrl: './bus-schedule-modal.component.html',
   styleUrl: './bus-schedule-modal.component.scss'
 })
 export class BusScheduleModalComponent {
-  private readonly dialogRef = inject<NgpDialogRef<BusScheduleModalData>>(NgpDialogRef);
-
-  protected readonly routeNumber = signal(this.dialogRef.data.routeNumber);
-
-  protected readonly departures = signal(this.dialogRef.data.departures);
+  readonly routeNumber = input.required<string>();
+  readonly departures = input.required<DepartureInfo[]>();
 
   protected readonly routeDetails = computed(
     () => routeDetails[this.routeNumber()] ?? fallbackRoute
@@ -65,8 +48,4 @@ export class BusScheduleModalComponent {
   protected readonly nextDeparture = computed(() => this.departures().at(0));
 
   protected readonly upcomingDepartures = computed(() => this.departures().slice(1));
-
-  protected closeScheduleModal(): void {
-    this.dialogRef.close();
-  }
 }

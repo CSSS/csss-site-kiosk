@@ -3,7 +3,7 @@ import { Component, computed, input } from '@angular/core';
 import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 
-type DepartureStatusVariant = 'arrived' | 'cancelled' | 'delayed' | 'early' | 'on-time';
+type DepartureStatusVariant = 'arrived' | 'cancelled' | 'delayed' | 'early' | 'normal';
 
 interface DepartureStatusDetails {
   text: string;
@@ -70,7 +70,7 @@ export class BusDepartureCardComponent {
 
     return {
       text: 'On time',
-      variant: 'on-time'
+      variant: 'normal'
     };
   });
 }

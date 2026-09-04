@@ -3,8 +3,8 @@
 }
 
 .bus-departure-card {
-  --bus-departure-colour: #018522;
-  --bus-departure-bg-colour: rgb(1 133 34 / 10%);
+  --bus-departure-colour: black;
+  --bus-departure-bg-colour: var(--colour-bg-surface);
   --card-width: 90%;
   --details-min-height: 3rem;
   --route-badge-border-colour: #9d9d9d;
@@ -19,19 +19,23 @@
   margin-inline: auto;
   width: var(--card-width);
 
-  &--arrived,
-  &--on-time {
+  &--normal {
+    --bus-departure-colour: black;
+    --bus-departure-bg-colour: var(--colour-bg-surface);
+  }
+
+  &--arrived {
     --bus-departure-colour: #018522;
     --bus-departure-bg-colour: rgb(1 133 34 / 10%);
   }
 
-  &--early {
+  &--early,
+  &--delayed {
     --bus-departure-colour: #9a6110;
     --bus-departure-bg-colour: rgb(154 97 16 / 10%);
   }
 
-  &--cancelled,
-  &--delayed {
+  &--cancelled {
     --bus-departure-colour: #d12f2a;
     --bus-departure-bg-colour: rgb(209 47 42 / 10%);
   }
