@@ -1,6 +1,8 @@
 <div ngpDialog>
   @if (modal.current(); as page) {
-    <h2>{{ page.title }}</h2>
+    @if (page.layout?.showTitle ?? true) {
+      <h2>{{ page.title }}</h2>
+    }
     <div class="content">
       @switch (page.type) {
         @case ('component') {

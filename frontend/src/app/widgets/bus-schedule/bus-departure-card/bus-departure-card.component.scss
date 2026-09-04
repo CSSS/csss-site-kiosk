@@ -1,0 +1,98 @@
+:host {
+  display: block;
+}
+
+.bus-departure-card {
+  --bus-departure-colour: black;
+  --bus-departure-bg-colour: var(--colour-bg-surface);
+  --card-width: 90%;
+  --details-min-height: 3rem;
+  --route-badge-border-colour: #9d9d9d;
+  --route-badge-bg-colour: white;
+  --route-badge-colour: black;
+  --time-column-width: 5.25rem;
+
+  display: grid;
+  grid-template-columns: var(--time-column-width) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-inline: auto;
+  width: var(--card-width);
+
+  &--normal {
+    --bus-departure-colour: black;
+    --bus-departure-bg-colour: var(--colour-bg-surface);
+  }
+
+  &--arrived {
+    --bus-departure-colour: #018522;
+    --bus-departure-bg-colour: rgb(1 133 34 / 10%);
+  }
+
+  &--early,
+  &--delayed {
+    --bus-departure-colour: #9a6110;
+    --bus-departure-bg-colour: rgb(154 97 16 / 10%);
+  }
+
+  &--cancelled {
+    --bus-departure-colour: #d12f2a;
+    --bus-departure-bg-colour: rgb(209 47 42 / 10%);
+  }
+
+  &__time {
+    --bus-departure-minute-size: var(--font-size-2xl);
+
+    display: grid;
+    justify-items: center;
+    color: var(--bus-departure-colour);
+    line-height: 1;
+  }
+
+  &__minutes {
+    font-size: var(--bus-departure-minute-size);
+    font-weight: 700;
+    line-height: 0.85;
+    text-align: center;
+  }
+
+  &__units {
+    font-size: var(--font-size-md);
+    font-weight: 700;
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-lg);
+    min-width: 0;
+    min-height: var(--details-min-height);
+    padding: var(--sp-xs) var(--sp-md);
+    border: 1px solid var(--bus-departure-colour);
+    border-radius: var(--radius-md);
+    background-color: var(--bus-departure-bg-colour);
+  }
+
+  &__route {
+    display: grid;
+    place-items: center;
+    min-width: 3rem;
+    min-height: 2rem;
+    padding: var(--sp-xs) var(--sp-sm);
+    border: 1px solid var(--route-badge-border-colour);
+    border-radius: var(--radius-sm);
+    background-color: var(--route-badge-bg-colour);
+    color: var(--route-badge-colour);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+
+  &__status {
+    min-width: 0;
+    color: var(--bus-departure-colour);
+    font-family: var(--font-body);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-tight);
+    white-space: nowrap;
+  }
+}
