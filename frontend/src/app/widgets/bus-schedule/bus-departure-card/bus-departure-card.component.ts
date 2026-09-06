@@ -1,4 +1,3 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
@@ -12,7 +11,6 @@ interface DepartureStatusDetails {
 
 @Component({
   selector: 'ksk-bus-departure-card',
-  imports: [DecimalPipe],
   templateUrl: './bus-departure-card.component.html',
   styleUrl: './bus-departure-card.component.scss'
 })
