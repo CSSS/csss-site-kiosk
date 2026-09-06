@@ -4,30 +4,24 @@ import { BusDepartureCardComponent } from '../bus-departure-card/bus-departure-c
 
 interface BusRouteDetails {
   destination: string;
-  platform: string;
 }
 
 const fallbackRoute: BusRouteDetails = {
-  destination: 'Destination unavailable',
-  platform: 'Upper Bus Loop'
+  destination: 'Destination unavailable'
 };
 
 const routeDetails: Record<string, BusRouteDetails> = {
   R5: {
-    destination: 'Hastings St to Burrard Station',
-    platform: 'Platform 2'
+    destination: 'Hastings St to Burrard Station'
   },
   '143': {
-    destination: 'Burquitlam Station',
-    platform: 'Platform 2'
+    destination: 'Burquitlam Station'
   },
   '144': {
-    destination: 'Metrotown Station',
-    platform: 'Platform 2'
+    destination: 'Metrotown Station'
   },
   '145': {
-    destination: 'Production Way-University Station',
-    platform: 'Platform 2'
+    destination: 'Production Way-University Station'
   }
 };
 
