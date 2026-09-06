@@ -17,7 +17,7 @@ interface DepartureStatusDetails {
 export class BusDepartureCardComponent {
   readonly departure = input.required<DepartureInfo>();
 
-  readonly delaySeconds = input<number>();
+  readonly delaySeconds = input.required<number>();
 
   protected readonly displayTime = computed(() => {
     const timeDiff = this.departure().secondsUntilDeparture;
@@ -32,8 +32,7 @@ export class BusDepartureCardComponent {
   protected readonly statusDetails = computed<DepartureStatusDetails>(() => {
     const departure = this.departure();
     const delaySeconds = this.delaySeconds();
-    const delayMinutes =
-      delaySeconds === undefined ? undefined : Math.ceil(Math.abs(delaySeconds) / 60);
+    const delayMinutes = Math.ceil(Math.abs(delaySeconds) / 60);
 
     if (departure.status === BusStatus.NUMBER_4) {
       return {
@@ -49,19 +48,16 @@ export class BusDepartureCardComponent {
       };
     }
 
-    if (delaySeconds !== undefined && delaySeconds < 0) {
+    if (delaySeconds < 0) {
       return {
         text: `Early: ${delayMinutes} min`,
         variant: 'early'
       };
     }
 
-    if (
-      (delaySeconds !== undefined && delaySeconds > 0) ||
-      departure.status === BusStatus.NUMBER_2
-    ) {
+    if (delaySeconds > 0 || departure.status === BusStatus.NUMBER_2) {
       return {
-        text: delayMinutes === undefined ? 'Delayed' : `Delayed: ${delayMinutes} min`,
+        text: `Delayed: ${delayMinutes} min`,
         variant: 'delayed'
       };
     }
