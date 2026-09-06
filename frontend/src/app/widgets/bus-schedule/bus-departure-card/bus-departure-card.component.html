@@ -1,14 +1,7 @@
-<article
-  class="bus-departure-card"
-  [class.bus-departure-card--arrived]="statusDetails().variant === 'arrived'"
-  [class.bus-departure-card--cancelled]="statusDetails().variant === 'cancelled'"
-  [class.bus-departure-card--delayed]="statusDetails().variant === 'delayed'"
-  [class.bus-departure-card--early]="statusDetails().variant === 'early'"
-  [class.bus-departure-card--normal]="statusDetails().variant === 'normal'"
->
+<article [class]="`bus-departure-card--${statusDetails().variant}`">
   <div class="bus-departure-card__time">
     <span class="bus-departure-card__minutes">
-      {{ displayTime() | number: '1.0-0' }}
+      {{ displayTime() }}
     </span>
     <span class="bus-departure-card__units">MIN</span>
   </div>
