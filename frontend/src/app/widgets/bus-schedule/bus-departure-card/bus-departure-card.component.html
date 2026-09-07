@@ -1,0 +1,13 @@
+<article [class]="`bus-departure-card--${statusDetails().variant}`">
+  <div class="bus-departure-card__time">
+    <span class="bus-departure-card__minutes">
+      {{ displayTime() }}
+    </span>
+    <span class="bus-departure-card__units">MIN</span>
+  </div>
+
+  <div class="bus-departure-card__details">
+    <span class="bus-departure-card__route">{{ departure().routeNumber }}</span>
+    <span class="bus-departure-card__status">{{ statusDetails().text }}</span>
+  </div>
+</article>

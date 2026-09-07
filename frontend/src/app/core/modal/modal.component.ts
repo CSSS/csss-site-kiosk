@@ -10,7 +10,12 @@ import { NgpDialog, NgpDialogOverlay, provideDialogState } from 'ng-primitives/d
   providers: [provideDialogState()],
   selector: 'ksk-modal',
   styleUrl: './modal.component.scss',
-  templateUrl: './modal.component.html'
+  templateUrl: './modal.component.html',
+  host: {
+    '[style.--width]': 'modal.current()?.layout?.width',
+    '[style.--height]': 'modal.current()?.layout?.height',
+    '[style.--padding]': 'modal.current()?.layout?.padding'
+  }
 })
 export class ModalComponent {
   modal = inject(ModalService);

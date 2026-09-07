@@ -2,18 +2,27 @@ import { computed, inject, Service, signal, TemplateRef, Type } from '@angular/c
 import { ModalComponent } from '@core/modal/modal.component';
 import { NgpDialogManager, NgpDialogRef } from 'ng-primitives/dialog';
 
+interface ModalLayout {
+  width?: string;
+  height?: string;
+  padding?: string;
+  showTitle?: boolean;
+}
+
 export type ModalContent<T = unknown> =
   | {
       type: 'template';
       title: string;
       content: TemplateRef<unknown>;
       context?: T;
+      layout?: ModalLayout;
     }
   | {
       type: 'component';
       title: string;
       content: Type<unknown>;
       inputs?: Record<string, unknown>;
+      layout?: ModalLayout;
     };
 
 @Service()

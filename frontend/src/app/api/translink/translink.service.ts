@@ -12,6 +12,7 @@ import { ObservableCache } from '../observable-cache';
 export interface DepartureInfo {
   routeNumber: string;
   secondsUntilDeparture: number;
+  delaySeconds: number;
   status: number;
 }
 
@@ -53,6 +54,7 @@ export class TranslinkService {
               departure.scheduled_departure_time -
                 this.timeService.currentDatetime().getTime() / 1000
             ),
+            delaySeconds: departure.delay_seconds,
             status: departure.status
           });
           result.set(departure.route_number, departList);

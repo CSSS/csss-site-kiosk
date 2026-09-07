@@ -1,9 +1,9 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, effect, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { ModalService } from '@core/modal/modal.service';
 import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
-
-const DROPDOWN_TIMEOUT_MS = 3000;
+import { BusScheduleModalComponent } from '../bus-schedule-modal/bus-schedule-modal.component';
 
 // TODO: Fix the enum values on the backend and regenerate the services to get better enum names
 const STATUS_COLOUR_MAP: Record<number, string> = {
@@ -22,26 +22,8 @@ const STATUS_COLOUR_MAP: Record<number, string> = {
 export class ScheduleDisplayComponent {
   readonly routeNumber = input.required<string>();
   readonly departures = input<DepartureInfo[]>();
-  protected readonly isDropdownOpen = signal(false);
-  private timeoutId?: number;
 
-  constructor() {
-    effect(() => {
-      if (this.isDropdownOpen()) {
-        this.timeoutId = setTimeout(() => {
-          this.isDropdownOpen.update(value => !value);
-        }, DROPDOWN_TIMEOUT_MS);
-      } else if (this.timeoutId) {
-        clearTimeout(this.timeoutId);
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
-  }
+  private readonly modal = inject(ModalService);
 
   protected getDisplayTime(timeDiff: number): number {
     if (timeDiff < 60) {
@@ -53,5 +35,21 @@ export class ScheduleDisplayComponent {
 
   protected getStatusClass(status?: number): string {
     return status ? STATUS_COLOUR_MAP[status] : 'status';
+  }
+
+  protected openScheduleModal(): void {
+    this.modal.open({
+      type: 'component',
+      title: `Route ${this.routeNumber()} departures`,
+      content: BusScheduleModalComponent,
+      inputs: {
+        routeNumber: this.routeNumber(),
+        departures: this.departures() ?? []
+      },
+      layout: {
+        padding: '0',
+        showTitle: false
+      }
+    });
   }
 }
