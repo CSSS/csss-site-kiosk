@@ -17,8 +17,6 @@ interface DepartureStatusDetails {
 export class BusDepartureCardComponent {
   readonly departure = input.required<DepartureInfo>();
 
-  readonly delaySeconds = input.required<number>();
-
   protected readonly displayTime = computed(() => {
     const timeDiff = this.departure().secondsUntilDeparture;
 
@@ -31,7 +29,7 @@ export class BusDepartureCardComponent {
 
   protected readonly statusDetails = computed<DepartureStatusDetails>(() => {
     const departure = this.departure();
-    const delaySeconds = this.delaySeconds();
+    const delaySeconds = departure.delaySeconds;
     const delayMinutes = Math.ceil(Math.abs(delaySeconds) / 60);
 
     if (departure.status === BusStatus.NUMBER_4) {

@@ -14,7 +14,7 @@
     </div>
 
     @if (nextDeparture(); as departure) {
-      <ksk-bus-departure-card [departure]="departure" [delaySeconds]="departure.delaySeconds" />
+      <ksk-bus-departure-card [departure]="departure" />
     } @else {
       <div class="bus-schedule-modal__empty">No upcoming departures</div>
     }
@@ -26,7 +26,7 @@
     </div>
 
     @for (departure of upcomingDepartures(); track $index) {
-      <ksk-bus-departure-card [departure]="departure" [delaySeconds]="departure.delaySeconds" />
+      <ksk-bus-departure-card [departure]="departure" />
     }
   </div>
 </section>
