@@ -72,9 +72,7 @@ export class EventsCalendarComponent {
   protected view = CalendarView.Month;
 
   protected events = toSignal(
-    this.eventsService
-      .getCurrentEvents()
-      .pipe(map(events => events.map(e => e.getCalendarEvent()))),
+    this.eventsService.getAllEvents().pipe(map(events => events.map(e => e.getCalendarEvent()))),
     { initialValue: [] }
   );
 
