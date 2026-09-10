@@ -30,22 +30,22 @@
   &--early {
     @extend .bus-departure-card;
 
-    --bus-departure-colour: #018522;
-    --bus-departure-bg-colour: rgb(1 133 34 / 10%);
+    --bus-departure-colour: var(--app-green);
+    --bus-departure-bg-colour: var(--app-bg-green);
   }
 
   &--delayed {
     @extend .bus-departure-card;
 
-    --bus-departure-colour: #9a6110;
-    --bus-departure-bg-colour: rgb(154 97 16 / 10%);
+    --bus-departure-colour: var(--app-yellow);
+    --bus-departure-bg-colour: var(--app-bg-yellow);
   }
 
   &--cancelled {
     @extend .bus-departure-card;
 
-    --bus-departure-colour: #d12f2a;
-    --bus-departure-bg-colour: rgb(209 47 42 / 10%);
+    --bus-departure-colour: var(--app-red);
+    --bus-departure-bg-colour: var(--app-bg-red);
   }
 
   &__time {

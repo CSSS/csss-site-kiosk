@@ -9,7 +9,10 @@ $csss-brand: (
 );
 
 $app: (
-  red: hsl(0, 100%, 35%),
-  green: hsl(135, 100%, 42%),
-  yellow: hsl(70, 64%, 41%)
+  red: hsl(1.8 66.5% 49.2%),
+  bg-red: hsl(1.8 66.5% 49.2% / 10%),
+  green: hsl(135 98.5% 26.3%),
+  bg-green: hsl(135 98.5% 26.3% / 10%),
+  yellow: hsl(35.2 81.2% 33.3%),
+  bg-yellow: hsl(35.2 81.2% 33.3% / 10%)
 );

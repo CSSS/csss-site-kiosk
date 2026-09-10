@@ -47,34 +47,30 @@
   --colour-status: var(--colour-warning);
   --colour-text: black;
   @include flex-center(column, 0, both);
-  background-color: var(--colour-bg-surface);
+  background-color: var(--colour-status);
   width: 9rem;
   height: 9rem;
   border-radius: 50%;
-  // border: 0.75rem solid var(--colour-status);
   border: 1px var(--colour-outline) solid;
-  color: var(--colour-text);
+  color: black;
 
   &--arrived {
     @extend .status;
-    --colour-status: var(--colour-accent-teal);
-    --colour-text: var(--colour-accent-teal);
+    --colour-status: var(--app-bg-green);
   }
 
   &--on-time {
     @extend .status;
-    --colour-status: var(--colour-accent-blue);
+    --colour-status: var(--colour-bg-surface);
   }
 
   &--delayed {
     @extend .status;
-    --colour-status: var(--colour-warning);
-    --colour-text: var(--colour-warning);
+    --colour-status: var(--app-bg-yellow);
   }
 
   &--cancelled {
     @extend .status;
-    --colour-status: var(--colour-danger);
-    --colour-text: var(--colour-danger);
+    --colour-status: var(--app-bg-red);
   }
 }

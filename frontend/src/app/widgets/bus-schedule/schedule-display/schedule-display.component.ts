@@ -1,17 +1,9 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { ModalService } from '@core/modal/modal.service';
-import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 import { BusScheduleModalComponent } from '../bus-schedule-modal/bus-schedule-modal.component';
-
-// TODO: Fix the enum values on the backend and regenerate the services to get better enum names
-const STATUS_COLOUR_MAP: Record<number, string> = {
-  [BusStatus.NUMBER_1]: 'status--arrived',
-  [BusStatus.NUMBER_2]: 'status--delayed',
-  [BusStatus.NUMBER_3]: 'status--on-time',
-  [BusStatus.NUMBER_4]: 'status--cancelled'
-};
+import { STATUS_COLOUR_MAP } from '../bus-utils';
 
 @Component({
   selector: 'ksk-schedule-display',
