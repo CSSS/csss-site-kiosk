@@ -5,6 +5,7 @@
   display: grid;
   grid-template-rows: 16% 8% var(--content-height) var(--navbar-height);
   background-color: var(--colour-primary);
+  background-image: url('/bg.svg');
 }
 
 * {
