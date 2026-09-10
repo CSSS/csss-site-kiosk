@@ -73,7 +73,8 @@ export class EventsCalendarComponent {
 
   protected events = toSignal(
     this.eventsService
-      .getCurrentEvents()
+      // TODO: We'll eventually need to make sure this pulls only by month, if the response gets too big.
+      .getAllEvents()
       .pipe(map(events => events.map(e => e.getCalendarEvent()))),
     { initialValue: [] }
   );
