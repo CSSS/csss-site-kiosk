@@ -165,7 +165,8 @@ function Test-KioskHealth {
                 -UseBasicParsing `
                 -TimeoutSec 5
 
-            $reportedVersion = $response.Content.Trim()
+            $health = $response.Content | ConvertFrom-Json
+            $reportedVersion = [string]$health.version
 
             if (
                 $response.StatusCode -eq 200 -and
