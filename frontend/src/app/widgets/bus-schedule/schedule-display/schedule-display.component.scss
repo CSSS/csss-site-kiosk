@@ -44,7 +44,7 @@
 }
 
 .status {
-  --colour-status: var(--colour-warning);
+  --colour-status: var(--colour-bg-surface);
   --colour-text: black;
   @include flex-center(column, 0, both);
   background-color: var(--colour-status);

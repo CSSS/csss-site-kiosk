@@ -26,7 +26,7 @@ export class ScheduleDisplayComponent {
   }
 
   protected getStatusClass(status?: number): string {
-    return status ? STATUS_COLOUR_MAP[status] : 'status';
+    return status ? STATUS_COLOUR_MAP[status] : '';
   }
 
   protected openScheduleModal(): void {
