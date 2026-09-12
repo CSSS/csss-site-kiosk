@@ -1,7 +1,7 @@
 <article [class]="`bus-departure-card--${statusDetails().variant}`">
   <div class="bus-departure-card__time">
     <span class="bus-departure-card__minutes">
-      {{ displayTime() }}
+      {{ departure().secondsUntilDeparture | busTime }}
     </span>
     <span class="bus-departure-card__units">MIN</span>
   </div>

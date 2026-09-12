@@ -3,10 +3,12 @@ import { ModalService } from '@core/modal/modal.service';
 import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 import { BusScheduleModalComponent } from '../bus-schedule-modal/bus-schedule-modal.component';
+import { BusTimePipe } from '../bus-time.pipe';
 import { STATUS_COLOUR_MAP } from '../bus-utils';
 
 @Component({
   selector: 'ksk-schedule-display',
+  imports: [BusTimePipe],
   templateUrl: './schedule-display.component.html',
   styleUrl: './schedule-display.component.scss'
 })
@@ -15,12 +17,6 @@ export class ScheduleDisplayComponent {
   readonly departures = input<DepartureInfo[]>([]);
 
   private readonly modal = inject(ModalService);
-
-  protected getDisplayTime(timeDiff: number): string {
-    const time = Math.ceil(timeDiff / 60);
-
-    return time < 1 ? '< 1' : time.toString();
-  }
 
   protected getStatusClass(departure?: DepartureInfo): string {
     if (!departure) {

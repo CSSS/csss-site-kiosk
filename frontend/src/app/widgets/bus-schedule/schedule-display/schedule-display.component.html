@@ -5,7 +5,7 @@
     <div class="route__content">
       <div class="route__time">
         @if (nextDeparture) {
-          {{ getDisplayTime(nextDeparture?.secondsUntilDeparture ?? 0) }}
+          {{ nextDeparture.secondsUntilDeparture | busTime }}
         } @else {
           --
         }
