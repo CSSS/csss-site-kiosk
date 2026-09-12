@@ -10,6 +10,7 @@ export interface DepartureInfo {
   secondsUntilDeparture: number;
   delaySeconds: number;
   status: number;
+  arrived: boolean;
 }
 
 const MINUTE_AND_A_HALF = 90 * 1000;
@@ -77,7 +78,8 @@ export class TranslinkService {
                 this.timeService.currentDatetime().getTime() / 1000
             ),
             delaySeconds: departure.delay_seconds,
-            status: departure.status
+            status: departure.status,
+            arrived: departure.arrived
           });
           result.set(departure.route_number, departList);
         }

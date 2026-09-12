@@ -1,5 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { ModalService } from '@core/modal/modal.service';
+import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 import { BusScheduleModalComponent } from '../bus-schedule-modal/bus-schedule-modal.component';
 import { STATUS_COLOUR_MAP } from '../bus-utils';
@@ -11,20 +12,24 @@ import { STATUS_COLOUR_MAP } from '../bus-utils';
 })
 export class ScheduleDisplayComponent {
   readonly routeNumber = input.required<string>();
-  readonly departures = input<DepartureInfo[]>();
+  readonly departures = input<DepartureInfo[]>([]);
 
   private readonly modal = inject(ModalService);
 
   protected getDisplayTime(timeDiff: number): string {
-    if (timeDiff <= 60) {
-      return '< 1';
-    }
+    const time = Math.ceil(timeDiff / 60);
 
-    return Math.floor(timeDiff / 60).toString();
+    return time < 1 ? '< 1' : time.toString();
   }
 
-  protected getStatusClass(status?: number): string {
-    return status ? STATUS_COLOUR_MAP[status] : '';
+  protected getStatusClass(departure?: DepartureInfo): string {
+    if (!departure) {
+      return STATUS_COLOUR_MAP[BusStatus.NUMBER_3];
+    }
+    if (departure.arrived) {
+      return STATUS_COLOUR_MAP[BusStatus.NUMBER_1];
+    }
+    return STATUS_COLOUR_MAP[departure.status];
   }
 
   protected openScheduleModal(): void {

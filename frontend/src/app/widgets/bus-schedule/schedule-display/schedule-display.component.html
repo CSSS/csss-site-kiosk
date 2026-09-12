@@ -1,7 +1,7 @@
-@let nextDeparture = departures()?.[0];
 <div class="route">
   <h2 class="route__label">{{ routeNumber() }}</h2>
-  <div [class]="`status${getStatusClass(nextDeparture?.status)}`" (click)="openScheduleModal()">
+  @let nextDeparture = departures()?.[0];
+  <div [class]="`status${getStatusClass(nextDeparture)}`" (click)="openScheduleModal()">
     <div class="route__content">
       <div class="route__time">
         @if (nextDeparture) {

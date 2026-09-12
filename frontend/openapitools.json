@@ -10,7 +10,7 @@
         "output": "#{cwd}/src/app/api/generated/csss-api",
         "globalProperty": {
           "apis": "Kiosk:Event",
-          "models": "Event:EventCreate:EventDelete:EventStatusEnum:EventUpdate:GroupEvent:GroupEventDeleteResponse:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
+          "models": "Event:EventCreate:EventDelete:EventStatusEnum:EventUpdate:GroupEvent:GroupEventDeleteResponse:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse:BusStatus",
           "supportingFiles": "",
           "generateRecursiveDependentModels": "true"
         },
@@ -29,7 +29,7 @@
         "output": "#{cwd}/src/app/api/generated/csss-api",
         "globalProperty": {
           "apis": "Kiosk:Event",
-          "models": "Event:EventCreate:EventDelete:EventStatusEnum:EventUpdate:GroupEvent:GroupEventDeleteResponse:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse",
+          "models": "Event:EventCreate:EventDelete:EventStatusEnum:EventUpdate:GroupEvent:GroupEventDeleteResponse:DetailModel:HTTPValidationError:TransLinkRealtimeResponse:TransLinkStaticResponse:TransLinkScheduleResponse:BusStatus",
           "supportingFiles": "",
           "generateRecursiveDependentModels": "true"
         },
