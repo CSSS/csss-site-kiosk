@@ -31,7 +31,7 @@ export class BusDepartureCardComponent {
       };
     }
 
-    if (departure.status === BusStatus.NUMBER_1) {
+    if (departure.arrived) {
       return {
         text: 'Arrived',
         variant: 'arrived'
