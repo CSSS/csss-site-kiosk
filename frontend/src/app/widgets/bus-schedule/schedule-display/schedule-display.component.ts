@@ -34,8 +34,7 @@ export class ScheduleDisplayComponent {
       title: `Route ${this.routeNumber()} departures`,
       content: BusScheduleModalComponent,
       inputs: {
-        routeNumber: this.routeNumber(),
-        departures: this.departures() ?? []
+        routeNumber: this.routeNumber()
       },
       layout: {
         padding: '0',
