@@ -1,4 +1,3 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { ModalService } from '@core/modal/modal.service';
 import { DepartureInfo } from '../../../api/translink/translink.service';
@@ -7,7 +6,6 @@ import { STATUS_COLOUR_MAP } from '../bus-utils';
 
 @Component({
   selector: 'ksk-schedule-display',
-  imports: [DecimalPipe],
   templateUrl: './schedule-display.component.html',
   styleUrl: './schedule-display.component.scss'
 })
