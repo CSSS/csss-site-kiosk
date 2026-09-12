@@ -2,11 +2,10 @@
 <div class="route">
   <h2 class="route__label">{{ routeNumber() }}</h2>
   <div [class]="`status${getStatusClass(nextDeparture?.status)}`" (click)="openScheduleModal()">
-    @let displayTime = getDisplayTime(nextDeparture?.secondsUntilDeparture ?? 0);
     <div class="route__content">
-      <div class="route__time" [style.font-size]="displayTime > 99 ? '2.5rem' : '3.5rem'">
+      <div class="route__time">
         @if (nextDeparture) {
-          {{ getDisplayTime(nextDeparture.secondsUntilDeparture) }}
+          {{ getDisplayTime(nextDeparture?.secondsUntilDeparture ?? 0) }}
         } @else {
           --
         }

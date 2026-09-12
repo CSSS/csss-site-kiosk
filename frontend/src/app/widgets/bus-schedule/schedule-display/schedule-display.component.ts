@@ -15,12 +15,12 @@ export class ScheduleDisplayComponent {
 
   private readonly modal = inject(ModalService);
 
-  protected getDisplayTime(timeDiff: number): number {
-    if (timeDiff < 60) {
-      return 1;
+  protected getDisplayTime(timeDiff: number): string {
+    if (timeDiff <= 60) {
+      return '< 1';
     }
 
-    return Math.floor(timeDiff / 60);
+    return Math.floor(timeDiff / 60).toString();
   }
 
   protected getStatusClass(status?: number): string {

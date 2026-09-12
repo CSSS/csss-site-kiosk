@@ -12,9 +12,7 @@ export interface DepartureInfo {
   status: number;
 }
 
-const MIDNIGHT = 24 * 60 * 60 * 1000;
 const MINUTE_AND_A_HALF = 90 * 1000;
-const STATIC_CACHE_KEY = 'static';
 const REALTIME_CACHE_KEY = 'realtime';
 
 @Service()
@@ -61,7 +59,7 @@ export class TranslinkService {
   }
 
   /**
-   * Retrieves the next 3 departures for each bus route.
+   * Retrieves the next 5 departures for each bus route.
    *
    * @returns An observable map of route numbers with their schedule information.
    */
