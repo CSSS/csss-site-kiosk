@@ -1,6 +1,6 @@
 {
   "name": "csss-site-kiosk",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "workspaces": [
     "frontend",
