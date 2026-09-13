@@ -1,32 +1,40 @@
-import { inject, Service } from '@angular/core';
+import { computed, inject, Service, signal, untracked } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TimeService } from '@core/time.service';
 import { EventService as CsssEventApi } from '@csss-api';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { ObservableCache } from '../../api/observable-cache';
 import { KioskEvent } from './event.types';
 
 const ONE_MINUTE = 60 * 1000;
 
-type EventScope = 'all' | 'current';
-
 @Service()
 export class EventsService {
   private readonly eventApi = inject(CsssEventApi);
 
+  private readonly timeService = inject(TimeService);
+
   private readonly cache = new ObservableCache();
 
-  getCurrentEvents(): Observable<KioskEvent[]> {
-    return this.getEvents('current');
-  }
+  loadedEvents = signal(new Map<number, KioskEvent>());
 
-  getAllEvents(): Observable<KioskEvent[]> {
-    return this.getEvents('all');
-  }
+  private readonly eventPoll$ = this.timeService.minuteTick$.pipe(
+    switchMap(() => this.getEvents())
+  );
 
-  getEvents(scope: EventScope): Observable<KioskEvent[]> {
+  events = toSignal(this.eventPoll$, { initialValue: [] });
+
+  currentEvents = computed(() => {
+    // Untracked so this doesn't keep filtering the current events.
+    const currentTime = untracked(() => this.timeService.currentDatetime());
+    return this.events().filter(event => event.endDatetime > currentTime);
+  });
+
+  getEvents(): Observable<KioskEvent[]> {
     return this.cache.get<KioskEvent[]>(
-      'all',
+      'events',
       () =>
-        this.eventApi.getEvents(scope === 'current' ? { current: true } : undefined).pipe(
+        this.eventApi.getEvents().pipe(
           map(events =>
             events.map(event => {
               const start = new Date(event.start_datetime);
@@ -36,7 +44,7 @@ export class EventsService {
             })
           )
         ),
-      ONE_MINUTE
+      ONE_MINUTE / 2
     );
   }
 }
