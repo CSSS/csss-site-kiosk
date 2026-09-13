@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject } from '@angular/core';
 import { ModalService } from '@core/modal/modal.service';
 import { TimeService } from '@core/time.service';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
@@ -20,7 +19,6 @@ import {
   provideCalendar
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { map } from 'rxjs';
 import { KioskCalendarEvent } from '../event.types';
 import { EventsModalComponent } from '../events-modal/events-modal.component';
 import { EventsService } from '../events.service';
@@ -71,12 +69,11 @@ export class EventsCalendarComponent {
 
   protected view = CalendarView.Month;
 
-  protected events = toSignal(
+  protected events = computed(() =>
     this.eventsService
       // TODO: We'll eventually need to make sure this pulls only by month, if the response gets too big.
-      .getAllEvents()
-      .pipe(map(events => events.map(e => e.getCalendarEvent()))),
-    { initialValue: [] }
+      .events()
+      .map(event => event.getCalendarEvent())
   );
 
   /**

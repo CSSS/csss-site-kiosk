@@ -10,7 +10,6 @@ import {
 import { DateCardComponent } from '@core/date-card/date-card.component';
 import { Pagination } from 'swiper/modules';
 
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalService } from '@core/modal/modal.service';
 import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
 import 'swiper/css/pagination';
@@ -31,7 +30,7 @@ export class EventsBrowserComponent {
 
   private readonly modal = inject(ModalService);
 
-  events = toSignal(this.eventsService.getCurrentEvents(), { initialValue: [] });
+  events = this.eventsService.currentEvents;
 
   IMG_H = 400;
   IMG_W = (this.IMG_H * 4) / 5;

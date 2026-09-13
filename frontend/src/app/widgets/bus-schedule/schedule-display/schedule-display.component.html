@@ -1,12 +1,11 @@
-@let nextDeparture = departures()?.[0];
 <div class="route">
   <h2 class="route__label">{{ routeNumber() }}</h2>
-  <div [class]="`status${getStatusClass(nextDeparture?.status)}`" (click)="openScheduleModal()">
-    @let displayTime = getDisplayTime(nextDeparture?.secondsUntilDeparture ?? 0);
+  @let nextDeparture = departures()?.[0];
+  <div [class]="`status${getStatusClass(nextDeparture)}`" (click)="openScheduleModal()">
     <div class="route__content">
-      <div class="route__time" [style.font-size]="displayTime > 99 ? '2.5rem' : '3.5rem'">
+      <div class="route__time">
         @if (nextDeparture) {
-          {{ getDisplayTime(nextDeparture.secondsUntilDeparture) | number: '2.0-0' }}
+          {{ nextDeparture.secondsUntilDeparture | busTime }}
         } @else {
           --
         }

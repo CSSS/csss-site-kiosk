@@ -1,32 +1,31 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { ModalService } from '@core/modal/modal.service';
+import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
 import { BusScheduleModalComponent } from '../bus-schedule-modal/bus-schedule-modal.component';
+import { BusTimePipe } from '../bus-time.pipe';
 import { STATUS_COLOUR_MAP } from '../bus-utils';
 
 @Component({
   selector: 'ksk-schedule-display',
-  imports: [DecimalPipe],
+  imports: [BusTimePipe],
   templateUrl: './schedule-display.component.html',
   styleUrl: './schedule-display.component.scss'
 })
 export class ScheduleDisplayComponent {
   readonly routeNumber = input.required<string>();
-  readonly departures = input<DepartureInfo[]>();
+  readonly departures = input<DepartureInfo[]>([]);
 
   private readonly modal = inject(ModalService);
 
-  protected getDisplayTime(timeDiff: number): number {
-    if (timeDiff < 60) {
-      return 1;
+  protected getStatusClass(departure?: DepartureInfo): string {
+    if (!departure) {
+      return STATUS_COLOUR_MAP[BusStatus.NUMBER_3];
     }
-
-    return Math.floor(timeDiff / 60);
-  }
-
-  protected getStatusClass(status?: number): string {
-    return status ? STATUS_COLOUR_MAP[status] : '';
+    if (departure.arrived) {
+      return STATUS_COLOUR_MAP[BusStatus.NUMBER_1];
+    }
+    return STATUS_COLOUR_MAP[departure.status];
   }
 
   protected openScheduleModal(): void {
@@ -35,8 +34,7 @@ export class ScheduleDisplayComponent {
       title: `Route ${this.routeNumber()} departures`,
       content: BusScheduleModalComponent,
       inputs: {
-        routeNumber: this.routeNumber(),
-        departures: this.departures() ?? []
+        routeNumber: this.routeNumber()
       },
       layout: {
         padding: '0',

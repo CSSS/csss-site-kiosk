@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { BusStatus } from '@csss-api';
 import { DepartureInfo } from '../../../api/translink/translink.service';
+import { BusTimePipe } from '../bus-time.pipe';
 
 type DepartureStatusVariant = 'arrived' | 'cancelled' | 'delayed' | 'early' | 'normal';
 
@@ -11,21 +12,12 @@ interface DepartureStatusDetails {
 
 @Component({
   selector: 'ksk-bus-departure-card',
+  imports: [BusTimePipe],
   templateUrl: './bus-departure-card.component.html',
   styleUrl: './bus-departure-card.component.scss'
 })
 export class BusDepartureCardComponent {
   readonly departure = input.required<DepartureInfo>();
-
-  protected readonly displayTime = computed(() => {
-    const timeDiff = this.departure().secondsUntilDeparture;
-
-    if (timeDiff < 60) {
-      return 1;
-    }
-
-    return Math.floor(timeDiff / 60);
-  });
 
   protected readonly statusDetails = computed<DepartureStatusDetails>(() => {
     const departure = this.departure();
@@ -39,7 +31,7 @@ export class BusDepartureCardComponent {
       };
     }
 
-    if (departure.status === BusStatus.NUMBER_1) {
+    if (departure.arrived) {
       return {
         text: 'Arrived',
         variant: 'arrived'

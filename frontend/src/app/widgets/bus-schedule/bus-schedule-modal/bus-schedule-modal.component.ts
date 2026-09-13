@@ -1,5 +1,5 @@
-import { Component, computed, input } from '@angular/core';
-import { DepartureInfo } from '../../../api/translink/translink.service';
+import { Component, computed, inject, input } from '@angular/core';
+import { TranslinkService } from '../../../api/translink/translink.service';
 import { BusDepartureCardComponent } from '../bus-departure-card/bus-departure-card.component';
 
 interface BusRouteDetails {
@@ -32,14 +32,18 @@ const routeDetails: Record<string, BusRouteDetails> = {
   styleUrl: './bus-schedule-modal.component.scss'
 })
 export class BusScheduleModalComponent {
+  private readonly translinkService = inject(TranslinkService);
   readonly routeNumber = input.required<string>();
-  readonly departures = input.required<DepartureInfo[]>();
 
   protected readonly routeDetails = computed(
     () => routeDetails[this.routeNumber()] ?? fallbackRoute
   );
 
-  protected readonly nextDeparture = computed(() => this.departures().at(0));
+  protected readonly departures = computed(() =>
+    this.translinkService.nextDepartures()?.get(this.routeNumber())
+  );
 
-  protected readonly upcomingDepartures = computed(() => this.departures().slice(1));
+  protected readonly nextDeparture = computed(() => this.departures()?.at(0));
+
+  protected readonly upcomingDepartures = computed(() => this.departures()?.slice(1) ?? []);
 }

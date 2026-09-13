@@ -1,7 +1,7 @@
 <h2>Departures - Upper Loop</h2>
 <div class="schedule">
   @for (route of routesToTrack; track $index) {
-    @let departures = nextDepartures().get(route);
+    @let departures = getDeparture(route);
     <ksk-schedule-display [routeNumber]="route" [departures]="departures" />
   }
 </div>
