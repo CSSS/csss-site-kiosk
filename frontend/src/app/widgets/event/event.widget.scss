@@ -1,9 +1,6 @@
 @use 'utilities/mixins' as *;
 
 :host {
-  --card-height: 38.375rem;
-  --card-offset: 5rem;
-  --carousel-height: calc(var(--card-height) + var(--card-offset));
   --widget-background-colour: var(--colour-bg-surface);
   @include widget();
   display: flex;
@@ -11,19 +8,14 @@
 }
 
 swiper-container {
-  --swiper-container-height: var(--carousel-height);
   --swiper-pagination-bottom: 2rem;
-  width: 100%;
   padding-top: 1rem;
-  @include flex-center(row, 0, vertical);
   flex-grow: 1;
   min-height: 0;
 }
 
 swiper-slide {
-  @include flex-center(row);
-  position: relative;
-  height: var(--card-height);
+  width: fit-content;
 }
 
 .swiper-slide-active .card::after {

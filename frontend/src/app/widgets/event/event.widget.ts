@@ -1,7 +1,6 @@
 import {
   afterRenderEffect,
   Component,
-  computed,
   CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
   inject,
@@ -12,12 +11,13 @@ import { ModalService } from '@core/modal/modal.service';
 import type { KioskEvent } from '@screens/events/event.types';
 import { EventsModalComponent } from '@screens/events/events-modal/events-modal.component';
 import { EventsService } from '@screens/events/events.service';
+import {
+  SWIPER_PAGINATION_BULLET_STYLES,
+  SWIPER_PAGINATION_STYLES_URL
+} from '@styles/overrides/swiper';
+import { SwiperContainer } from 'swiper/element';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
-import { SWIPER_PAGINATION_BULLET_STYLES } from '../../../styles/overrides/swiper';
-
-// Max number of events this can handle is 13.
-// Any more and the pagination dots overflow.
-const MAX_DISPLAYED_CARDS = 13;
+import { SwiperOptions } from 'swiper/types';
 
 @Component({
   selector: 'ksk-event-widget',
@@ -31,11 +31,11 @@ export class EventWidget {
 
   private readonly modal = inject(ModalService);
 
-  protected swiperRef = viewChild.required<ElementRef>('swiperRef');
+  protected swiperRef = viewChild.required<ElementRef<SwiperContainer>>('swiperRef');
 
   protected cardWidth = 520;
 
-  events = computed(() => this.eventsService.currentEvents().slice(0, MAX_DISPLAYED_CARDS));
+  events = this.eventsService.currentEvents;
 
   constructor() {
     afterRenderEffect({
@@ -97,18 +97,17 @@ export class EventWidget {
   initializeSwiper(): void {
     const swiperEl = this.swiperRef().nativeElement;
 
-    const swiperParams = {
+    const swiperParams: SwiperOptions = {
       modules: [Autoplay, EffectCoverflow, Pagination],
       effect: 'coverflow',
       slidesPerView: 'auto',
       speed: 600,
       centeredSlides: true,
       loop: true,
-      grabCursor: true,
-      touchRatio: 1,
       resistanceRatio: 0.5,
       pagination: {
-        clickable: true
+        clickable: true,
+        dynamicBullets: true
       },
       autoplay: {
         delay: 5000,
@@ -120,12 +119,26 @@ export class EventWidget {
         depth: 360,
         slideShadows: false
       },
-      injectStylesUrls: ['/swiper/pagination-element.min.css'],
+      injectStylesUrls: [SWIPER_PAGINATION_STYLES_URL],
       injectStyles: [SWIPER_PAGINATION_BULLET_STYLES]
     };
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
+
+    const paginationStyles = swiperEl.shadowRoot?.querySelector<HTMLLinkElement>(
+      `link[href="${SWIPER_PAGINATION_STYLES_URL}"]`
+    );
+    const updatePagination = (): void => {
+      if (!swiperEl.swiper.destroyed) {
+        swiperEl.swiper.pagination.update();
+      }
+    };
+
+    // Dynamic pagination measures its bullet width during initialization. The
+    // injected stylesheet loads asynchronously, so repeat that measurement once
+    // its bullet sizing rules are available.
+    paginationStyles?.addEventListener('load', updatePagination, { once: true });
   }
 
   openEventModal(event: KioskEvent): void {

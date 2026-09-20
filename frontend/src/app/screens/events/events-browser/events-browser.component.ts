@@ -11,8 +11,13 @@ import { DateCardComponent } from '@core/date-card/date-card.component';
 import { Pagination } from 'swiper/modules';
 
 import { ModalService } from '@core/modal/modal.service';
-import { SWIPER_PAGINATION_BULLET_STYLES } from '@styles/overrides/swiper';
+import {
+  SWIPER_PAGINATION_BULLET_STYLES,
+  SWIPER_PAGINATION_STYLES_URL
+} from '@styles/overrides/swiper';
 import 'swiper/css/pagination';
+import { SwiperContainer } from 'swiper/element';
+import { SwiperOptions } from 'swiper/types';
 import { EventDetailsComponent } from '../event-details/event-details.component';
 import { KioskEvent } from '../event.types';
 import { EventsModalComponent } from '../events-modal/events-modal.component';
@@ -35,7 +40,7 @@ export class EventsBrowserComponent {
   IMG_H = 400;
   IMG_W = (this.IMG_H * 4) / 5;
 
-  swiperRef = viewChild.required<ElementRef>('swiperRef');
+  swiperRef = viewChild.required<ElementRef<SwiperContainer>>('swiperRef');
 
   constructor() {
     afterRenderEffect({
@@ -59,7 +64,7 @@ export class EventsBrowserComponent {
   initializeSwiper(): void {
     const swiperEl = this.swiperRef().nativeElement;
 
-    const swiperParams = {
+    const swiperParams: SwiperOptions = {
       modules: [Pagination],
       slidesPerView: 'auto',
       spaceBetween: 10,
@@ -67,14 +72,29 @@ export class EventsBrowserComponent {
       touchRatio: 1,
       resistanceRatio: 0.5,
       pagination: {
-        clickable: true
+        clickable: true,
+        dynamicBullets: true
       },
-      injectStylesUrls: ['/swiper/pagination-element.min.css'],
+      injectStylesUrls: [SWIPER_PAGINATION_STYLES_URL],
       injectStyles: [SWIPER_PAGINATION_BULLET_STYLES]
     };
 
     Object.assign(swiperEl, swiperParams);
     swiperEl.initialize();
+
+    const paginationStyles = swiperEl.shadowRoot?.querySelector<HTMLLinkElement>(
+      `link[href="${SWIPER_PAGINATION_STYLES_URL}"]`
+    );
+    const updatePagination = (): void => {
+      if (!swiperEl.swiper.destroyed) {
+        swiperEl.swiper.pagination.update();
+      }
+    };
+
+    // Dynamic pagination measures its bullet width during initialization. The
+    // injected stylesheet loads asynchronously, so repeat that measurement once
+    // its bullet sizing rules are available.
+    paginationStyles?.addEventListener('load', updatePagination, { once: true });
   }
 
   openEventModal(event: KioskEvent): void {
