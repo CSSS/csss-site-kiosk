@@ -17,7 +17,7 @@ const FALLBACK_IMAGE_SRC = '/images/placeholder.webp';
 export class DateCardComponent {
   date = input.required<Date>();
   title = input.required<string>();
-  description = input();
+  description = input<string>();
   imgSrc = input.required<string>();
   width = input.required<number>();
   height = input.required<number>();

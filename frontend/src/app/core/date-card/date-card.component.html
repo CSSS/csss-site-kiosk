@@ -14,7 +14,7 @@
   <div class="month">{{ date() | date: 'MMM' }}</div>
 </div>
 <div class="info">
-  <h3 class="info__title">{{ title() }}</h3>
+  <h3 class="info__title" [class.single-line]="description()">{{ title() }}</h3>
   <p class="info__description">
     {{ description() }}
   </p>
