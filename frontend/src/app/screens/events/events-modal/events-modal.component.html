@@ -1,11 +1,11 @@
-<img class="poster" [ngSrc]="event().image_url" [height]="400" [width]="500" />
-@if (event().url; as url) {
-  <section class="link">
-    <qrcode [qrdata]="url" [width]="180" [margin]="0"></qrcode>
-    <p>{{ url }}</p>
-  </section>
-}
+<img class="poster" [ngSrc]="event().image_url" [height]="imgHeight" [width]="imgWidth" />
 <section class="details">
+  <section class="link">
+    @if (event().url; as url) {
+      <qrcode [qrdata]="url" [width]="qrCodeSize" [margin]="0"></qrcode>
+      <p>{{ url }}</p>
+    }
+  </section>
   <ksk-event-details [event]="event()" />
 </section>
 <section class="description">

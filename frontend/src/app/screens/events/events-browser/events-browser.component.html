@@ -4,7 +4,7 @@
     @if (events().length > 0) {
       @let event = events()[0];
       <div class="next__img">
-        <img [ngSrc]="event.image_url" alt="title" [height]="IMG_H" [width]="IMG_W" />
+        <img [ngSrc]="event.image_url" [alt]="event.name" [height]="IMG_H" [width]="IMG_W" />
       </div>
       <div class="next__info">
         <h3>{{ event.name }}</h3>

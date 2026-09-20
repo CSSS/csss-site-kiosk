@@ -34,16 +34,7 @@ export class EventsService {
     return this.cache.get<KioskEvent[]>(
       'events',
       () =>
-        this.eventApi.getEvents().pipe(
-          map(events =>
-            events.map(event => {
-              const start = new Date(event.start_datetime);
-              const end = new Date(event.end_datetime);
-
-              return new KioskEvent(event, start, end);
-            })
-          )
-        ),
+        this.eventApi.getEvents().pipe(map(events => events.map(event => new KioskEvent(event)))),
       ONE_MINUTE / 2
     );
   }

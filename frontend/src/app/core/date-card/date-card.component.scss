@@ -39,9 +39,12 @@ img {
   &__title {
     margin-bottom: 5%;
     font-size: 8cqw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+    &.single-line {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   &__description {
