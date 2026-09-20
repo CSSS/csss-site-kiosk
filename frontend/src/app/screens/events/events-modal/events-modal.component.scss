@@ -34,6 +34,7 @@
     text-align: center;
     gap: var(--sp-sm);
     min-width: 0;
+    word-break: break-word;
 
     qrcode {
       display: grid;
