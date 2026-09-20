@@ -39,7 +39,7 @@ export class KioskEvent implements Event {
   endDatetime: Date;
   isMultiDayEvent?: boolean;
 
-  constructor(event: Event, startDatetime: Date, endDatetime: Date) {
+  constructor(event: Event) {
     this.name = event.name;
     this.description = event.description;
     this.start_datetime = event.start_datetime;
@@ -52,8 +52,8 @@ export class KioskEvent implements Event {
     this.eid = event.eid;
     this.group_id = event.group_id;
     this.image_url = event.image_url ?? '/media/images/placeholder.webp';
-    this.startDatetime = startDatetime;
-    this.endDatetime = endDatetime;
+    this.startDatetime = new Date(event.start_datetime);
+    this.endDatetime = new Date(event.end_datetime);
     this.isMultiDayEvent = this.startDatetime.toDateString() !== this.endDatetime.toDateString();
   }
 
