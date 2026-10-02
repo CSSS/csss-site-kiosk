@@ -32,8 +32,11 @@
   "devDependencies": {
     "concurrently": "^10.0.5"
   },
+  "overrides": {
+    "basic-ftp": "^6.2.1"
+  },
   "allowScripts": {
-    "@openapitools/openapi-generator-cli@2.40.1": false,
+    "@openapitools/openapi-generator-cli@2.41.0": false,
     "@parcel/watcher@2.5.6": true,
     "@scarf/scarf": false,
     "esbuild@0.28.2": true,
