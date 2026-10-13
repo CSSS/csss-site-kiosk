@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { createProxyServer } from 'httpxy';
 import { readFile } from 'node:fs/promises';
-import { basename, dirname, join } from 'node:path';
+import { basename, dirname, join, resolve} from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 function getSecret(): string {
@@ -67,6 +67,45 @@ function main(): void {
         .send('Version unavailable.');
     }
   });
+
+    const logFiles = {
+    update: process.env.KIOSK_UPDATE_LOG_PATH,
+    stderr: process.env.KIOSK_STDERR_LOG_PATH
+  };
+
+  for (const [name, filePath] of Object.entries(logFiles)) {
+    app.get(`/debug/logs/${name}`, (_, res, next) => {
+      res.set('Cache-Control', 'no-store').type('text/plain');
+
+      if (!filePath) {
+        res.status(503).send('Log path is not configured.');
+        return;
+      }
+
+      res.sendFile(
+        resolve(serverDirectory, filePath),
+        { lastModified: false },
+        err => {
+          if (!err) {
+            return;
+          }
+
+          if (res.headersSent) {
+            next(err);
+            return;
+          }
+
+          if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+            res.status(404).send('Log file not found.');
+            return;
+          }
+
+          console.error(`Failed to read ${name} log:`, err);
+          res.status(500).send('Unable to read log file.');
+        }
+      );
+    });
+  }
 
   // Proxy backend requests while preserving their route prefixes upstream.
   const proxy = createProxyServer({
