@@ -17,7 +17,7 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "http-proxy-middleware": "^4.2.0"
+    "httpxy": "^0.5.5"
   },
   "devDependencies": {
     "@csss-kiosk/shared": "*",
