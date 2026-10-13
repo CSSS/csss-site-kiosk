@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createProxyServer } from 'httpxy';
 import { readFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -69,25 +69,28 @@ function main(): void {
   });
 
   // Proxy backend requests while preserving their route prefixes upstream.
-  app.use(
-    createProxyMiddleware({
-      target: PROXY_TARGET,
-      changeOrigin: true,
-      pathFilter: ['/kiosk', '/api'],
-      on: {
-        proxyReq: proxyReq => {
-          proxyReq.setHeader('Authorization', `Bearer ${cachedSecret}`);
-        },
-        error: (err, _, res) => {
-          console.error('Proxy error:', err.message);
-          if ('writeHead' in res) {
-            res.writeHead(502, { 'Content-Type': 'application/json' });
-          }
-          res.end(JSON.stringify({ error: 'Proxy failed to reach server.' }));
-        }
+  const proxy = createProxyServer({
+    target: PROXY_TARGET,
+    changeOrigin: true,
+    headers: { Authorization: `Bearer ${cachedSecret}` }
+  });
+  app.use(async (req, res, next) => {
+    if (!req.path.startsWith('/kiosk') && !req.path.startsWith('/api')) {
+      next();
+      return;
+    }
+
+    try {
+      await proxy.web(req, res);
+    } catch (err) {
+      console.error('Proxy error:', err instanceof Error ? err.message : err);
+      if (res.headersSent) {
+        res.destroy();
+        return;
       }
-    })
-  );
+      res.status(502).json({ error: 'Proxy failed to reach server.' });
+    }
+  });
 
   // Serve the built frontend files
   app.use(express.static(FRONTEND_PATH));
