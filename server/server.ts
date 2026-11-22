@@ -100,7 +100,7 @@ function main(): void {
             return;
           }
 
-          console.error(`Failed to read ${name} log:`, err);
+          console.error('Failed to read %s log:', name, err);
           res.status(500).send('Unable to read log file.');
         }
       );
