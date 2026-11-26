@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TimeService } from '@core/time.service';
-import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { sfuCourseOutlineApi } from '../../config';
 import { ObservableCache } from '../observable-cache';
 import {
@@ -205,7 +205,15 @@ export class SfuCourseOutlinesService {
       DEPARTMENTS.reduce((acc, dept) => {
         return {
           ...acc,
-          [dept]: this.getDepartmentCourses(year, term, dept)
+          [dept]: this.getDepartmentCourses(year, term, dept).pipe(
+            catchError(error => {
+              if (error instanceof HttpErrorResponse && error.status === 404) {
+                return of([]);
+              }
+
+              return throwError(() => error);
+            })
+          )
         };
       }, {} as DepartmentLoader)
     ).pipe(
